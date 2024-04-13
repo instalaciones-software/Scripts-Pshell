@@ -21,16 +21,18 @@ foreach ($item in $content) {
 }
 
 
+$web = "yeminusweb"
+
+if ($web -eq "yeminusweb" -or "yeminus" ) {
+
+ $contrasena = Read-Host "¿Contraseña del usuario $env:USERNAME ?" -AsSecureString
+$contrasenaTextoPlano = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($contrasena))
+
+}else {
+    $nombreUsuario = "small"
+    $contrasena = "123456Aa"<# Action when all if and elseif conditions are false #>
+}
 
 
+Write-Host $contrasena
 
-
-# $nombreSitioWeb = "yeminus"
-# $urlYem = [System.Environment]::GetEnvironmentVariable("${nombreSitioWeb}BASEURLYEMINUS", "Machine")
-
-# # Remover la parte "/apiyeminus" de la URL
-
-
-# # Ahora la URL solo contendrá "http://localhost:8000"
-# Invoke-WebRequest $urlYem
-# Write-Host $urlYem

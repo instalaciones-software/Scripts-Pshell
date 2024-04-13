@@ -7,6 +7,7 @@
 
  #Set-ExecutionPolicy Unrestricted
 
+# list the apis
 $listApis = New-Object Collections.Generic.List[String]
 $listApis.Add("ActivosFijos");
 $listApis.Add("Admin");
@@ -39,16 +40,21 @@ $listApis.Add("SolicitudesCompraMRP");
 $listApis.Add("TablasSistema");
 $listApis.Add("Ventas");
 
+# password for the resource virtual
+$contrasena = Read-Host "¿Contraseña del usuario $env:USERNAME ?" -AsSecureString
+$contrasenaTextoPlano = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($contrasena))
+
 # route where this installed the appcmd IIS
 $comandoAppCmd = "C:\Windows\System32\inetsrv\"
+
+# user the autentication for the resource virtual
+$nombreUsuario = $env:USERNAME
 
 # which version to deploy
 $numversion = Read-Host '¿Qué versión vas a implementar ej (3.0.46.0)?'
 
-$addfile = mkdir "C:\inetpub\versiones\" 2>$null
-
 # define the route download 
-$rutaDescarga = "C:\inetpub\versiones\$numversion.zip"
+$rutaDescarga = "C:\inetpub\$numversion.zip"
 
 # check if the version this download
 if (Test-Path $rutaDescarga) {
@@ -58,11 +64,11 @@ if (Test-Path $rutaDescarga) {
     try {
 	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         Invoke-WebRequest -Uri "https://github.com/yeminus/yeminusweb/releases/download/$numversion/$numversion.zip" -OutFile $rutaDescarga
-        Write-Host "!VERSION DESCARGADA¡" -ForegroundColor green -NoNewline
+        Write-Host "!VERSION DESCARGADA¡" -ForegroundColor White -BackgroundColor Green -NoNewline
         Write-Host " $numversion exitosamente en $rutaDescarga"
     } catch {
         if ($_.Exception.Response.StatusCode -eq 404) {
-        Write-Host "!ATENCIÓN!" -ForegroundColor red  -NoNewline
+        Write-Host "!ATENCIÓN!" -ForegroundColor white -BackgroundColor red -NoNewline
             Write-Host " La versión $numversion no existe en el repositorio. Valide la última versión en el siguiente enlace: https://github.com/yeminus/yeminusweb/releases/"
         } else {
             Write-Host "Ocurrió un error: $($_.Exception.Message)"
@@ -73,33 +79,19 @@ if (Test-Path $rutaDescarga) {
 }
 
 
-
-
 # list the names sites web
 $sitiosWeb = Read-Host 'Ingresa los nombres de los sitios web (separados por coma)'
 $sitiosWeb = $sitiosWeb.ToLower()
-
-if ($sitiosWeb -eq "yeminus" -or  $sitiosWeb -eq "yeminusweb" ) {
-    $nombreUsuario = $env:USERNAME
-
-    $contrasena = Read-Host "¿Contraseña del usuario $env:USERNAME ?" -AsSecureString
-   $contrasenaTextoPlano = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($contrasena))
-   
-   }else {
-       $nombreUsuario = "small"
-       $contrasenaTextoPlano = "123456Aa"
-   }
 
 # Convert the names sites web in array
 $nombresSitiosWeb = $sitiosWeb -split ','
 
 
 foreach ($nombreSitioWeb in $nombresSitiosWeb) {
-    # stop site web
-    $program = & "$comandoAppCmd\appcmd" list vdir "$nombreSitioWeb/" /text:physicalPath
+       $program = & "$comandoAppCmd\appcmd" list vdir "$nombreSitioWeb/" /text:physicalPath
     
     if ($program -ne $null -and $program -ne '') {
-                Write-Host "Deteniendo Pools De Aplicacion $nombreSitioWeb" -ForegroundColor yellow 
+        Write-Host "Deteniendo Pools De Aplicacion $nombreSitioWeb" -ForegroundColor DarkBlue -BackgroundColor White
 
         foreach ($pool in  $listApis){
             # stop site web
@@ -116,33 +108,29 @@ foreach ($nombreSitioWeb in $nombresSitiosWeb) {
         & $comandoAppCmd\appcmd start apppool "$nombreSitioWeb.$pool" 1>$null
         }
 
-        Write-Host "IMPLEMENTANDO VERSION $numversion AL SITIO WEB $nombreSitioWeb CARGANDO ..." -ForegroundColor green 
-
+        Write-Host "ACTUALIZANDO VERSION AL SITIO WEB $nombreSitioWeb CARGANDO ..." -ForegroundColor black -BackgroundColor yellow
+        
     } else {
-        Write-Host "!ATENCIÓN!" -ForegroundColor red -NoNewline
+        Write-Host "!ATENCIÓN!" -ForegroundColor white -BackgroundColor red -NoNewline
         Write-Host " El sitio web '$nombreSitioWeb' no existe o el nombre es incorrecto."
-        
-        
-        
-        break OuterLoop
+
+       break OuterLoop
     }
-    
     
     
     #add the directory resource virtual 
     $rutarecursos = & "${comandoAppCmd}\appcmd" list vdir "$nombreSitioWeb/Api$nombreSitioWeb/recursos" /text:physicalPath
-   
+
 
     foreach ($nombreApi in $listApis) {
          & "${comandoAppCmd}\appcmd" add app /site.name:$nombreSitioWeb /path:"/$nombreApi.Api" /physicalPath:"$program\$nombreApi.Api" /applicationPool:$nombreSitioWeb.$nombreApi 1>$null
          & "${comandoAppCmd}\appcmd" add vdir /app.name:$nombreSitioWeb/$nombreApi.api /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
          & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$nombreSitioWeb.$nombreApi /processModel.identityType:"LocalSystem" 1>$null
     }
-    
-   
+       
 
     # path where this the file compress
-$compressedFilePath = "C:\inetpub\versiones\$numversion.zip"
+$compressedFilePath = "C:\inetpub\$numversion.zip"
 
 # path the extract for the files 
 $extractedPath = "$program"
@@ -151,65 +139,28 @@ $extractedPath = "$program"
 Expand-Archive -Path $compressedFilePath -DestinationPath $extractedPath -Force
 
 # create files "apiempresa" on the directory the extract
-$apiYeminusPath = Join-Path $extractedPath "api$nombreSitioWeb"
+$apiYeminusPath = Join-Path $extractedPath "apiyeminus"
 New-Item -Path $apiYeminusPath -ItemType Directory
 
 # Move the files 'apisiteweb'
-Move-Item -Path (Join-Path $extractedPath "Content\D_C\Documents\WORKSPACE-GIT\cf-v3\SolApiGeminus\ApiGeminus\obj\x64\Release\Package\PackageTmp\*") -Destination $apiYeminusPath -Force
+Move-Item -Path (Join-Path $extractedPath "Content\D_C\WORKSPACE-GIT\cf-v3\SolApiGeminus\ApiGeminus\obj\x64\Release\Package\PackageTmp\*") -Destination $apiYeminusPath -Force
 
-Remove-Item -Recurse "$program\content" -Exclude api$nombreSitioWeb ; Remove-Item -Recurse "$program\*.XML"
-
-
-$nombreSitioWeb = $nombreSitioWeb.ToUpper()
+Remove-Item -Recurse "$program\content" -Exclude apiyeminus ; Remove-Item -Recurse "$program\*.XML"
 
 
 #Url the apisitioweb in variables everinoment
 $urlYem = [System.Environment]::GetEnvironmentVariable("${nombreSitioWeb}BASEURLYEMINUS", "Machine")
-    
-    Invoke-WebRequest $urlYem
-        
-    $urlYem2 = $urlYem.Replace("api$nombresSitiosWeb/", '')
 
-    $response = Invoke-WebRequest "$urlYem2/admin.api/api/admin/empresas/getids" 
     
-    Write-Host "IDS A ACTUALIZAR SON " $response -ForegroundColor Green
-    
-    $content = $response.Content | ConvertFrom-Json
-    
-    foreach ($item in $content) {
-        foreach ($element in $item) {
-            # CREATE TABLES 
-            Write-Host "ACTUALIZANDO EL ID" $element -ForegroundColor green
-          Invoke-WebRequest $urlYem2/Admin.Api/api/configuracion/actualizacionbd/creartablas/$element/YEMINUS #>> $program\CreateTable.txt    
-        }
-    }
-    
+    Write-Host "!ACTUALIZACION COMPLETADA¡" -ForegroundColor White -BackgroundColor Green -NoNewline
+    Write-Host " " "para el sitio web '$nombreSitioWeb' con version: $numversion"
 
-  # route the files
+
+     # route the files
 $rutaArchivo = "$program\oldversion.txt"
 
 # show the files txt 
 $contenidoArchivo = Get-Content -Path $rutaArchivo
-
-Write-Host "Abriendo Software Web" -ForegroundColor green 
-sleep -Seconds 3 
-
-$urlYem = $urlYem.Replace("api$sitiosWeb", "$sitiosWeb")
-
-Write-Host $urlYem
-
-
-if (Test-Path "C:\Program Files\Google\Chrome\Application\chrome.exe") {
-    [System.Diagnostics.Process]::Start("chrome.exe", "--incognito $urlYem")
-}
-
-elseif (Test-Path "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe") {
-    [System.Diagnostics.Process]::Start("msedge.exe", "--inprivate $urlYem")
-}
-
-else {
-    Start-Process "firefox.exe" $urlYem
-}
 
 
 # legend the upgrade
@@ -223,7 +174,10 @@ $tempFile = [System.IO.Path]::GetTempFileName()
 $texto | Out-File -FilePath $tempFile -Force -Encoding UTF8
 
 # start program notepad.exe
-    Start-Process notepad.exe -ArgumentList $tempFile
-                                                                     
+Start-Process notepad.exe -ArgumentList $tempFile
+
+    
+[System.Diagnostics.Process]::Start("msedge.exe", "--incognito $urlYem")
+                                                                             
 }                                                                            
-                                                                          
+                                                                             
