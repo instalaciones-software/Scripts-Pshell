@@ -140,24 +140,56 @@ foreach ($nombreSitioWeb in $nombresSitiosWeb) {
     }
     
    
-
     # path where this the file compress
 $compressedFilePath = "C:\inetpub\versiones\$numversion.zip"
 
 # path the extract for the files 
-$extractedPath = "$program"
+$extractedPath = "C:\inetpub\versiones\"
 
 # descompress the files
 Expand-Archive -Path $compressedFilePath -DestinationPath $extractedPath -Force
 
-# create files "apiempresa" on the directory the extract
-$apiYeminusPath = Join-Path $extractedPath "api$nombreSitioWeb"
-New-Item -Path $apiYeminusPath -ItemType Directory
+# Ruta donde buscar la carpeta PackageTmp
+$sourcePath = "$extractedPath"
 
-# Move the files 'apisiteweb'
-Move-Item -Path (Join-Path $extractedPath "*\*\*\*\*\*\*\*\*\*\*\PackageTmp\*") -Destination $apiYeminusPath -Force
+# Nombre de la carpeta que buscamos
+$folderName = "PackageTmp"
 
-Remove-Item -Recurse "$program\content" -Exclude api$nombreSitioWeb ; Remove-Item -Recurse "$program\*.XML"
+# Ruta donde mover la carpeta renombrada
+$destinationPath = "$program"
+
+# Función recursiva para buscar y renombrar la carpeta
+function RenameAndMoveFolder {
+    param (
+        [string]$currentPath
+    )
+
+    # Busca todas las subcarpetas en la ruta actual
+    $subfolders = Get-ChildItem -Path $currentPath -Directory
+
+    foreach ($folder in $subfolders) {
+        # Verifica si el nombre de la carpeta coincide
+        if ($folder.Name -eq $folderName) {
+            # Renombra la carpeta
+            $newName = "api$nombreSitioWeb"
+            Rename-Item -Path $folder.FullName -NewName $newName -Force
+            Write-Host "Carpeta renombrada: $($folder.FullName) => $($folder.Parent.FullName)\$newName"
+
+            # Mueve la carpeta renombrada al destino
+            Move-Item -Path "$($folder.Parent.FullName)\$newName" -Destination $destinationPath -Force
+            Write-Host "Carpeta movida a: $destinationPath"
+        } else {
+            # Si no es la carpeta buscada, sigue buscando en las subcarpetas
+            RenameAndMoveFolder -currentPath $folder.FullName
+        }
+    }
+}
+
+# Inicia la búsqueda y renombrado de la carpeta
+RenameAndMoveFolder -currentPath $sourcePath
+
+Remove-Item -Recurse "C:\inetpub\versiones\*" -Exclude *.zip
+
 
 
 $nombreSitioWeb = $nombreSitioWeb.ToUpper()
