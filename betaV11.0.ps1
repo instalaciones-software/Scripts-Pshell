@@ -155,7 +155,7 @@ $apiYeminusPath = Join-Path $extractedPath "api$nombreSitioWeb"
 New-Item -Path $apiYeminusPath -ItemType Directory
 
 # Move the files 'apisiteweb'
-Move-Item -Path (Join-Path $extractedPath "Content\D_C\Documents\WORKSPACE-GIT\cf-v3\SolApiGeminus\ApiGeminus\obj\x64\Release\Package\PackageTmp\*") -Destination $apiYeminusPath -Force
+Move-Item -Path (Join-Path $extractedPath "*\*\*\*\*\*\*\*\*\*\*\PackageTmp\*") -Destination $apiYeminusPath -Force
 
 Remove-Item -Recurse "$program\content" -Exclude api$nombreSitioWeb ; Remove-Item -Recurse "$program\*.XML"
 
