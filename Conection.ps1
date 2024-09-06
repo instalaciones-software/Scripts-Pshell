@@ -1,5 +1,5 @@
 ﻿                                                                           
-Write-Host "Version 3.0.1" -ForegroundColor Green
+Write-Host "Version 3.0.0" -ForegroundColor Green
     
 $pathpass = Read-Host "Para conectarse a otros servidores, es necesario proporcionar la llave de acceso. Por favor, especifique la ruta donde desea descargar los archivos" 
     
