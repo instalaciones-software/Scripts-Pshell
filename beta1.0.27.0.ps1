@@ -63,6 +63,8 @@ $listApis.Add("SolicitudesCompraMRP");
 $listApis.Add("TablasSistema");
 $listApis.Add("Ventas");
 
+
+
 $addfile = mkdir "C:\inetpub\versiones\" 2>$null
 
 $appcmdPath = "$env:SystemRoot\system32\inetsrv\appcmd.exe"
@@ -72,6 +74,7 @@ $dato = Read-Host "
 
 1. Crear sitio web y variables de entorno 
 2. Actualizar sitio web (ENTER PARA CONTINUAR)
+3. Acceso Remoto (BETA)
 Opcion"
 
 #create variables in S.O
@@ -86,7 +89,7 @@ if ($dato -eq "1") {
     
     if ($sitioweb -ne "yeminus") {
         $sitioweb = $sitioweb.ToLower()
-
+        
         
         #CREATE SITE WEB 
         
@@ -424,8 +427,7 @@ if ($dato -eq "2" -or $dato -eq "") {
         # path search the file PackageTmp
         $sourcePath = "$extractedPath"
 
-        #
-        Name the file to search 
+        # Name the file to search 
         $folderName = "PackageTmp"
 
         #Path where move the files 
@@ -549,39 +551,39 @@ if ($dato -eq "2" -or $dato -eq "") {
         }
 
    
-        # if ($sitioWeb -ne "yeminus" -and $sitioWeb -ne "yeminusweb") {
+        if ($sitioWeb -ne "yeminus" -and $sitioWeb -ne "yeminusweb") {
 
-        #        # owerwrite the files txt
-        #      "$numversion" | Out-File -FilePath $rutaArchivo -Force
+               # owerwrite the files txt
+             "$numversion" | Out-File -FilePath $rutaArchivo -Force
 
-        #     $EmailDestinatario = "instalaciones@yeminus.com,aarias@yeminus.com,soporte9@yeminus.com,soporte2@yeminus.com,dguzman@yeminus.com,soporte10@yeminus.com,soporte3@yeminus.com,coordinadorsoporte@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,tics@yeminus.com,instalaciones3@yeminus.com"
-        #     $EmailEmisor = "noresponder@yeminus.com"
-        #     $Asunto = "📌Actualización Empresa $sitioWeb Version $numversion"
-        #     $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del Yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren Soporte Sobre el producto web</p>
+            $EmailDestinatario = "instalaciones@yeminus.com,aarias@yeminus.com,soporte9@yeminus.com,soporte2@yeminus.com,dguzman@yeminus.com,soporte10@yeminus.com,soporte3@yeminus.com,coordinadorsoporte@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,tics@yeminus.com,instalaciones3@yeminus.com"
+            $EmailEmisor = "noresponder@yeminus.com"
+            $Asunto = "📌Actualización Empresa $sitioWeb Version $numversion"
+            $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del Yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren Soporte Sobre el producto web</p>
     
-        #     <p><b>Atentamente Area de instalaciones</b></p>"
+            <p><b>Atentamente Area de instalaciones</b></p>"
 
-        #     $SMTPServidor = "mail.yeminus.com"
-        #     $CodificacionCaracteres = [System.Text.Encoding]::UTF8
+            $SMTPServidor = "mail.yeminus.com"
+            $CodificacionCaracteres = [System.Text.Encoding]::UTF8
     
-        #     try {
-        #         $SMTPMensaje = New-Object System.Net.Mail.MailMessage($EmailEmisor, $EmailDestinatario, $Asunto, $CuerpoEnHTML)
-        #         $SMTPMensaje.IsBodyHtml = $true
-        #         $SMTPMensaje.BodyEncoding = $CodificacionCaracteres
-        #         $SMTPMensaje.SubjectEncoding = $CodificacionCaracteres
-        #         $SMTPCliente = New-Object Net.Mail.SmtpClient($SMTPServidor, 587)
-        #         $SMTPCliente.EnableSsl = $true
-        #         $SMTPCliente.Credentials = New-Object System.Net.NetworkCredential($EmailEmisor, "12345Aa$@/*");
-        #         $SMTPCliente.Send($SMTPMensaje)
+            try {
+                $SMTPMensaje = New-Object System.Net.Mail.MailMessage($EmailEmisor, $EmailDestinatario, $Asunto, $CuerpoEnHTML)
+                $SMTPMensaje.IsBodyHtml = $true
+                $SMTPMensaje.BodyEncoding = $CodificacionCaracteres
+                $SMTPMensaje.SubjectEncoding = $CodificacionCaracteres
+                $SMTPCliente = New-Object Net.Mail.SmtpClient($SMTPServidor, 587)
+                $SMTPCliente.EnableSsl = $true
+                $SMTPCliente.Credentials = New-Object System.Net.NetworkCredential($EmailEmisor, "12345Aa$@/*");
+                $SMTPCliente.Send($SMTPMensaje)
      
-        #     }  
+            }  
     
     
-        #     catch {
-        #         Write-Error -Message "Error al enviar correo electrónico"
-        #     }                                                                                                                
+            catch {
+                Write-Error -Message "Error al enviar correo electrónico"
+            }                                                                                                                
                                                                         
-        # }
+        }
         
     }        
     
@@ -621,7 +623,7 @@ if ($dato -eq "2" -or $dato -eq "") {
 
     #             $SMTPServidor = "mail.yeminus.com"
     #             $CodificacionCaracteres = [System.Text.Encoding]::UTF8
-
+    
     #             try {
     #                 $SMTPMensaje = New-Object System.Net.Mail.MailMessage($EmailEmisor, $EmailDestinatario, $Asunto, $CuerpoEnHTML)
     #                 $SMTPMensaje.IsBodyHtml = $true
@@ -638,11 +640,29 @@ if ($dato -eq "2" -or $dato -eq "") {
     #             }
     #         }
     #     }
-
+            
     #     $workbook.Close()
     #     $excel.Quit()
     # }
 }                                                                            
-                                                                          
+         
+if ($dato -eq "3") {
+   $datops = Read-Host "¿ Servidor a conectarse ?" 
+   
+   $serverMap = @{
+    "56" = "192.168.1.56"
+    "12" = "192.168.1.12"
+    "13" = "192.168.1.13"
+}
 
-
+# Check if the provided server code exists in the hashtable
+if ($serverMap.ContainsKey($datops)) {
+    $cred = Import-Clixml "C:\beta-update\mycredentials.xml"
+    $ipAddress = $serverMap[$datops]
+    Enter-PSSession -ComputerName $ipAddress -Credential $cred
+} else {
+    Write-Host "Código de servidor no válido."
+}
+}
+        
+        
