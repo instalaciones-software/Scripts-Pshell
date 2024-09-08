@@ -18,7 +18,7 @@ Write-Host `
 |____/ \____|_| \_\___|_|    |_| |___|_| \_|\____|         |___|___|____/
 
 
-Version 1.0.27" -ForegroundColor green
+Version 1.0.30" -ForegroundColor green
 
 
 
@@ -73,9 +73,7 @@ $dato = Read-Host "
 ¿ QUE DESEAS REALIZAR ?
 
 1. Crear sitio web y variables de entorno 
-2. Actualizar sitio web (ENTER PARA CONTINUAR)
-3. Acceso Remoto (BETA)
-Opcion"
+2. Actualizar sitio web (ENTER PARA CONTINUAR)"
 
 #create variables in S.O
 
@@ -128,7 +126,7 @@ if ($dato -eq "1") {
 
         $url = "http://$sitioweb.yeminus.com/api$sitioweb/"
         $admin = "ADMIN_$sitioweb"
-        $NombreBd = "YEMINUS"
+        $NombreBd = "yeminus"
     }
     
     else {
@@ -189,7 +187,7 @@ if ($dato -eq "1") {
     foreach ($dato in $dato) {
         $dato = $sitioweb.ToUpper()
         Write-Host "Nombre de la variable: $nombreVariable1"  # Imprime el nombre de la variable para depurar
-        $nombreVariable1 = "${dato}BASEURLYEMINUS"
+        $nombreVariable1 = "${dato}BASEURLyeminus"
         $dato = $sitioweb.ToLower()
         $valorVariable1 = "$url"
     
@@ -202,7 +200,7 @@ if ($dato -eq "1") {
             $admin = $admin.ToUpper()
             $NombreBd = $NombreBd.ToUpper()
 
-            $nombreVariable2 = "${dato}CADENACONEXIONBDYEMINUS"
+            $nombreVariable2 = "${dato}CADENACONEXIONBDyeminus"
             $valorVariable2 = "User Id=$admin;Password=$pass;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$ip)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=$NombreBd)))"
             
             
@@ -213,7 +211,7 @@ if ($dato -eq "1") {
         if ($motor -eq "1") {
             
             $dato = $sitioweb.ToUpper()
-            $nombreVariable2 = "${dato}CADENACONEXIONBDYEMINUS"
+            $nombreVariable2 = "${dato}CADENACONEXIONBDyeminus"
             $valorVariable2 = "Server=$ip;Port=5432;Database=$NombreBd;User Id=postgres;Password=$pass;SearchPath=$admin"
             
             
@@ -222,14 +220,14 @@ if ($dato -eq "1") {
 
         $dato = $sitioweb.ToUpper()
 
-        $nombreVariable3 = "${dato}DIRECTORIOACTIVOYEMINUS"
+        $nombreVariable3 = "${dato}DIRECTORIOACTIVOyeminus"
         $valorVariable3 = "8214"
     
 
         New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name $nombreVariable3 -Value $valorVariable3 -PropertyType String -Force
 
         if ($motor -eq "") {
-            $nombreVariable4 = "${dato}TIPOMOTORBDYEMINUS"
+            $nombreVariable4 = "${dato}TIPOMOTORBDyeminus"
             $valorVariable4 = "Oracle"
     
         
@@ -237,7 +235,7 @@ if ($dato -eq "1") {
         }
       
         if ($motor -eq "1") {
-            $nombreVariable4 = "${dato}TIPOMOTORBDYEMINUS"
+            $nombreVariable4 = "${dato}TIPOMOTORBDyeminus"
             $valorVariable4 = "PostgreSQL"
     
         
@@ -248,7 +246,7 @@ if ($dato -eq "1") {
                         
             $dato = $sitioweb.ToUpper()
             
-            $nombreVariable5 = "${dato}PETICIONESDESCONOCIDASPORSEGUNDOYEMINUS"
+            $nombreVariable5 = "${dato}PETICIONESDESCONOCIDASPORSEGUNDOyeminus"
             $valorVariable5 = "0"
                 
                     
@@ -259,7 +257,7 @@ if ($dato -eq "1") {
             
             $dato = $sitioweb.ToUpper()
             
-            $nombreVariable5 = "${dato}PETICIONESDESCONOCIDASPORSEGUNDOYEMINUS"
+            $nombreVariable5 = "${dato}PETICIONESDESCONOCIDASPORSEGUNDOyeminus"
             $valorVariable5 = "1"       
 
             New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name $nombreVariable5 -Value $valorVariable5 -PropertyType String -Force
@@ -383,7 +381,7 @@ if ($dato -eq "2" -or $dato -eq "") {
                 & $comandoAppCmd\appcmd stop apppool "$sitioWeb.$pool"
             }
             # remove files the app
-            ii "$program\"
+            #ii "$program\"
             Remove-Item -Recurse -Force "$program\*" -Exclude oldversion.txt    
 
             foreach ($pool in $listApis) {
@@ -466,7 +464,7 @@ if ($dato -eq "2" -or $dato -eq "") {
         $sitioWeb = $sitioWeb.ToUpper()
 
         #Url the apisitioweb in variables everinoment
-        $urlYem = [System.Environment]::GetEnvironmentVariable("${sitioWeb}BASEURLYEMINUS", "Machine")
+        $urlYem = [System.Environment]::GetEnvironmentVariable("${sitioWeb}BASEURLyeminus", "Machine")
     
         $urlapi = Invoke-WebRequest $urlYem
 
@@ -484,12 +482,12 @@ if ($dato -eq "2" -or $dato -eq "") {
             foreach ($element in $item) {
                 # CREATE TABLES 
                 Write-Host "EJECUTANDO 1° PASO AL ID" $element -ForegroundColor green
-                $runpaso1 = Invoke-WebRequest $urlYem2/Admin.Api/api/configuracion/actualizacionbd/creartablas/$element/YEMINUS 
+                $runpaso1 = Invoke-WebRequest $urlYem2/Admin.Api/api/configuracion/actualizacionbd/creartablas/$element/yeminus 
                 Write-Host $runpaso1.Content
 
                 # CREATE CAMPOS
                 Write-Host "EJECUTANDO 2° PASO AL ID" $element -ForegroundColor green
-                $runpaso2 = Invoke-WebRequest $urlYem2/Admin.Api/api/configuracion/actualizacionbd/actualizar/$element/YEMINUS/true
+                $runpaso2 = Invoke-WebRequest $urlYem2/Admin.Api/api/configuracion/actualizacionbd/actualizar/$element/yeminus/true
                 Write-Host $runpaso2.Content
             }
         }
@@ -537,7 +535,7 @@ if ($dato -eq "2" -or $dato -eq "") {
   
 
             # legend the upgrade
-            $texto = "SITIO WEB`n`n`n$sitioWeb`n`n`nCordial Saludo, se realizo la actualizacion del Yeminus de la version ($contenidoArchivo) a la version ($numversion)`n`nTema por el que se actualiza:$legend`n`nSr(a) Cliente por favor recordar borrar cache, y hacer la prueba de que funcione el tema de la actualizacion.`n De no hacerlo asi por favor comunicarse a las lineas de soporte de mesa de ayuda`n`n Tel: 310 4210 508         316 7429 438         (6) 333 1303     (6) 334 5036`n`n`n`nTambien Puedes realizar tu mismo el soporte,  para dar mejor trazabilidad al ticket`n`nTutorial de subir tickets: https://youtu.be/LpUyBrDM-fw`n`nLink subir soportes: https://yeminus.yeminus.com/portalcliente/#/`n`n`nCon gusto."
+            $texto = "SITIO WEB`n`n`n$sitioWeb`n`n`nCordial Saludo, se realizo la actualizacion del yeminus de la version ($contenidoArchivo) a la version ($numversion)`n`nTema por el que se actualiza:$legend`n`nSr(a) Cliente por favor recordar borrar cache, y hacer la prueba de que funcione el tema de la actualizacion.`n De no hacerlo asi por favor comunicarse a las lineas de soporte de mesa de ayuda`n`n Tel: 310 4210 508         316 7429 438         (6) 333 1303     (6) 334 5036`n`n`n`nTambien Puedes realizar tu mismo el soporte,  para dar mejor trazabilidad al ticket`n`nTutorial de subir tickets: https://youtu.be/LpUyBrDM-fw`n`nLink subir soportes: https://yeminus.yeminus.com/portalcliente/#/`n`n`nCon gusto."
 
             # owerwrite the files txt
             "$numversion" | Out-File -FilePath $rutaArchivo -Force
@@ -551,17 +549,21 @@ if ($dato -eq "2" -or $dato -eq "") {
         }
 
    
+        
         if ($sitioWeb -ne "yeminus" -and $sitioWeb -ne "yeminusweb") {
-
-               # owerwrite the files txt
-             "$numversion" | Out-File -FilePath $rutaArchivo -Force
-
-            $EmailDestinatario = "instalaciones@yeminus.com,aarias@yeminus.com,soporte9@yeminus.com,soporte2@yeminus.com,dguzman@yeminus.com,soporte10@yeminus.com,soporte3@yeminus.com,coordinadorsoporte@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,tics@yeminus.com,instalaciones3@yeminus.com"
+            
+            # owerwrite the files txt
+            "$numversion" | Out-File -FilePath $rutaArchivo -Force
+            
+            $EmailDestinatario = "instalaciones@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,cjaramillo@yeminus.com,tics@yeminus.com,dguzman@yeminus.com"
             $EmailEmisor = "noresponder@yeminus.com"
             $Asunto = "📌Actualización Empresa $sitioWeb Version $numversion"
-            $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del Yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren Soporte Sobre el producto web</p>
-    
-            <p><b>Atentamente Area de instalaciones</b></p>"
+            $sitioWeb = $sitioWeb.ToLower()
+            $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
+
+            <b><a>Link web: </b>$urlYem2$sitioWeb</a>
+            <p></p>
+            <p><b>Atentamente area de infraestructura</b></p>"
 
             $SMTPServidor = "mail.yeminus.com"
             $CodificacionCaracteres = [System.Text.Encoding]::UTF8
@@ -607,7 +609,7 @@ if ($dato -eq "2" -or $dato -eq "") {
     #             $Asunto = "📌Actualizacion Del Software Web Version $numversion"
     #             $CuerpoEnHTML = "<p>Cordial saludo Sr(a). Cliente</p> 
 
-    # <p>Le informamos que se ha aplicado una actualización a nuestro producto Yeminus Web. La versión <b>($contenidoArchivo)</b> ha sido reemplazada por la versión <b>($numversion)</b> . Por favor, asegúrese de borrar la caché de su navegador para que pueda cargar la nueva versión correctamente. Además, le recomendamos que informe a sus compañeros para que también realicen este proceso.</p>
+    # <p>Le informamos que se ha aplicado una actualización a nuestro producto yeminus Web. La versión <b>($contenidoArchivo)</b> ha sido reemplazada por la versión <b>($numversion)</b> . Por favor, asegúrese de borrar la caché de su navegador para que pueda cargar la nueva versión correctamente. Además, le recomendamos que informe a sus compañeros para que también realicen este proceso.</p>
 
     # <b><p>Nota:Sr cliente si despues de realizar la actualizacion tiene algun inconveniente por favor escalar el soporte a mesa de ayuda</p></b>
        
@@ -646,23 +648,40 @@ if ($dato -eq "2" -or $dato -eq "") {
     # }
 }                                                                            
          
-if ($dato -eq "3") {
-   $datops = Read-Host "¿ Servidor a conectarse ?" 
-   
-   $serverMap = @{
-    "56" = "192.168.1.56"
-    "12" = "192.168.1.12"
-    "13" = "192.168.1.13"
-}
+# if ($dato -eq "3") {
 
-# Check if the provided server code exists in the hashtable
-if ($serverMap.ContainsKey($datops)) {
-    $cred = Import-Clixml "C:\beta-update\mycredentials.xml"
-    $ipAddress = $serverMap[$datops]
-    Enter-PSSession -ComputerName $ipAddress -Credential $cred
-} else {
-    Write-Host "Código de servidor no válido."
-}
-}
-        
-        
+#     $pathpass = Read-Host "Para conectarse a otros servidores, es necesario proporcionar la llave de acceso. Por favor, especifique la ruta donde se encuentra la llave" 
+#     $datops = Read-Host "¿Servidor a conectarse?" 
+   
+#     $serverMap = @{
+#         "3"   = "IP"
+#         "233" = "IP"
+#         "144" = "IP"
+#         "5"   = "IP"
+#         "137" = "IP"
+#         "230" = "IP"
+#         "229" = "IP"
+#         "231" = "IP"
+#         "232" = "IP"
+#         "133" = "IP"
+#         "228" = "IP"
+#         "234" = "IP"
+#         "33"  = "IP"
+#         "56"  = "IP"
+#     }
+
+#     # Check if the provided server code exists in the hashtable
+#     if ($serverMap.ContainsKey($datops)) {
+#         $cred = Import-Clixml "$pathpass\key$datops.xml"
+#         $ipAddress = $serverMap[$datops]     
+#          Enter-PSSession -ComputerName $ipAddress -Credential $cred
+#        # Invoke-Command -ComputerName $ipAddress -Credential  $cred -FilePath "$pathpass\iis.ps1"
+#         Remove-Item -Path "$pathpass\*.xml" -Force
+
+#     }
+#     else {
+#         Write-Host "ip de servidor no valido" -ForegroundColor Red
+#     }
+# }
+
+
