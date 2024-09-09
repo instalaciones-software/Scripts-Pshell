@@ -12,9 +12,9 @@ ii $pathpass
 
 $datops = Read-Host "¿Servidor a conectarse?" 
 
-Set-Item WSMan:\localhost\Client\TrustedHosts -value $datops".dominio.com" -Force
+Set-Item WSMan:\localhost\Client\TrustedHosts -value $datops".yeminus.com" -Force
 $cred = Import-Clixml "$pathpass\key.xml"
-Invoke-Command  -FilePath $pathpass\iis.ps1 -ComputerName $datops".dominio.com" -Credential $cred
+Invoke-Command  -FilePath $pathpass\iis.ps1 -ComputerName $datops".yeminus.com" -Credential $cred
 
 
 
@@ -24,6 +24,6 @@ Remove-Item -Path "$pathpass\*.ps1" -Force
 
     
 
-
+pause
 
 
