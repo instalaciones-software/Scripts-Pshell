@@ -1,5 +1,5 @@
 ﻿
-<# Reemplaza las siguientes palabras en el documento: "USERRDP", "PASSCOMPRESS" y "RUTA". En el campo "RUTA", especifica el directorio donde deseas que se guarde el archivo comprimido. Además, actualiza las variables $EmailEmisor y $CCO modificando las direcciones de correo electrónico de manera masiva, sustituyendo "dominio.com" por el dominio que utilizas. Finalmente, en la línea 100, cambia la clave del correo electrónico del remitente. #>
+<# Reemplaza las siguientes palabras en el documento: "USERRDP", "PASSCOMPRESS" y "RUTA". En el campo "RUTA", especifica el directorio donde deseas que se guarde el archivo comprimido. Además, actualiza las variables $EmailEmisor y $CCO modificando las direcciones de correo electrónico de manera masiva, sustituyendo "yeminus.com" por el dominio que utilizas. Finalmente, en la línea 100, cambia la clave del correo electrónico del remitente. #>
 
 function Generate-RandomString {
     param (
@@ -62,18 +62,18 @@ $routezip = "RUTA\datos\datos.zip"
 Start-Process -FilePath "C:\Program Files\7-Zip\7z.exe" -ArgumentList "a", "-tzip", "`"$routezip`"", "`"$routefile`"" -NoNewWindow -Wait 
 
 
-$EmailEmisor = "noresponder@dominio.com"
+$EmailEmisor = "noresponder@yeminus.com"
 $Asunto = "Reporte de Actividad - SRV-" + $env:COMPUTERNAME.Substring($env:COMPUTERNAME.Length - 2)
 $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Comparto el reporte</p>"
 
-$SMTPServidor = "mail.dominio.com"
+$SMTPServidor = "mail.yeminus.com"
 $CodificacionCaracteres = [System.Text.Encoding]::UTF8
 
 
 $ArchivoAdjunto = "$routezip"
 
 
-$CCO = "instalaciones@dominio.com" ,"instalaciones2@dominio.com","tics@dominio.com","epineda@dominio.com","instalaciones3@dominio.com","subgerente@dominio.com","directorsoporte@dominio.com","correoinstalaciones@dominio.com","coorinstalaciones.correo@dominio.com"
+$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","tics@yeminus.com","epineda@yeminus.com","instalaciones3@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","correoinstalaciones@yeminus.com","coorinstalaciones.correo@yeminus.com"
 
 try {
     

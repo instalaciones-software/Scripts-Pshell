@@ -93,7 +93,7 @@ if ($dato -eq "1") {
         
         # Puerto en el que se ejecutará el sitio
         $Port = 80
-        $hostname = "$sitioweb.dominio.com"
+        $hostname = "$sitioweb.yeminus.com"
         
         # Ruta física al directorio raíz del sitio web
         $PhysicalPath = mkdir "C:\inetpub\wwwroot\$sitioweb"
@@ -124,7 +124,7 @@ if ($dato -eq "1") {
 
         # CREATE ENVIROMENT VARIABLES
 
-        $url = "http://$sitioweb.dominio.com/api$sitioweb/"
+        $url = "http://$sitioweb.yeminus.com/api$sitioweb/"
         $admin = "ADMIN_$sitioweb"
         $NombreBd = "yeminus"
     }
@@ -485,15 +485,15 @@ if ($dato -eq "2" -or $dato -eq "") {
             # owerwrite the files txt
             "$numversion" | Out-File -FilePath $rutaArchivo -Force
             
-            $EmailDestinatario = "instalaciones@dominio.com,directorsoporte@dominio.com,instalaciones2@dominio.com,instalaciones3@dominio.com,soporte2@dominio.com,soporte1@dominio.com,soporte3@dominio.com,soporte10@dominio.com,cjaramillo@dominio.com,tics@dominio.com,dguzman@dominio.com"
-            $EmailEmisor = "noresponder@dominio.com"
+            $EmailDestinatario = "instalaciones@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,cjaramillo@yeminus.com,tics@yeminus.com,dguzman@yeminus.com"
+            $EmailEmisor = "noresponder@yeminus.com"
             $Asunto = "📌Actualización Empresa $sitioWeb Version $numversion"
             $sitioWeb = $sitioWeb.ToLower()
             $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
 
             <p><b>Atentamente area de infraestructura</b></p>"
 
-            $SMTPServidor = "mail.dominio.com"
+            $SMTPServidor = "mail.yeminus.com"
             $CodificacionCaracteres = [System.Text.Encoding]::UTF8
     
             try {

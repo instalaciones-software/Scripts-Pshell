@@ -93,7 +93,7 @@ if ($dato -eq "1") {
         
         # Puerto en el que se ejecutará el sitio
         $Port = 80
-        $hostname = "$sitioweb.dominio.com"
+        $hostname = "$sitioweb.yeminus.com"
         
         # Ruta física al directorio raíz del sitio web
         $PhysicalPath = mkdir "C:\inetpub\wwwroot\$sitioweb"
@@ -124,7 +124,7 @@ if ($dato -eq "1") {
 
         # CREATE ENVIROMENT VARIABLES
 
-        $url = "http://$sitioweb.dominio.com/api$sitioweb/"
+        $url = "http://$sitioweb.yeminus.com/api$sitioweb/"
         $admin = "ADMIN_$sitioweb"
         $NombreBd = "dominio"
     }
@@ -535,7 +535,7 @@ if ($dato -eq "2" -or $dato -eq "") {
   
 
             # legend the upgrade
-            $texto = "SITIO WEB`n`n`n$sitioWeb`n`n`nCordial Saludo, se realizo la actualizacion del dominio de la version ($contenidoArchivo) a la version ($numversion)`n`nTema por el que se actualiza:$legend`n`nSr(a) Cliente por favor recordar borrar cache, y hacer la prueba de que funcione el tema de la actualizacion.`n De no hacerlo asi por favor comunicarse a las lineas de soporte de mesa de ayuda`n`n Tel: 310 4210 508         316 7429 438         (6) 333 1303     (6) 334 5036`n`n`n`nTambien Puedes realizar tu mismo el soporte,  para dar mejor trazabilidad al ticket`n`nTutorial de subir tickets: https://youtu.be/LpUyBrDM-fw`n`nLink subir soportes: https://dominio.dominio.com/portalcliente/#/`n`n`nCon gusto."
+            $texto = "SITIO WEB`n`n`n$sitioWeb`n`n`nCordial Saludo, se realizo la actualizacion del dominio de la version ($contenidoArchivo) a la version ($numversion)`n`nTema por el que se actualiza:$legend`n`nSr(a) Cliente por favor recordar borrar cache, y hacer la prueba de que funcione el tema de la actualizacion.`n De no hacerlo asi por favor comunicarse a las lineas de soporte de mesa de ayuda`n`n Tel: 310 4210 508         316 7429 438         (6) 333 1303     (6) 334 5036`n`n`n`nTambien Puedes realizar tu mismo el soporte,  para dar mejor trazabilidad al ticket`n`nTutorial de subir tickets: https://youtu.be/LpUyBrDM-fw`n`nLink subir soportes: https://dominio.yeminus.com/portalcliente/#/`n`n`nCon gusto."
 
             # owerwrite the files txt
             "$numversion" | Out-File -FilePath $rutaArchivo -Force
@@ -555,8 +555,8 @@ if ($dato -eq "2" -or $dato -eq "") {
             # owerwrite the files txt
             "$numversion" | Out-File -FilePath $rutaArchivo -Force
             
-            $EmailDestinatario = "instalaciones@dominio.com,directorsoporte@dominio.com,instalaciones2@dominio.com,instalaciones3@dominio.com,soporte2@dominio.com,soporte1@dominio.com,soporte3@dominio.com,soporte10@dominio.com,cjaramillo@dominio.com,tics@dominio.com,dguzman@dominio.com"
-            $EmailEmisor = "noresponder@dominio.com"
+            $EmailDestinatario = "instalaciones@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,cjaramillo@yeminus.com,tics@yeminus.com,dguzman@yeminus.com"
+            $EmailEmisor = "noresponder@yeminus.com"
             $Asunto = "📌Actualización Empresa $sitioWeb Version $numversion"
             $sitioWeb = $sitioWeb.ToLower()
             $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del dominio web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
@@ -565,7 +565,7 @@ if ($dato -eq "2" -or $dato -eq "") {
             <p></p>
             <p><b>Atentamente area de infraestructura</b></p>"
 
-            $SMTPServidor = "mail.dominio.com"
+            $SMTPServidor = "mail.yeminus.com"
             $CodificacionCaracteres = [System.Text.Encoding]::UTF8
     
             try {
@@ -605,7 +605,7 @@ if ($dato -eq "2" -or $dato -eq "") {
     #         if ($nombre -ne $null -and $correo -ne $null) {
     #             # Configuración del correo
     #             $EmailDestinatario = $correo
-    #             $EmailEmisor = "noresponder@dominio.com"
+    #             $EmailEmisor = "noresponder@yeminus.com"
     #             $Asunto = "📌Actualizacion Del Software Web Version $numversion"
     #             $CuerpoEnHTML = "<p>Cordial saludo Sr(a). Cliente</p> 
 
@@ -619,11 +619,11 @@ if ($dato -eq "2" -or $dato -eq "") {
 
     # <p>Link subir tickets:</p>
 
-    # <a> https://dominio.dominio.com/portalcliente/#/login</a>
+    # <a> https://dominio.yeminus.com/portalcliente/#/login</a>
 
     # <p>Gracias por su atención.</p>"
 
-    #             $SMTPServidor = "mail.dominio.com"
+    #             $SMTPServidor = "mail.yeminus.com"
     #             $CodificacionCaracteres = [System.Text.Encoding]::UTF8
     
     #             try {

@@ -12,8 +12,8 @@ $datops = Read-Host "¿Servidor a conectarse?"
 
 $datops = $datops.ToLower()
 
-Set-Item WSMan:\localhost\Client\TrustedHosts -value $datops".dominio.com" -Force
-Invoke-Command  -FilePath "C:\Windows\iis\remote.ps1" -ComputerName $datops".dominio.com" -Credential "pshell"
+Set-Item WSMan:\localhost\Client\TrustedHosts -value $datops".yeminus.com" -Force
+Invoke-Command  -FilePath "C:\Windows\iis\remote.ps1" -ComputerName $datops".yeminus.com" -Credential "pshell"
 
 
 Clear-Item WSMan:\localhost\Client\TrustedHosts -Force

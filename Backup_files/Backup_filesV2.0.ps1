@@ -50,10 +50,10 @@ Remove-Item -Recurse -Force "E:\backups"
 # Enviar correo
 
 
-$EmailDestinatario = "tics@dominio.com"
+$EmailDestinatario = "tics@yeminus.com"
 $EmailEmisor = "instalacionesdominio@gmail.com"
 $Asunto = "!IMPORTANTE BACKUPS APP SRV-$env:COMPUTERNAME!"
-$CuerpoEnHTML = "Cordial saludo, Se hace backup del servidor <b>$env:COMPUTERNAME Recuerda que el archivo se almaceno en el FTP la ruta es ftp://files.dominio.com/BackupEmpresas/BackupsAPP/ informacion guardada del dia $fechaanterior al $fechaactual . las empresas que estan en este servidor:</b><i>$contenidoArchivo<i/>"
+$CuerpoEnHTML = "Cordial saludo, Se hace backup del servidor <b>$env:COMPUTERNAME Recuerda que el archivo se almaceno en el FTP la ruta es ftp://files.yeminus.com/BackupEmpresas/BackupsAPP/ informacion guardada del dia $fechaanterior al $fechaactual . las empresas que estan en este servidor:</b><i>$contenidoArchivo<i/>"
 $SMTPServidor = "smtp.gmail.com"
 $CodificacionCaracteres = [System.Text.Encoding]::UTF8
 
@@ -75,7 +75,7 @@ catch {
 }
 
 
-& "C:\Program Files (x86)\WinSCP\WinSCP.com" /command "open ftp://empresabkup:empresabkup1*@files.dominio.com" "put E:\Back-$env:COMPUTERNAME-$fechaanterior-Al-$fechaactual.zip /BackupEmpresas/BackupsAPP/" "exit"
+& "C:\Program Files (x86)\WinSCP\WinSCP.com" /command "open ftp://empresabkup:empresabkup1*@files.yeminus.com" "put E:\Back-$env:COMPUTERNAME-$fechaanterior-Al-$fechaactual.zip /BackupEmpresas/BackupsAPP/" "exit"
 
 
 attrib +h +s /d *.*
