@@ -51,7 +51,7 @@ Remove-Item -Recurse -Force "E:\backups"
 
 
 $EmailDestinatario = "tics@yeminus.com"
-$EmailEmisor = "instalacionesdominio@gmail.com"
+$EmailEmisor = "instalacionesyeminus@gmail.com"
 $Asunto = "!IMPORTANTE BACKUPS APP SRV-$env:COMPUTERNAME!"
 $CuerpoEnHTML = "Cordial saludo, Se hace backup del servidor <b>$env:COMPUTERNAME Recuerda que el archivo se almaceno en el FTP la ruta es ftp://files.yeminus.com/BackupEmpresas/BackupsAPP/ informacion guardada del dia $fechaanterior al $fechaactual . las empresas que estan en este servidor:</b><i>$contenidoArchivo<i/>"
 $SMTPServidor = "smtp.gmail.com"
