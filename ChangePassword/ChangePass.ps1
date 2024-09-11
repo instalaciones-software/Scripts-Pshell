@@ -42,7 +42,11 @@ foreach ($user in $usernames) {
     
     $randomString = Generate-RandomString -length $length
     
+<<<<<<< HEAD
     $userFilePath = "$folderPath\datos\$username_$env:COMPUTERNAME.txt"
+=======
+    $userFilePath = "$folderPath\datos\$env:COMPUTERNAME-$username.txt"
+>>>>>>> beta
     
     Set-Content -Path $userFilePath -Value "por favor no compartir acceso, el reporte se envia cada 30 dias $username $randomString"
     
@@ -76,6 +80,10 @@ $ArchivoAdjunto = "$routezip"
 
 
 $CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","tics@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com"
+<<<<<<< HEAD
+=======
+# $CCO = "instalaciones@yeminus.com" #correo de pruebas
+>>>>>>> beta
 
 try {
     
