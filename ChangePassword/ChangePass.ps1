@@ -12,17 +12,17 @@ function Generate-RandomString {
 }
 
 $usernames = @(
-    @{ Name = "epineda"; ZipPassword = "Pepito" }
-    @{ Name = "administrator"; ZipPassword = "+-NewPw2024*#" }
-    @{ Name = "instalacion"; ZipPassword = "Y3minus*" }
-    @{ Name = "instalacion2"; ZipPassword = "Colombia2021**##" }
-    @{ Name = "soporte-01"; ZipPassword = "Yeminus" }
-    @{ Name = "soporte-02"; ZipPassword = "15963Sopo#" }
-    @{ Name = "soporte-03"; ZipPassword = "Lc1088022547" }
-    @{ Name = "soporte-04"; ZipPassword = "Bardack085" }
-    @{ Name = "soporte-05"; ZipPassword = "saar98." }
-    @{ Name = "soporte-06"; ZipPassword = "Alana0803*" }
-    @{ Name = "soporte-07"; ZipPassword = "Sopyem10*" }
+    @{ Name = "epineda"; ZipPassword = "ChangePassZip" }
+    @{ Name = "administrator"; ZipPassword = "ChangePassZip" }
+    @{ Name = "instalacion"; ZipPassword = "ChangePassZip" }
+    @{ Name = "instalacion2"; ZipPassword = "ChangePassZip" }
+    @{ Name = "soporte-01"; ZipPassword = "ChangePassZip" }
+    @{ Name = "soporte-02"; ZipPassword = "ChangePassZip" }
+    @{ Name = "soporte-03"; ZipPassword = "ChangePassZip" }
+    @{ Name = "soporte-04"; ZipPassword = "ChangePassZip" }
+    @{ Name = "soporte-05"; ZipPassword = "ChangePassZip" }
+    @{ Name = "soporte-06"; ZipPassword = "ChangePassZip" }
+    @{ Name = "soporte-07"; ZipPassword = "ChangePassZip" }
     )
 
 mkdir E:\Apps\geminus\datos 2>$null
@@ -42,7 +42,7 @@ foreach ($user in $usernames) {
     
     $randomString = Generate-RandomString -length $length
     
-    $userFilePath = "$folderPath\datos\$username.txt"
+    $userFilePath = "$folderPath\datos\$username_$env:COMPUTERNAME.txt"
     
     Set-Content -Path $userFilePath -Value "por favor no compartir acceso, el reporte se envia cada 30 dias $username $randomString"
     
@@ -65,7 +65,7 @@ Start-Process -FilePath "C:\Program Files\7-Zip\7z.exe" -ArgumentList "a", "-tzi
 
 
 $EmailEmisor = "noresponder@yeminus.com"
-$Asunto = "Reporte de Actividad - SRV-" + $env:COMPUTERNAME.Substring($env:COMPUTERNAME.Length - 2)
+$Asunto = "Reporte de Actividad - SRV-" + $env:COMPUTERNAME
 $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Comparto el reporte</p>"
 
 $SMTPServidor = "mail.yeminus.com"
@@ -75,7 +75,7 @@ $CodificacionCaracteres = [System.Text.Encoding]::UTF8
 $ArchivoAdjunto = "$routezip"
 
 
-$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","tics@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com"
+$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","tics@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com"
 
 try {
     
