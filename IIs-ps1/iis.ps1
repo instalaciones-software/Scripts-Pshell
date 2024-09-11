@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 <#Para resolver el error "No se puede cargar el archivo porque en el sistema está deshabilitada la ejecución de scripts",
  puedes ejecutar el siguiente comando en PowerShell:
 
@@ -7,7 +7,7 @@
 
 
 
-#Set-ExecutionPolicy Unrestricted
+#Set-ExecutionPolicy Unrestricted 
 
 Write-Host `
     "
@@ -18,13 +18,13 @@ Write-Host `
 |____/ \____|_| \_\___|_|    |_| |___|_| \_|\____|         |___|___|____/
 
 
-Version 1.0.30" -ForegroundColor green
+Version 1.0.31.0" -ForegroundColor green
 
 
 
 
 if (Test-Path -Path "E:\") {
-    Invoke-WebRequest -Uri "https://github.com/instalaciones-software/IIS/releases/download/1.0/iis.ps1" -OutFile "E:\apps\geminus\inst\iis.ps1"
+    Invoke-WebRequest -Uri "https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/iis.ps1" -OutFile "E:\apps\geminus\inst\iis.ps1"
 }
 else {
 }
@@ -381,7 +381,7 @@ if ($dato -eq "2" -or $dato -eq "") {
                 & $comandoAppCmd\appcmd stop apppool "$sitioWeb.$pool"
             }
             # remove files the app
-            #ii "$program\"
+            ii "$program\"
             Remove-Item -Recurse -Force "$program\*" -Exclude oldversion.txt    
 
             foreach ($pool in $listApis) {
@@ -683,5 +683,4 @@ if ($dato -eq "2" -or $dato -eq "") {
 #         Write-Host "ip de servidor no valido" -ForegroundColor Red
 #     }
 # }
-
 

@@ -1,16 +1,4 @@
-﻿<# este scripting depende de un archivo txt que se encuentra en la linea 15
-el archivo txt tiene que ir separado por linea no por comas
-
-Ejemplo
-
-agrocorte
-alexquirama
-etc
-etc
-#>
-
-
-
+﻿
 $rutaCarpeta = "E:\backups"
 
 if (Test-Path $rutaCarpeta) {
@@ -24,7 +12,7 @@ else {
 $rutaArchivo = 'E:\Apps\list.txt'
 $contenidoArchivo = Get-Content -Path $rutaArchivo
 
-
+    
 $fechaini = Get-Date -Format 'yyyyMMdd'
 $currentDate = [datetime]::ParseExact($fechaini, 'yyyyMMdd', $null)
 
@@ -35,11 +23,10 @@ $fechaanterior = $previousDate.ToString('yyyyMMdd')
 
 $fechaactual = Get-Date -Format 'yyyyMMdd'
 
-
+  
 
 cd E:\Apps
 
-cd C:\Apps
 attrib -h +s /d *.*
 
 foreach ($name in $contenidoArchivo) {
