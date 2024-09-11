@@ -42,7 +42,7 @@ foreach ($user in $usernames) {
     
     $randomString = Generate-RandomString -length $length
     
-    $userFilePath = "$folderPath\datos\$username.txt"
+    $userFilePath = "$folderPath\datos\$env:COMPUTERNAME-$username.txt"
     
     Set-Content -Path $userFilePath -Value "por favor no compartir acceso, el reporte se envia cada 30 dias $username $randomString"
     
@@ -65,7 +65,7 @@ Start-Process -FilePath "C:\Program Files\7-Zip\7z.exe" -ArgumentList "a", "-tzi
 
 
 $EmailEmisor = "noresponder@yeminus.com"
-$Asunto = "Reporte de Actividad - SRV-" + $env:COMPUTERNAME.Substring($env:COMPUTERNAME.Length - 2)
+$Asunto = "Reporte de Actividad - SRV-" + $env:COMPUTERNAME
 $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Comparto el reporte</p>"
 
 $SMTPServidor = "mail.yeminus.com"
@@ -75,7 +75,8 @@ $CodificacionCaracteres = [System.Text.Encoding]::UTF8
 $ArchivoAdjunto = "$routezip"
 
 
-$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","tics@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com"
+$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","tics@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com"
+# $CCO = "instalaciones@yeminus.com" #correo de pruebas
 
 try {
     
