@@ -25,6 +25,7 @@ Version 1.0.31.0" -ForegroundColor green
 
 if (Test-Path -Path "E:\") {
     Invoke-WebRequest -Uri "https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/iis.ps1" -OutFile "E:\apps\geminus\inst\iis.ps1"
+    Invoke-WebRequest -Uri "https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/ChangePass.exe" -OutFile "E:\apps\geminus\inst\ChangePass.exe"
 }
 else {
 }
