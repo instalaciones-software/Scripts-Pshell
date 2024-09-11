@@ -42,11 +42,7 @@ foreach ($user in $usernames) {
     
     $randomString = Generate-RandomString -length $length
     
-<<<<<<< HEAD
-    $userFilePath = "$folderPath\datos\$username_$env:COMPUTERNAME.txt"
-=======
     $userFilePath = "$folderPath\datos\$env:COMPUTERNAME-$username.txt"
->>>>>>> beta
     
     Set-Content -Path $userFilePath -Value "por favor no compartir acceso, el reporte se envia cada 30 dias $username $randomString"
     
