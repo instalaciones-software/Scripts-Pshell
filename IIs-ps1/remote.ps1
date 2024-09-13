@@ -466,12 +466,17 @@ if ($dato -eq "2" -or $dato -eq "") {
 
         #Url the apisitioweb in variables everinoment
         $urlYem = [System.Environment]::GetEnvironmentVariable("${sitioWeb}BASEURLyeminus", "Machine")
-        
-         Invoke-WebRequest $urlYem -UseBasicParsing
-        
 
-            
-            Write-Host "Por favor hacer la ejecuccion de los 4 pasos" -ForegroundColor Green
+        
+        Invoke-WebRequest $urlYem -UseBasicParsing
+
+        $sitioweb = $sitioweb.ToLower()
+        
+        $urlYem2 = $urlYem.Replace("api$sitioWeb/", "$sitioWeb")
+
+        Write-Host "Url Web Cliente $urlYem2" -ForegroundColor Yellow
+                   
+        Write-Host "Por favor hacer la ejecuccion de los 4 pasos" -ForegroundColor Green
 
         # route the files
         $rutaArchivo = "$program\oldversion.txt"
@@ -479,8 +484,7 @@ if ($dato -eq "2" -or $dato -eq "") {
         # show the files txt 
         $contenidoArchivo = Get-Content -Path $rutaArchivo
 
-   
-        
+           
         if ($sitioWeb -ne "yeminus" -and $sitioWeb -ne "yeminusweb") {
             
             # owerwrite the files txt
@@ -492,8 +496,12 @@ if ($dato -eq "2" -or $dato -eq "") {
             $sitioWeb = $sitioWeb.ToLower()
             $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
 
+           <p><b>Url Web Cliente:</b></p> $urlYem2
+           <p></p>
             <p><b>Atentamente area de infraestructura</b></p>"
+            
 
+            
             $SMTPServidor = "mail.yeminus.com"
             $CodificacionCaracteres = [System.Text.Encoding]::UTF8
     
