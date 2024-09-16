@@ -315,6 +315,7 @@ if ($dato -eq "2" -or $dato -eq "") {
         # Descargar la versión desde GitHub
         try {
             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+            Write-Host "Descargando Version $numversion ......"
             Invoke-WebRequest -Uri "https://github.com/yeminus/yeminusweb/releases/download/$numversion/$numversion.zip" -OutFile $rutaDescarga
             Write-Host "!VERSION DESCARGADA!" -ForegroundColor Green -NoNewline
             Write-Host " $numversion exitosamente en $rutaDescarga"
