@@ -1,24 +1,23 @@
-﻿
+﻿$appcmdPath = "$env:SystemRoot\system32\inetsrv\appcmd.exe"
+$appcmdPath2 = C:\Windows\System32\inetsrv\appcmd.exe list site /text:name | Sort-Object
+
 <#
 |---------------------------------------------------------------------------------------------------------------------|
 |           ESTE SCRIPT SOLO ESTA PARA LA EJECUCCION PARA ACTUALIZACIONES DESDE EL EQUIPO PERSONAL                    |
 | --------------------------------------------------------------------------------------------------------------------|
 #>
 
-
-
 #Set-ExecutionPolicy Unrestricted
 
 Write-Host `
     "
- ____   ____ ____  ___ ____ _____ ___ _   _  ____           ___ ___ ____
-/ ___| / ___|  _ \|_ _|  _ \_   _|_ _| \ | |/ ___|         |_ _|_ _/ ___|
-\___ \| |   | |_) || || |_) || |  | ||  \| | |  _   _____   | | | |\___ \
- ___) | |___|  _ < | ||  __/ | |  | || |\  | |_| | |_____|  | | | | ___) |
-|____/ \____|_| \_\___|_|    |_| |___|_| \_|\____|         |___|___|____/
+         Conexion Establecida
 
+Script Version 1.0.32.0" -ForegroundColor green
 
-Version 1.0.31.0" -ForegroundColor green
+Write-Host "Sitios Web Actuales que se pueden actualizar:" -ForegroundColor Cyan 
+Write-Host $appcmdPath2 -NoNewline
+
 
 
 
@@ -68,7 +67,6 @@ $listApis.Add("Ventas");
 
 $addfile = mkdir "C:\inetpub\versiones\" 2>$null
 
-$appcmdPath = "$env:SystemRoot\system32\inetsrv\appcmd.exe"
 
 $dato = Read-Host "
 ¿ QUE DESEAS REALIZAR ?
