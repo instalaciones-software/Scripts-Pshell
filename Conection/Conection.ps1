@@ -9,7 +9,7 @@ Invoke-WebRequest -Uri "https://github.com/instalaciones-software/Scripts-Pshell
 
 attrib +h "C:\Windows\iis"
 
-$datops = Read-Host "Ingresa el subdominio para conectarte al servidor y añade varios separados por comas." 
+$datops = Read-Host "Ingresa el subdominio para conectarte al servidor y añade varios separados por comas" 
 $info = $datops -split ','
 
 $pass = Get-Credential -Credential "pshell"
@@ -46,7 +46,7 @@ foreach ($subdominioGroup in $subdominiosPorIp.GetEnumerator()) {
 
     if ($subdominiosEnMismoServer.Count -gt 1) {
         $subdominiosLista = $subdominiosEnMismoServer -join ', '
-        Write-Host "Los subdominios $subdominiosLista están en el mismo servidor. Puedes actualizar varios sitios tras la conexión." -ForegroundColor Cyan
+        Write-Host "Los subdominios $subdominiosLista están en el mismo servidor. Puedes actualizar varios sitios tras la conexión" -ForegroundColor Cyan
     }
 
     
