@@ -14,17 +14,17 @@ $info = $datops -split ','
 
 $pass = Get-Credential -Credential "pshell"
 
-# Crear un hash para almacenar las conexiones únicas
+
 $servidoresConectados = @{}
 
-# Crear un diccionario para agrupar subdominios por IP
+
 $subdominiosPorIp = @{}
 
 foreach ($subdominio in $info) {
     $subdominio = $subdominio.Trim().ToLower()
     $nombreCompleto = "$subdominio.yeminus.com"
     
-    # Obtener la IP del subdominio
+ 
     try {
         $ip = [System.Net.Dns]::GetHostAddresses($nombreCompleto)[0].IPAddressToString
     } catch {
@@ -32,14 +32,14 @@ foreach ($subdominio in $info) {
         continue
     }
     
-    # Agrupar subdominios por IP
+  
     if (-not $subdominiosPorIp.ContainsKey($ip)) {
         $subdominiosPorIp[$ip] = @()
     }
     $subdominiosPorIp[$ip] += $nombreCompleto
 }
 
-# Establecer conexiones únicas
+
 foreach ($subdominioGroup in $subdominiosPorIp.GetEnumerator()) {
     $ip = $subdominioGroup.Key
     $subdominiosEnMismoServer = $subdominioGroup.Value
@@ -49,12 +49,12 @@ foreach ($subdominioGroup in $subdominiosPorIp.GetEnumerator()) {
         Write-Host "Los subdominios $subdominiosLista están en el mismo servidor. Puedes actualizar varios sitios tras la conexión." -ForegroundColor Cyan
     }
 
-    # Establecer conexión con el primer subdominio de la lista
+    
     $nombreCompleto = $subdominiosEnMismoServer[0]
     Write-Host "Estableciendo conexión con el servidor ($nombreCompleto) ...." -ForegroundColor DarkYellow
     Start-Sleep -Seconds 3 
 
-    # Agregar la IP a los servidores conectados
+  
     if (-not $servidoresConectados.ContainsKey($ip)) {
         $servidoresConectados[$ip] = $nombreCompleto
         
