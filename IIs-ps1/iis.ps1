@@ -561,7 +561,7 @@ if ($dato -eq "2" -or $dato -eq "") {
             $sitioWeb = $sitioWeb.ToLower()
             $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
 
-            <b><a>Link web: </b>$urlYem2$sitioWeb</a>
+            <b><a>Link web: </b>$urlYem2</a>
             <p></p>
             <p><b>Atentamente area de infraestructura</b></p>"
 
