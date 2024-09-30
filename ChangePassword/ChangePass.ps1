@@ -1,5 +1,4 @@
-﻿
-function Generate-RandomString {
+﻿function Generate-RandomString {
     param (
         [int]$length = 12
     )
@@ -21,7 +20,8 @@ $usernames = @(
     @{ Name = "soporte-03"; ZipPassword = "Lc1088022547" }
     @{ Name = "soporte-04"; ZipPassword = "Bardack085" }
     @{ Name = "soporte-05"; ZipPassword = "saar98." }
-    @{ Name = "soporte-07"; ZipPassword = "Alana0803*" }
+    @{ Name = "soporte-06"; ZipPassword = "Alana0803*" }
+    @{ Name = "soporte-07"; ZipPassword = "Sopyem10*"}
     @{ Name = "consultor-01"; ZipPassword = "Valen9306." }
     @{ Name = "consultor-02"; ZipPassword = "Jp1088353472#" }
     @{ Name = "consultor-03"; ZipPassword = 'Con-Of$gem' }
@@ -80,8 +80,8 @@ $CodificacionCaracteres = [System.Text.Encoding]::UTF8
 $ArchivoAdjunto = "$routezip"
 
 
-#$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","tics@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com"
-$CCO = "instalaciones@yeminus.com" #pruebas
+$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,vquintero@yeminus.com,scuervo@yeminus.com,jpineda@yeminus.com,oflorez@yeminus.com,dmarin@yeminus.com"
+#$CCO = "instalaciones@yeminus.com" #pruebas
 
 try {
     
