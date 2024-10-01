@@ -1,5 +1,4 @@
-﻿
-function Generate-RandomString {
+﻿function Generate-RandomString {
     param (
         [int]$length = 12
     )
@@ -12,17 +11,22 @@ function Generate-RandomString {
 }
 
 $usernames = @(
-    @{ Name = "epineda"; ZipPassword = "ChangePassZip" }
-    @{ Name = "administrator"; ZipPassword = "ChangePassZip" }
-    @{ Name = "instalacion"; ZipPassword = "ChangePassZip" }
-    @{ Name = "instalacion2"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-01"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-02"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-03"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-04"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-05"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-06"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-07"; ZipPassword = "ChangePassZip" }
+    @{ Name = "epineda"; ZipPassword = "Pepito" }
+    #@{ Name = "administrator"; ZipPassword = "+-NewPw2024*#" }
+    @{ Name = "instalacion"; ZipPassword = "Ocsxxi%123%" }
+    @{ Name = "instalacion2"; ZipPassword = "Colombia2021**##" }
+    @{ Name = "soporte-01"; ZipPassword = "Yeminus" }
+    @{ Name = "soporte-02"; ZipPassword = "15963Sopo#" }
+    @{ Name = "soporte-03"; ZipPassword = "Lc1088022547" }
+    @{ Name = "soporte-04"; ZipPassword = "Bardack085" }
+    @{ Name = "soporte-05"; ZipPassword = "saar98." }
+    @{ Name = "soporte-06"; ZipPassword = "Alana0803*" }
+    @{ Name = "soporte-07"; ZipPassword = "Sopyem10*"}
+    @{ Name = "consultor-01"; ZipPassword = "Valen9306." }
+    @{ Name = "consultor-02"; ZipPassword = "Jp1088353472#" }
+    @{ Name = "consultor-03"; ZipPassword = 'Con-Of$gem' }
+    @{ Name = "consultor-04"; ZipPassword = "S3bas#" }
+    @{ Name = "consultor-05"; ZipPassword = "4049" }
     )
 
 mkdir E:\Apps\geminus\datos 2>$null
@@ -49,6 +53,7 @@ foreach ($user in $usernames) {
     $password = ConvertTo-SecureString -AsPlainText -Force -String $randomString
     
     Set-LocalUser -Name $username -Password $password
+    Write-Host "Cambio de clave al usuario $username"
     
     $zipFilePath = "$folderPath\datos\$env:COMPUTERNAME-$username.zip"
 
@@ -75,7 +80,8 @@ $CodificacionCaracteres = [System.Text.Encoding]::UTF8
 $ArchivoAdjunto = "$routezip"
 
 
-$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","tics@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com"
+$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,vquintero@yeminus.com,scuervo@yeminus.com,jpineda@yeminus.com,oflorez@yeminus.com,dmarin@yeminus.com"
+#$CCO = "instalaciones@yeminus.com" #pruebas
 
 try {
     
