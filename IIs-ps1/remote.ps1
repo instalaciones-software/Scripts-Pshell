@@ -17,6 +17,8 @@ Script Version 1.0.32.0" -ForegroundColor green
 
 Write-Host "Sitios Web Actuales que se pueden actualizar:" -ForegroundColor Cyan 
 Write-Host $appcmdPath2 -NoNewline
+Write-Host
+Write-Host
 
 
 
