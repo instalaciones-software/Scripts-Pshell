@@ -68,11 +68,14 @@ $listApis.Add("Ventas");
 $addfile = mkdir "C:\inetpub\versiones\" 2>$null
 
 
-$dato = Read-Host "
-¿ QUE DESEAS REALIZAR ?
+# $dato = Read-Host "
+# ¿ QUE DESEAS REALIZAR ?
 
-1. Crear sitio web y variables de entorno 
-2. Actualizar sitio web (ENTER PARA CONTINUAR)"
+# 1. Crear sitio web y variables de entorno 
+# 2. Actualizar sitio web (ENTER PARA CONTINUAR)"
+
+
+$dato = "2"
 
 #create variables in S.O
 
