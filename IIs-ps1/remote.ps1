@@ -13,7 +13,7 @@ Write-Host `
     "
          Conexion Establecida
 
-Script Version 1.0.32.0" -ForegroundColor green
+Script Version 1.0.33.0" -ForegroundColor green
 
 Write-Host "Sitios Web Actuales que se pueden actualizar:" -ForegroundColor Cyan 
 Write-Host $appcmdPath2 -NoNewline
@@ -26,7 +26,6 @@ Write-Host
 
 if (Test-Path -Path "E:\") {
     Invoke-WebRequest -Uri "https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/iis.ps1" -OutFile "E:\apps\geminus\inst\iis.ps1"
-    Invoke-WebRequest -Uri "https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/ChangePass.exe" -OutFile "E:\apps\geminus\inst\ChangePass.exe"
 }
 else {
 }
@@ -70,221 +69,12 @@ $listApis.Add("Ventas");
 $addfile = mkdir "C:\inetpub\versiones\" 2>$null
 
 
-# $dato = Read-Host "
-# ¿ QUE DESEAS REALIZAR ?
-
-# 1. Crear sitio web y variables de entorno 
-# 2. Actualizar sitio web (ENTER PARA CONTINUAR)"
-
-
-$dato = "2"
+$dato = "1"
 
 #create variables in S.O
 
+
 if ($dato -eq "1") {
-    $sitioweb = Read-Host "¿Nombre del sitio web?"
-    $motor = Read-Host "¿Tipo de motor Oracle(ENTER) o PostgreSQL(1)?"
-    $ip = Read-Host "¿Direccion ip del motor de la base de datos?"
-    $pass = Read-Host "¿Clave del usuario admin gem?"
-    $peticion = Read-Host "¿Peticiones Desconocidas si tecleas (ENTER) por defecto 0 ?"
-    
-    
-    if ($sitioweb -ne "yeminus") {
-        $sitioweb = $sitioweb.ToLower()
-        
-        
-        #CREATE SITE WEB 
-        
-        # Puerto en el que se ejecutará el sitio
-        $Port = 80
-        $hostname = "$sitioweb.yeminus.com"
-        
-        # Ruta física al directorio raíz del sitio web
-        $PhysicalPath = mkdir "C:\inetpub\wwwroot\$sitioweb"
-
-        $rutaapi = mkdir "C:\inetpub\wwwroot\$sitioweb\api$sitioweb" 2>$null
-
-
-        $rutarecurso = mkdir "E:\Apps\$sitioweb" 2>$null
-        
-        # Crear el directorio físico si no existe
-        if (-not (Test-Path $PhysicalPath)) {
-            New-Item -ItemType Directory -Path $PhysicalPath
-        }
-        
-        # Crear el sitio web usando appcmd
-        & $AppCmdPath add site /name:$sitioweb /bindings:http/*:${Port}:${hostname} /physicalPath:$PhysicalPath
-        
-        # Verificar que el sitio se haya creado
-        & $AppCmdPath list site /name:$sitioweb
-
-        
-        & $AppCmdPath add app /site.name:$sitioWeb /path:"/api$sitioWeb" /physicalPath:"$rutaapi" /applicationPool:$sitioWeb 1>$null
-        
-        & $AppCmdPath add apppool /apppool.name:$sitioWeb /processModel.identityType:"LocalSystem" 1>$null
-
-        & $AppCmdPath add vdir /app.name:$sitioWeb/api$sitioWeb /path:/recursos /physicalPath:$rutarecurso /username:small /password:123456Aa 1>$null
-
-
-        # CREATE ENVIROMENT VARIABLES
-
-        $url = "http://$sitioweb.yeminus.com/api$sitioweb/"
-        $admin = "ADMIN_$sitioweb"
-        $NombreBd = "yeminus"
-    }
-    
-    else {
-
-        # CREATE ENVIROMENT VARIABLES
-
-        $admin = Read-Host "¿Usuario admin gem?"
-        $NombreBd = Read-Host "¿Servicio de la BD?"
-        $url = Read-Host "¿Digitar URL Base?"
-        $rutarecurso = Read-Host "¿Cual es la ruta de recursos?" 
-        $user = Read-Host "¿Usuario para el recurso virtual?"
-        $passuser = Read-Host "¿Clave para la ruta recursos virtual?"
-
-        $admin = $admin.ToUpper()
-        $NombreBd = $NombreBd.ToUpper()
-        $url = $url.ToLower()
-        $user = $user.ToUpper()
-        $passuser = $passuser.ToLower()
-        $pass = $pass.ToLower()
-        $sitioweb = $sitioweb.ToLower()
-        
-    
-
-        #CREATE SITE WEB 
-
-        $Port = 80
-        $hostname = ""
-        
-        # Ruta física al directorio raíz del sitio web
-        $PhysicalPath = mkdir "C:\inetpub\wwwroot\$sitioweb"
-
-        $rutaapi = mkdir "C:\inetpub\wwwroot\$sitioweb\api$sitioweb" 2>$null
-
-        
-        # Crear el directorio físico si no existe
-        if (-not (Test-Path $PhysicalPath)) {
-            New-Item -ItemType Directory -Path $PhysicalPath
-        }
-        
-        # Crear el sitio web usando appcmd
-        & $AppCmdPath add site /name:$sitioweb /bindings:http/*:${Port}:${hostname} /physicalPath:$PhysicalPath
-        
-        # Verificar que el sitio se haya creado
-        & $AppCmdPath list site /name:$sitioweb
-
-     
-        & $AppCmdPath add app /site.name:$sitioWeb /path:"/api$sitioWeb" /physicalPath:"$rutaapi" /applicationPool:$sitioWeb 1>$null
-     
-        & $AppCmdPath add apppool /apppool.name:$sitioWeb /processModel.identityType:"LocalSystem" 1>$null
-
-        & $AppCmdPath add vdir /app.name:$sitioWeb/api$sitioWeb /path:/recursos /physicalPath:$rutarecurso /username:$user /password:$passuser 1>$null
-
-
-    }
-
-
-
-    foreach ($dato in $dato) {
-        $dato = $sitioweb.ToUpper()
-        Write-Host "Nombre de la variable: $nombreVariable1"  # Imprime el nombre de la variable para depurar
-        $nombreVariable1 = "${dato}BASEURLyeminus"
-        $dato = $sitioweb.ToLower()
-        $valorVariable1 = "$url"
-    
-        
-        New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name $nombreVariable1 -Value $valorVariable1 -PropertyType String -Force
-
-        if ($motor -eq "") {
-            
-            $dato = $sitioweb.ToUpper()
-            $admin = $admin.ToUpper()
-            $NombreBd = $NombreBd.ToUpper()
-
-            $nombreVariable2 = "${dato}CADENACONEXIONBDyeminus"
-            $valorVariable2 = "User Id=$admin;Password=$pass;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$ip)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=$NombreBd)))"
-            
-            
-            New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name $nombreVariable2 -Value $valorVariable2 -PropertyType String -Force
-        }
-
-
-        if ($motor -eq "1") {
-            
-            $dato = $sitioweb.ToUpper()
-            $nombreVariable2 = "${dato}CADENACONEXIONBDyeminus"
-            $valorVariable2 = "Server=$ip;Port=5432;Database=$NombreBd;User Id=postgres;Password=$pass;SearchPath=$admin"
-            
-            
-            New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name $nombreVariable2 -Value $valorVariable2 -PropertyType String -Force
-        }
-
-        $dato = $sitioweb.ToUpper()
-
-        $nombreVariable3 = "${dato}DIRECTORIOACTIVOyeminus"
-        $valorVariable3 = "8214"
-    
-
-        New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name $nombreVariable3 -Value $valorVariable3 -PropertyType String -Force
-
-        if ($motor -eq "") {
-            $nombreVariable4 = "${dato}TIPOMOTORBDyeminus"
-            $valorVariable4 = "Oracle"
-    
-        
-            New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name $nombreVariable4 -Value $valorVariable4 -PropertyType String -Force
-        }
-      
-        if ($motor -eq "1") {
-            $nombreVariable4 = "${dato}TIPOMOTORBDyeminus"
-            $valorVariable4 = "PostgreSQL"
-    
-        
-            New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name $nombreVariable4 -Value $valorVariable4 -PropertyType String -Force
-        }
-
-        if ($peticion -eq "") {
-                        
-            $dato = $sitioweb.ToUpper()
-            
-            $nombreVariable5 = "${dato}PETICIONESDESCONOCIDASPORSEGUNDOyeminus"
-            $valorVariable5 = "0"
-                
-                    
-            New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name $nombreVariable5 -Value $valorVariable5 -PropertyType String -Force
-        }
-
-        if ($peticion -eq "1") {
-            
-            $dato = $sitioweb.ToUpper()
-            
-            $nombreVariable5 = "${dato}PETICIONESDESCONOCIDASPORSEGUNDOyeminus"
-            $valorVariable5 = "1"       
-
-            New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name $nombreVariable5 -Value $valorVariable5 -PropertyType String -Force
-        }
-
-    }
-    
-    Write-Host "Resumen variables de entorno" -ForegroundColor red
-    Write-Host "
-    Nombre del sitio web: $sitioweb
-    Url api: $url
-    Ip: $ip
-    Usuario Admin:$admin
-    Motor de BD: $valorVariable4
-    Peticion desconocida: $valorVariable5"
-
-    
-    # Write-Host "ESTA OPCION ESTA EN PRUEBAS" -ForegroundColor Red
-    # exit
-    
-}
-
-if ($dato -eq "2" -or $dato -eq "") {
         
     #URL Api Gituhub 
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
