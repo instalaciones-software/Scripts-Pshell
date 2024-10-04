@@ -18,7 +18,6 @@ Script Version 1.0.33.0" -ForegroundColor green
 Write-Host "Sitios Web Actuales que se pueden actualizar:" -ForegroundColor Cyan 
 Write-Host $appcmdPath2 -NoNewline
 Write-Host
-Write-Host
 
 
 
@@ -128,6 +127,24 @@ if ($dato -eq "1") {
 
     # list the names sites web
     $sitiosWeb = Read-Host 'Ingresa los nombres de los sitios web (separados por coma)'
+
+    foreach ($sitiosWeb in $sitiosWeb) {
+
+        if (Test-Path -Path "C:\inetpub\wwwroot\$sitiosWeb\oldversion.txt") {
+        
+            $file = Get-Content "C:\inetpub\wwwroot\$sitiosWeb\oldversion.txt"
+          
+            foreach ($LINE in $file) {
+                Write-Output "Version actual $sitiosWeb" $LINE 
+            }
+        }
+        else {
+            Write-Host "El archivo que indica que version tienen no existe $sitiosWeb" -ForegroundColor Red
+        }
+    }
+
+    Start-Sleep -Seconds 2
+
     $sitiosWeb = $sitiosWeb.ToLower()
 
     if ($sitiosWeb -eq "todos") {
@@ -142,7 +159,6 @@ if ($dato -eq "1") {
 
         }
     }
-
 
     if ($sitiosWeb -eq "yeminus" -or $sitiosWeb -eq "yeminusweb" ) {
         $nombreUsuario = $env:USERNAME
@@ -185,7 +201,7 @@ if ($dato -eq "1") {
                 & $comandoAppCmd\appcmd start apppool "$sitioWeb.$pool" 1>$null
             }
 
-            Write-Host "IMPLEMENTANDO VERSION $numversion AL SITIO WEB $sitioWeb DESPLEGANDO APLICACION..." -ForegroundColor green 
+            Write-Host "Actualizando version de $file al $numversion sitio web $sitioWeb DESPLEGANDO APLICACION..." -ForegroundColor green 
 
         }
         else {
@@ -284,7 +300,7 @@ if ($dato -eq "1") {
             # owerwrite the files txt
             "$numversion" | Out-File -FilePath $rutaArchivo -Force
             
-            $EmailDestinatario = "instalaciones@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,cjaramillo@yeminus.com,tics@yeminus.com,dguzman@yeminus.com"
+            $EmailDestinatario = "instalaciones@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,tics@yeminus.com,dguzman@yeminus.com,vquintero@yeminus.com"
             $EmailEmisor = "noresponder@yeminus.com"
             $Asunto = "📌Actualización Empresa $sitioWeb Version $numversion"
             $sitioWeb = $sitioWeb.ToLower()
