@@ -78,3 +78,6 @@ pause
 
 
 
+Set-Item WSMan:\localhost\Client\TrustedHosts -value prost.yeminus.com -Force
+
+Enter-PSSession -ComputerName prost.yeminus.com -Credential pshell
