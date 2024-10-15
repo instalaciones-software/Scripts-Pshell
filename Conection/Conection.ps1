@@ -74,7 +74,7 @@ Remove-Item -Path "C:\Windows\iis\remote.ps1" -Force
 
 pause    
 
-
+Enter-PSSession -ComputerName yeminus.yeminus.com -Credential pshell
 
 
 
