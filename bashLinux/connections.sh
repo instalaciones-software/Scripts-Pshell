@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Dowload shell ps1 for upgrade
-wget -p /home/$USER/Documentos/script/ https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/remote.ps1
+wget  /home/$USER/Documentos/script/ https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/remote.ps1
 
 
 read -p "Ingresa el subdominio para conectarte al servidor:" server
 
 
-echo "Estableciendo conexion con el servidor $server.yeminus.com"
+echo -e "\e[1;33mEstableciendo conexion con el servidor $server.yeminus.com\e[0m"
 
 sleep 2s
 
