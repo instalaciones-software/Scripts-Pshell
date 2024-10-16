@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "Version 1.0.2.0"
-
 #create file for download packages
 mkdir /home/$USER/Documentos/script/
 
@@ -11,6 +9,9 @@ wget -P /home/$USER/Documentos/script/ https://packages.microsoft.com/config/deb
 wget -P /home/$USER/Documentos/script/ https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/connections.sh
 
 
+clear
+
+echo -e "\e[1;33mVersion 1.0.2.0\e[0m"
 
 echo "
 
@@ -49,3 +50,5 @@ pwsh -Command 'Install-WSMan'
 # Register the Microsoft repository GPG keys
 sudo dpkg -i /home/$USER/Documentos/script/packages-microsoft-prod.deb
 
+echo "Se finaliza proceso de instalacion presione eeenter para continuar"
+read
