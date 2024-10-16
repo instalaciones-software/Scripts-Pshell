@@ -1,16 +1,12 @@
 #!/bin/bash
 
-echo "Version 1.0.0.0"
+echo "Version 1.0.2.0"
 
 #create file for download packages
 mkdir /home/$USER/Documentos/script/
 
 # Download the Microsoft repository GPG keys
 wget -P /home/$USER/Documentos/script/ https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb
-
-
-#Download shell The Github Yeminus
-wget -p /home/$USER/Documentos/script/ https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/bash.sh
 
 
 
@@ -30,6 +26,9 @@ sleep 5
 
 # Update the list of products
 sudo apt-get update -y
+
+#Permission sh ejecutable
+sudo chmod u+x /home/$USER/Documentos/script/connections.sh
 
 
 # Install PowerShell
