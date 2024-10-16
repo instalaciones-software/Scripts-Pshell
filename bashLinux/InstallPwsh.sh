@@ -27,15 +27,18 @@ echo ""
 
 sleep 5
 
+echo -e "\e[1;33mPor favor digite la clave de su equipo\e[0m"
+
 # Update the list of products
 sudo apt-get update -y
 
 #Permission sh ejecutable
-sudo chmod u+x /home/$USER/Documentos/script/connections.sh
+sudo chmod +x /home/$USER/Documentos/script/connections.sh
 
+pause
 
 # Install PowerShell
-sudo apt-get install -y powershell gss-ntlmssp
+#sudo apt-get install -y powershell gss-ntlmssp
 
 #install pwsh
 sudo snap install powershell --classic
@@ -50,4 +53,4 @@ pwsh -Command 'Install-WSMan'
 # Register the Microsoft repository GPG keys
 sudo dpkg -i /home/$USER/Documentos/script/packages-microsoft-prod.deb
 
-
+pause
