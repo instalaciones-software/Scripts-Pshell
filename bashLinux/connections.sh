@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Dowload shell ps1 for upgrade
-wget  /home/$USER/Documentos/script/ https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/remote.ps1
+wget  /home/$USER/Documentos/script/remote.ps1 https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/remote.ps1
 
 
 read -p "Ingresa el subdominio para conectarte al servidor:" server

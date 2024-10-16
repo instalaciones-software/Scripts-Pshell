@@ -33,9 +33,9 @@ echo -e "\e[1;33mPor favor digite la clave de su equipo\e[0m"
 sudo apt-get update -y
 
 #Permission sh ejecutable
-sudo chmod +x /home/$USER/Documentos/script/connections.sh
+chmod +x /home/$USER/Documentos/script/connections.sh
 
-pause
+read
 
 # Install PowerShell
 #sudo apt-get install -y powershell gss-ntlmssp
@@ -53,4 +53,4 @@ pwsh -Command 'Install-WSMan'
 # Register the Microsoft repository GPG keys
 sudo dpkg -i /home/$USER/Documentos/script/packages-microsoft-prod.deb
 
-pause
+read
