@@ -34,14 +34,11 @@ sudo apt-get update -y
 #Permission sh ejecutable
 chmod +x /home/$USER/Documentos/script/connections.sh
 
-read
-
 # Install PowerShell
 #sudo apt-get install -y powershell gss-ntlmssp
 
 #install pwsh
 sudo snap install powershell --classic
-
 
 pwsh -Command 'Install-Module -Name PSWSMan'
 
@@ -52,4 +49,3 @@ pwsh -Command 'Install-WSMan'
 # Register the Microsoft repository GPG keys
 sudo dpkg -i /home/$USER/Documentos/script/packages-microsoft-prod.deb
 
-read
