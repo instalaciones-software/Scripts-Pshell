@@ -9,6 +9,9 @@ mkdir /home/$USER/Documentos/script/
 wget -P /home/$USER/Documentos/script/ https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb
 
 
+wget -P /home/$USER/Documentos/script/ https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/connections.sh
+
+
 
 echo "
 

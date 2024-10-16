@@ -17,4 +17,4 @@ sleep 2s
 pwsh -Command Invoke-Command -FilePath /home/$USER/Documentos/script/remote.ps1 -ComputerName $server.yeminus.com -Authentication Negotiate -Credential pshell
 
 
-rm -r /home/$USER/Documentos/script/
+rm -r /home/$USER/Documentos/script/*.ps1
