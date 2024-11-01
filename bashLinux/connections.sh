@@ -23,6 +23,4 @@ echo "Estableciendo conexion con el servidor $server.yeminus.com"
 pwsh -Command Invoke-Command -FilePath /home/updateiis/script/remote.ps1 -ComputerName $server.yeminus.com -Authentication Negotiate -Credential pshell
 
 
-echo "hola mundo"
-
 rm -r /home/updateiis/script/*.ps1
