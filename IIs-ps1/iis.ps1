@@ -1,13 +1,13 @@
 ﻿﻿
-<#Para resolver el error "No se puede cargar el archivo porque en el sistema está deshabilitada la ejecución de scripts",
- puedes ejecutar el siguiente comando en PowerShell:
+<# 
+    ATENCION!!
 
- puedes borrar la # al principio de la linea 10 y lo ejecutas, utilizando el comando f8 subrayandola y le das la opcion si a todo
-#>
-
-
-
-#Set-ExecutionPolicy Unrestricted 
+    Para resolver el inconveniente de permitir
+    la ejecuccion de scripts: 
+        
+    Set-ExecutionPolicy Unrestricted  #EJECUTAR LINEA
+    
+    #>
 
 Write-Host `
     "
@@ -18,7 +18,7 @@ Write-Host `
 |____/ \____|_| \_\___|_|    |_| |___|_| \_|\____|         |___|___|____/
 
 
-Version 1.0.31.0" -ForegroundColor green
+Version 1.0.32.0" -ForegroundColor green
 
 
 
