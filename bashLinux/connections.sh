@@ -7,11 +7,9 @@ clear
 
 echo "
 
-********************************************************************************************************************|
-                                                                                                                    |
-                                        CONEXIONES A SERVIDORES HOSTING                                             | 
-                                                                                                                    |
-*********************************************************************************************************************
+|********************************************|
+|    CONEXIONES A SERVIDORES HOSTING         | 
+**********************************************
 "
 
 
@@ -24,5 +22,7 @@ echo "Estableciendo conexion con el servidor $server.yeminus.com"
 #Start PowerShell
 pwsh -Command Invoke-Command -FilePath /home/updateiis/script/remote.ps1 -ComputerName $server.yeminus.com -Authentication Negotiate -Credential pshell
 
+
+echo "hola mundo"
 
 rm -r /home/updateiis/script/*.ps1
