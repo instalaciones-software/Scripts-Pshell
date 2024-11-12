@@ -1,4 +1,45 @@
-﻿$appcmdPath = "$env:SystemRoot\system32\inetsrv\appcmd.exe"
+﻿# Configuraciones de correo
+$smtpServer = "smtp.gmail.com"      # Servidor SMTP (puede cambiar dependiendo del proveedor)
+$smtpPort = 587                     # Puerto para TLS
+$smtpUser = "yeminusinstalaciones@gmail.com"    # Tu correo de Gmail
+$smtpPassword = "qpdx eyum xeci ggci"      # Tu contraseña o aplicación específica de Google
+$toEmail = "directorsoporte@yeminus.com,soporte3@yeminus.com,instalaciones2@yeminus.com,instalaciones@yeminus.com,tics@yeminus.com"
+ # Correo al cual enviar el código (puede ser tu propio correo)
+$fromEmail = $toEmail
+
+# Generar un código aleatorio de 6 dígitos
+$codigo = Get-Random -Minimum 100000 -Maximum 999999
+
+# Cuerpo del correo con el código de verificación
+$body = "Tu código de verificación es: $codigo"
+
+
+# Configurar el cliente SMTP
+$smtp = New-Object Net.Mail.SmtpClient($smtpServer, $smtpPort)
+$smtp.EnableSsl = $true
+$smtp.Credentials = New-Object System.Net.NetworkCredential($smtpUser, $smtpPassword)
+
+# Enviar el correo
+$mailmessage = New-Object System.Net.Mail.MailMessage($fromEmail, $toEmail, "Código de Verificación IIS", $body)
+
+# Intentar enviar el correo
+try {
+    $smtp.Send($mailmessage)
+    Write-Host "El código de verificación ha sido enviado a tu correo."
+} catch {
+    Write-Host "Hubo un error al enviar el correo: $_"
+    exit
+}
+
+# Pedir al usuario que ingrese el código recibido por correo
+$codigoIngresado = Read-Host "Para ingresar al Servidor escribe el Codigo de verificacion"
+
+# Validar el código
+if ($codigoIngresado -eq $codigo) {
+    
+
+
+$appcmdPath = "$env:SystemRoot\system32\inetsrv\appcmd.exe"
 $appcmdPath2 = C:\Windows\System32\inetsrv\appcmd.exe list site /text:name | Sort-Object
 
 <#
@@ -309,7 +350,7 @@ if ($dato -eq "1") {
 
            <p><b>Url Web Cliente:</b></p> $urlYem2
            <p></p>
-            <p><b>Atentamente area de infraestructura</b></p>"
+            <p><b>Atentamente area de servicio al cliente</b></p>"
             
 
             
@@ -338,4 +379,11 @@ if ($dato -eq "1") {
     }        
 } 
 
+
+
+}
+
+else {
+    Write-Host "Código incorrecto. Intenta nuevamente."
+}
 
