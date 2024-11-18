@@ -22,8 +22,7 @@ $smtp.Credentials = New-Object System.Net.NetworkCredential($smtpUser, $smtpPass
 # Enviar el correo
 $mailmessage = New-Object System.Net.Mail.MailMessage($fromEmail, $toEmail, "Código de Verificación IIS", $body)
 
-# por si el correo de yeminus estan caidos se puede saltar el codigo con la palabra yeminus
-$help = "yeminus"
+
 
 # Intentar enviar el correo
 try {
@@ -38,7 +37,8 @@ try {
 $codigoIngresado = Read-Host "Para ingresar al Servidor escribe el Codigo de autenticacion"
 
 # Validar el código
-if ($codigoIngresado -eq $codigo -or $help -eq "yeminus") {
+# por si el correo de yeminus estan caidos se puede saltar el codigo con la palabra yeminus
+if ($codigoIngresado -eq $codigo -or $codigoIngresado -eq "yeminus") {
     
 
 
