@@ -25,7 +25,7 @@ $mailmessage = New-Object System.Net.Mail.MailMessage($fromEmail, $toEmail, "Có
 # Intentar enviar el correo
 try {
     $smtp.Send($mailmessage)
-    Write-Host "El código de verificación ha sido enviado a tu correo."
+    Write-Host "El código de verificación ha sido enviado a los correos."
 } catch {
     Write-Host "Hubo un error al enviar el correo: $_"
     exit
