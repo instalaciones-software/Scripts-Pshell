@@ -23,3 +23,5 @@ Invoke-Command -FilePath '/home/updateiis/script/remote.ps1' -ComputerName '$ser
 "
 
 rm -r /home/updateiis/script/*.ps1
+
+exit
