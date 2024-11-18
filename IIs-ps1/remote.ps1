@@ -37,7 +37,7 @@ try {
 $codigoIngresado = Read-Host "Para ingresar al Servidor escribe el Codigo de autenticacion"
 
 # Validar el código
-# por si el correo de yeminus estan caidos se puede saltar el codigo con la palabra yeminus
+# si los correos de yeminus estan caidos, se puede saltar el codigo con la palabra yeminus
 if ($codigoIngresado -eq $codigo -or $codigoIngresado -eq "yeminus") {
     
 
