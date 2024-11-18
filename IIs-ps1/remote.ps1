@@ -5,7 +5,7 @@ $smtpUser = "yeminusinstalaciones@gmail.com"    # Tu correo de Gmail
 $smtpPassword = "qpdx eyum xeci ggci"      # Tu contraseña o aplicación específica de Google
 $toEmail = "directorsoporte@yeminus.com,soporte3@yeminus.com,instalaciones2@yeminus.com,instalaciones@yeminus.com,tics@yeminus.com"
  # Correo al cual enviar el código (puede ser tu propio correo)
-$fromEmail = $toEmail
+$fromEmail = "yeminusinstalaciones@gmail.com"
 
 # Generar un código aleatorio de 6 dígitos
 $codigo = Get-Random -Minimum 100000 -Maximum 999999
