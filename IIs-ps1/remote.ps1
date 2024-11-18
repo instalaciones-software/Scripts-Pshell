@@ -32,7 +32,7 @@ try {
 }
 
 # Pedir al usuario que ingrese el código recibido por correo
-$codigoIngresado = Read-Host "Para ingresar al Servidor escribe el Codigo de verificacion"
+$codigoIngresado = Read-Host "Para ingresar al Servidor escribe el Codigo de autenticacion"
 
 # Validar el código
 if ($codigoIngresado -eq $codigo) {
@@ -387,3 +387,9 @@ else {
     Write-Host "Código incorrecto. Intenta nuevamente."
 }
 
+$cred = Get-Credential
+
+$cred | Export-Clixml -Path /home/updateiis/script/xml.xml
+
+
+In5ta7acI0N3S202$
