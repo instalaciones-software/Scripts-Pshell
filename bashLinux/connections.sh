@@ -5,7 +5,7 @@ wget -P /home/updateiis/script https://github.com/instalaciones-software/Scripts
 
 clear
 
-read -p "Ingresa subdominio:" server
+read -p "Ingresa el subdominio:" server
 
 
 echo "Estableciendo conexion con el servidor $server.yeminus.com"
