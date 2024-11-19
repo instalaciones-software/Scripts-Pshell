@@ -11,22 +11,22 @@
 }
 
 $usernames = @(
-    @{ Name = "epineda"; ZipPassword = "ChangePassZip" }
-    #@{ Name = "administrator"; ZipPassword = "ChangePassZip" }
-    @{ Name = "instalacion"; ZipPassword = "ChangePassZip" }
-    @{ Name = "instalacion2"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-01"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-02"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-03"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-04"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-05"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-06"; ZipPassword = "ChangePassZip" }
-    @{ Name = "soporte-07"; ZipPassword = "ChangePassZip"}
-    @{ Name = "consultor-01"; ZipPassword = "ChangePassZip" }
-    @{ Name = "consultor-02"; ZipPassword = "ChangePassZip" }
-    @{ Name = "consultor-03"; ZipPassword = 'ChangePassZip' }
-    @{ Name = "consultor-04"; ZipPassword = "ChangePassZip" }
-    @{ Name = "consultor-05"; ZipPassword = "ChangePassZip" }
+    @{ Name = "epineda"; ZipPassword = "ChangePassZip" }            # Inge
+    #@{ Name = "administrator"; ZipPassword = "ChangePassZip" }     # N/A
+    @{ Name = "instalacion"; ZipPassword = "ChangePassZip" }        # Diego
+    @{ Name = "instalacion2"; ZipPassword = "ChangePassZip" }       # Esteban
+    @{ Name = "soporte-01"; ZipPassword = "ChangePassZip" }         # Jarvy         
+    @{ Name = "soporte-02"; ZipPassword = "ChangePassZip" }         # Harold
+    @{ Name = "soporte-03"; ZipPassword = "ChangePassZip" }         # Laura
+    @{ Name = "soporte-04"; ZipPassword = "ChangePassZip" }         # Jhon G
+    @{ Name = "soporte-05"; ZipPassword = "ChangePassZip" }         # Stiven
+    @{ Name = "soporte-06"; ZipPassword = "ChangePassZip" }         # Angelica
+    @{ Name = "soporte-07"; ZipPassword = "ChangePassZip"}          # Julian
+    @{ Name = "consultor-01"; ZipPassword = "ChangePassZip" }       # Valen
+    @{ Name = "consultor-02"; ZipPassword = "ChangePassZip" }       # Juli
+    @{ Name = "consultor-03"; ZipPassword = 'ChangePassZip' }       # Olguita
+    @{ Name = "consultor-04"; ZipPassword = "ChangePassZip" }       # Sebastian
+    @{ Name = "consultor-05"; ZipPassword = "ChangePassZip" }       # Duglas
     )
 
 mkdir E:\Apps\geminus\datos 2>$null

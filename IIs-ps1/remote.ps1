@@ -171,7 +171,7 @@ if ($dato -eq "1") {
 
 
     # list the names sites web
-    $sitiosWeb = Read-Host 'Ingresa los nombres de los sitios web (separados por coma)'
+    $sitiosWeb = Read-Host 'Ingresa el subdominio de nuevo:' # para actualizar mas de un sitio web separalos por coma (,)
 
     foreach ($sitiosWeb in $sitiosWeb) {
 
