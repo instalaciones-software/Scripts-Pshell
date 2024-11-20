@@ -10,7 +10,7 @@
     return $randomString
 }
 
-$usernames = @(
+$usernames = @(                                                     # Usuarios RDP 
     @{ Name = "epineda"; ZipPassword = "ChangePassZip" }            # Inge
     #@{ Name = "administrator"; ZipPassword = "ChangePassZip" }     # N/A
     @{ Name = "instalacion"; ZipPassword = "ChangePassZip" }        # Diego

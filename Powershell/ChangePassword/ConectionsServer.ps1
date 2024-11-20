@@ -5,6 +5,7 @@ Set-ExecutionPolicy Unrestricted -Force
 
 mkdir "C:\Windows\iis" 2>$null
 
+#separlos por coma si quiere conectarse mas de un servidor 
 $datops = "NOMBRE SUBDOMINIO"
 
 $info = $datops -split ','

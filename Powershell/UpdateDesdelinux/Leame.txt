@@ -1,0 +1,3 @@
+Este script de PowerShell se ejecuta automáticamente cuando nos conectamos a la máquina virtual de la oficina a través de SSH. Está vinculado a un script .sh en el entorno Linux
+
+Nota:no ejecuta los 4 pasos 

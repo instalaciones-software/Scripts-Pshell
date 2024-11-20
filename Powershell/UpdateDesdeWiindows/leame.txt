@@ -1,0 +1,3 @@
+Este script se encuentra configurado en las variables del servidor. Para ejecutarlo correctamente, es necesario acceder mediante RDP.
+
+Nota:ejecuta los 4 pasos.
