@@ -27,6 +27,8 @@ $usernames = @(                                                     # Usuarios R
     @{ Name = "consultor-03"; ZipPassword = 'ChangePassZip' }       # Olguita
     @{ Name = "consultor-04"; ZipPassword = "ChangePassZip" }       # Sebastian
     @{ Name = "consultor-05"; ZipPassword = "ChangePassZip" }       # Duglas
+    @{ Name = "consultor-06"; ZipPassword = "ChangePassZip" }       # heidy
+    @{ Name = "consultor-07"; ZipPassword = "ChangePassZip" }       # Diego
     )
 
 mkdir E:\Apps\geminus\datos 2>$null
