@@ -28,7 +28,7 @@ $usernames = @(                                                     # Usuarios R
     @{ Name = "consultor-04"; ZipPassword = "ChangePassZip" }       # Sebastian
     @{ Name = "consultor-05"; ZipPassword = "ChangePassZip" }       # Duglas
     @{ Name = "consultor-06"; ZipPassword = "ChangePassZip" }       # heidy
-    @{ Name = "consultor-07"; ZipPassword = "ChangePassZip" }       # Diego
+    @{ Name = "consultor-07"; ZipPassword = "ChangePassZip" }       # Diego imple
     )
 
 mkdir E:\Apps\geminus\datos 2>$null
@@ -82,7 +82,7 @@ $CodificacionCaracteres = [System.Text.Encoding]::UTF8
 $ArchivoAdjunto = "$routezip"
 
 
-$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,vquintero@yeminus.com,scuervo@yeminus.com,jpineda@yeminus.com,oflorez@yeminus.com,dmarin@yeminus.com"
+$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,vquintero@yeminus.com,scuervo@yeminus.com,jpineda@yeminus.com,oflorez@yeminus.com,dmarin@yeminus.com,jrodriguez@yeminus.com,despinal@yeminus.com"
 #$CCO = "instalaciones@yeminus.com" #pruebas
 
 try {
