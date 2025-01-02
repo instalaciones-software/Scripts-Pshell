@@ -12,7 +12,7 @@
 
 $usernames = @(                                                     # Usuarios RDP 
     @{ Name = "epineda"; ZipPassword = "ChangePassZip" }            # Inge
-    #@{ Name = "administrator"; ZipPassword = "ChangePassZip" }     # N/A
+    @{ Name = "administrator"; ZipPassword = "ChangePassZip" }      # N/A
     @{ Name = "instalacion"; ZipPassword = "ChangePassZip" }        # Diego
     @{ Name = "instalacion2"; ZipPassword = "ChangePassZip" }       # Esteban
     @{ Name = "soporte-01"; ZipPassword = "ChangePassZip" }         # Jarvy         
@@ -29,6 +29,7 @@ $usernames = @(                                                     # Usuarios R
     @{ Name = "consultor-05"; ZipPassword = "ChangePassZip" }       # Duglas
     @{ Name = "consultor-06"; ZipPassword = "ChangePassZip" }       # heidy
     @{ Name = "consultor-07"; ZipPassword = "ChangePassZip" }       # Diego imple
+    @{ Name = "consultor-08"; ZipPassword = "ChangePassZip" }       # Diana imple
     )
 
 mkdir E:\Apps\geminus\datos 2>$null
