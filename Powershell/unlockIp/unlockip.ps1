@@ -5,6 +5,8 @@ netsh advfirewall firewall delete rule name="Bloquear IP Maliciosa $ip"
 
 $archivo = "C:\failed_logins_log.txt"
 
-$patron = "IP $ip bloqueada por"
+$patron = "Intento fallido desde IP: $ip"
 
 Select-String -Path $archivo -Pattern $patron
+
+
