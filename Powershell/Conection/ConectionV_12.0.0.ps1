@@ -59,7 +59,8 @@ foreach ($subdominioGroup in $subdominiosPorIp.GetEnumerator()) {
         $servidoresConectados[$ip] = $nombreCompleto
         
         Set-Item WSMan:\localhost\Client\TrustedHosts -value $nombreCompleto -Force
-        Invoke-Command -FilePath "C:\Windows\iis\remote.ps1" -ComputerName $nombreCompleto -Credential $pass
+        Invoke-Command -FilePath "C:\Windows\iis\remote.ps1" -ComputerName $nombreCompleto -Credential $pass # comando de powershell a invokar
+        
     } else {
         Write-Host "Ya conectado a la IP correspondiente a $nombreCompleto. No es necesario reconectar." -ForegroundColor Green
     }
