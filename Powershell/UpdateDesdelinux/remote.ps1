@@ -107,6 +107,8 @@ $listApis.Add("Security");
 $listApis.Add("SolicitudesCompraMRP");
 $listApis.Add("TablasSistema");
 $listApis.Add("Ventas");
+$listApis.Add("WebComponents");
+
 
 
 
@@ -171,7 +173,7 @@ if ($dato -eq "1") {
 
 
     # list the names sites web
-    $sitiosWeb = Read-Host 'Ingresa el subdominio de nuevo:' # para actualizar mas de un sitio web separalos por coma (,)
+    $sitiosWeb = Read-Host 'Ingresa el subdominio de nuevo' # para actualizar mas de un sitio web separalos por coma (,)
 
     foreach ($sitiosWeb in $sitiosWeb) {
 
@@ -232,6 +234,9 @@ if ($dato -eq "1") {
             Write-Host "Deteniendo Pools De Aplicacion $sitioWeb" -ForegroundColor yellow 
 
             foreach ($pool in  $listApis) {
+                    # agregar pool de app en el grupo IIS
+                    Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb.$poll"
+
                 # stop site web
                 & $comandoAppCmd\appcmd stop apppool $sitioWeb 1>$null
                 & $comandoAppCmd\appcmd stop apppool "$sitioWeb.$pool"
