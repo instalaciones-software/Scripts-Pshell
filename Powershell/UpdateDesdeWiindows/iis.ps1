@@ -1,5 +1,5 @@
 ﻿﻿       
- # Para resolver el inconveniente de permitir la ejecuccion de scripts:  Set-ExecutionPolicy Unrestricted  #EJECUTAR LINEA
+ # Para resolver el inconveniente de permitir la ejecuccion de scripts:  Set-ExecutionPolicy Unrestricted  
     
 
  Write-Host `
@@ -377,6 +377,7 @@ if ($dato -eq "2" -or $dato -eq "") {
        # stop site web
              & $comandoAppCmd\appcmd stop apppool $sitioWeb 1>$null
              & $comandoAppCmd\appcmd stop apppool "$sitioWeb.$pool"
+             & $comandoAppCmd\appcmd stop apppool "$sitioWeb.$listmodel"
          }
          # remove files the app
          ii "$program\"
@@ -386,6 +387,7 @@ if ($dato -eq "2" -or $dato -eq "") {
              # startup the site web
              & $comandoAppCmd\appcmd start apppool $sitioWeb 1>$null
              & $comandoAppCmd\appcmd start apppool "$sitioWeb.$pool" 1>$null
+             & $comandoAppCmd\appcmd start apppool "$sitioWeb.$listmodel" 1>$null
          }
 
          Write-Host "IMPLEMENTANDO VERSION $numversion AL SITIO WEB $sitioWeb DESPLEGANDO APLICACION..." -ForegroundColor green 
@@ -409,21 +411,20 @@ if ($dato -eq "2" -or $dato -eq "") {
 
          & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$nombreApi /processModel.identityType:"LocalSystem" 1>$null
 
-               # agregar poll con el usuario 
+               # agregar pool con el usuario 
                Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb.$nombreApi" 2>$null
+               Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb.$listmodel" 2>$null
 
 
             # agregar los nuevos componentes
             
         & "${comandoAppCmd}\appcmd" add app /site.name:$sitioWeb /path:"/$listmodel" /physicalPath:"$program\$listmodel" /applicationPool:$sitioWeb.$listmodel 1>$null
 
-        & "${comandoAppCmd}\appcmd" add vdir /app.name:$sitioWeb/$listmodel.api /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
+        & "${comandoAppCmd}\appcmd" add vdir /app.name:$sitioWeb/$listmodel /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
 
         & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$listmodel /processModel.identityType:"LocalSystem" 1>$null
      
      }
-
-
 
 
         
