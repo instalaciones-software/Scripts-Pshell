@@ -406,10 +406,10 @@ if ($dato -eq "2" -or $dato -eq "") {
         foreach ($nombreApi in $listApis) {
             
             # convert a aplication apiyeminus
-          & "${comandoAppCmd}\appcmd" add app /site.name:$sitioWeb /path:"/api$sitioWeb" /physicalPath:"$program\api$sitioWeb" /applicationPool:$sitioWeb 1>$null
+            & "${comandoAppCmd}\appcmd" add app /site.name:$sitioWeb /path:"/api$sitioWeb" /physicalPath:"$program\api$sitioWeb" /applicationPool:$sitioWeb 1>$null
 
-             # add path virtual apiyeminus
-             & "${comandoAppCmd}\appcmd" add vdir /app.name:$sitioWeb/"api$sitioWeb" /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
+            # add path virtual apiyeminus
+            & "${comandoAppCmd}\appcmd" add vdir /app.name:$sitioWeb/"api$sitioWeb" /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
 
             # convert a aplication .api
             & "${comandoAppCmd}\appcmd" add app /site.name:$sitioWeb /path:"/$nombreApi.Api" /physicalPath:"$program\$nombreApi.Api" /applicationPool:$sitioWeb.$nombreApi 1>$null
@@ -435,7 +435,23 @@ if ($dato -eq "2" -or $dato -eq "") {
             & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$listmodel /processModel.identityType:"LocalSystem" 1>$null
      
         }
-    
+        
+        # Define la ruta de la carpeta y el usuario
+        $carpeta = "C:\inetpub\wwwroot\$sitioWeb"
+        $grupo = "IIS_IUSRS"  
+
+        # Asegúrate de que la carpeta existe
+        if (Test-Path $carpeta) {
+            $acl = Get-Acl $carpeta
+            $permiso = [System.Security.AccessControl.FileSystemRights]::Modify
+            $regla = New-Object System.Security.AccessControl.FileSystemAccessRule($grupo, $permiso, "ContainerInherit, ObjectInherit", "None", "Allow")
+            $acl.SetAccessRule($regla)
+            Set-Acl $carpeta $acl
+            Write-Host "Permisos aplicados correctamente a $carpeta"
+        }
+        else {
+            Write-Host "La carpeta especificada no existe."
+        }
 
         # path where this the file compress
         $compressedFilePath = "C:\inetpub\versiones\$numversion.zip"
