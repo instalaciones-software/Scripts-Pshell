@@ -242,7 +242,7 @@ Script Version 1.0.33.0" -ForegroundColor green
                     # stop site web
                     & $comandoAppCmd\appcmd stop apppool $sitioWeb 1>$null
                     & $comandoAppCmd\appcmd stop apppool "$sitioWeb.$pool"
-                    & $comandoAppCmd\appcmd stop apppool "$sitioWeb.$listmodel"
+                    & $comandoAppCmd\appcmd stop apppool "$sitioWeb.$listmodel" 1>$null
 
                 }
                 # remove files the app
@@ -272,28 +272,54 @@ Script Version 1.0.33.0" -ForegroundColor green
 
    
             foreach ($nombreApi in $listApis) {
-
+            
+                # convert a aplication apiyeminus
+                & "${comandoAppCmd}\appcmd" add app /site.name:$sitioWeb /path:"/api$sitioWeb" /physicalPath:"$program\api$sitioWeb" /applicationPool:$sitioWeb 1>$null
+    
+                # add path virtual apiyeminus
+                & "${comandoAppCmd}\appcmd" add vdir /app.name:$sitioWeb/"api$sitioWeb" /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
+    
+                # convert a aplication .api
                 & "${comandoAppCmd}\appcmd" add app /site.name:$sitioWeb /path:"/$nombreApi.Api" /physicalPath:"$program\$nombreApi.Api" /applicationPool:$sitioWeb.$nombreApi 1>$null
-   
-                & "${comandoAppCmd}\appcmd" add vdir /app.name:$sitioWeb/$nombreApi.api /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
-   
-                & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$nombreApi /processModel.identityType:"LocalSystem" 1>$null
-   
-                # agregar pool con el usuario 
+                
+                # add path virtual .api
+                & "${comandoAppCmd}\appcmd" add vdir /app.name:$sitioWeb/$nombreApi.api /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null   
+    
+                # add pool de app
+                & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$nombreApi /processModel.identityType:"ApplicationPoolIdentity" 1>$null
+    
+                # add pool de app the group user IIS_IUSRS
                 Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb.$nombreApi" 2>$null
                 Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb.$listmodel" 2>$null
-   
-   
-                # agregar los nuevos componentes
-               
-                & "${comandoAppCmd}\appcmd" add app /site.name:$sitioWeb /path:"/$listmodel" /physicalPath:"$program\$listmodel" /applicationPool:$sitioWeb.$listmodel 1>$null
-   
-                & "${comandoAppCmd}\appcmd" add vdir /app.name:$sitioWeb/$listmodel /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
-   
-                & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$listmodel /processModel.identityType:"LocalSystem" 1>$null
-        
-            }
     
+    
+                # add new components            
+                & "${comandoAppCmd}\appcmd" add app /site.name:$sitioWeb /path:"/$listmodel" /physicalPath:"$program\$listmodel" /applicationPool:$sitioWeb.$listmodel 1>$null
+    
+                # add directory virtual de los componentes
+                C:\Windows\system32\inetsrv\appcmd add vdir /app.name:$sitioWeb/$listmodel /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
+    
+                # add pool app 
+                & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$listmodel /processModel.identityType:"LocalSystem" 1>$null
+         
+            }
+
+            # Define la ruta de la carpeta y el usuario
+            $carpeta = "C:\inetpub\wwwroot\$sitioWeb"
+            $grupo = "IIS_IUSRS"  
+
+            # Asegúrate de que la carpeta existe
+            if (Test-Path $carpeta) {
+                $acl = Get-Acl $carpeta
+                $permiso = [System.Security.AccessControl.FileSystemRights]::Modify
+                $regla = New-Object System.Security.AccessControl.FileSystemAccessRule($grupo, $permiso, "ContainerInherit, ObjectInherit", "None", "Allow")
+                $acl.SetAccessRule($regla)
+                Set-Acl $carpeta $acl
+                Write-Host "Permisos aplicados correctamente a $carpeta"
+            }
+            else {
+                Write-Host "La carpeta especificada no existe."
+            }
    
             # path where this the file compress
             $compressedFilePath = "C:\inetpub\versiones\$numversion.zip"
