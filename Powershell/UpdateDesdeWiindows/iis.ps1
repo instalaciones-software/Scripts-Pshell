@@ -389,6 +389,11 @@ if ($dato -eq "2" -or $dato -eq "") {
                 
             }
 
+
+            Remove-WebSite -Name "$sitioWeb" 
+                
+            Read-Host "Crear sitio web son su recurso virtual modificar el app pool V 4.0 (Enter para continuar)"
+
             # remove files the app
             ii "$program\"
             Remove-Item -Recurse -Force "$program\*" -Exclude oldversion.txt    
