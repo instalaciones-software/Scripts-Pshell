@@ -52,7 +52,7 @@ if ($codigoIngresado -eq $codigo -or $codigoIngresado -eq "yeminus") {
 | --------------------------------------------------------------------------------------------------------------------|
 #>
 
-    #Set-ExecutionPolicy Unrestricted
+#Set-ExecutionPolicy Unrestricted
 
 
     Write-Host `
