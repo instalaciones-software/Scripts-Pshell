@@ -59,7 +59,7 @@ if ($codigoIngresado -eq $codigo -or $codigoIngresado -eq "yeminus") {
         "
          Conexion Establecida
 
-Script Version 1.0.33.0" -ForegroundColor green
+Script Version 1.0.34.0" -ForegroundColor green
 
     Write-Host "Sitios Web Actuales que se pueden actualizar:" -ForegroundColor Cyan 
     Write-Host $appcmdPath2 -NoNewline
