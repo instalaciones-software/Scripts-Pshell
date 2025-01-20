@@ -373,22 +373,25 @@ if ($dato -eq "2" -or $dato -eq "") {
             Write-Host "Deteniendo Pools De Aplicacion $sitioWeb" -ForegroundColor yellow 
 
             foreach ($pool in  $listApis) {
-
+                    
                 # stop site web
                 & $comandoAppCmd\appcmd stop apppool $sitioWeb 1>$null
                 & $comandoAppCmd\appcmd stop apppool "$sitioWeb.$pool"
                 & $comandoAppCmd\appcmd stop apppool "$sitioWeb.$listmodel" 1>$null
+                
+                
+                #----------------------------------------------------------------------------------------------
+                
+                & $comandoAppCmd\appcmd delete apppool "$sitioWeb" 1>$null # Borrar appol sitio temporal
+                & $comandoAppCmd\appcmd delete apppool "$sitioWeb.$pool"  1>$null # Borrar app pool temporal
+                & $comandoAppCmd\appcmd delete apppool "$sitioWeb.$listmodel" 1>$null  # Borrar appol componentes temporal
+                
+                
             }
+
             # remove files the app
             ii "$program\"
             Remove-Item -Recurse -Force "$program\*" -Exclude oldversion.txt    
-
-            foreach ($pool in $listApis) {
-                # startup the site web
-                & $comandoAppCmd\appcmd start apppool $sitioWeb 1>$null
-                & $comandoAppCmd\appcmd start apppool "$sitioWeb.$pool" 1>$null
-                & $comandoAppCmd\appcmd start apppool "$sitioWeb.$listmodel" 1>$null
-            }
 
             Write-Host "IMPLEMENTANDO VERSION $numversion AL SITIO WEB $sitioWeb DESPLEGANDO APLICACION..." -ForegroundColor green 
 
@@ -421,6 +424,7 @@ if ($dato -eq "2" -or $dato -eq "") {
             & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$nombreApi /processModel.identityType:"ApplicationPoolIdentity" 1>$null
 
             # add pool de app the group user IIS_IUSRS
+            Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb" 2>$null
             Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb.$nombreApi" 2>$null
             Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb.$listmodel" 2>$null
 

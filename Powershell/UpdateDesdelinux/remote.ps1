@@ -202,10 +202,7 @@ Script Version 1.0.33.0" -ForegroundColor green
             if ($program -ne $null -and $program -ne '') {
                 Write-Host "Deteniendo Pools De Aplicacion $sitioWeb" -ForegroundColor yellow 
 
-                
-                
-                
-                
+
                 foreach ($pool in  $listApis) {
                     
                     # stop site web
