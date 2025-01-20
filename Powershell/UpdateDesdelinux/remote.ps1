@@ -23,7 +23,10 @@ if ($codigoIngresado -eq "insta2025") {
         "
          Conexion Establecida
 
-Script Version 1.0.33.0" -ForegroundColor green
+Script Version 1.0.34.0" -ForegroundColor green
+
+Write-Host "ATENCION!! Este script ejecutelo cuando la version del cliente sea inferior a la 4.0 " -ForegroundColor Red
+Read-Host
 
     Write-Host "Sitios Web Actuales que se pueden actualizar:" -ForegroundColor Cyan 
     Write-Host $appcmdPath2 -NoNewline
@@ -222,7 +225,7 @@ Script Version 1.0.33.0" -ForegroundColor green
                 
                 Remove-WebSite -Name "$sitioWeb" 
                 
-                Read-Host "Crear sitio web son su recurso virtual modificar el app pool V 4.0 (Enter para continuar)"
+                Read-Host "Crear sitio web con su recurso virtual modificar el app pool V 4.0 (Enter para continuar)"
 
                 # remove files the app
                 

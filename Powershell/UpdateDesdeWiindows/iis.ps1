@@ -1,4 +1,4 @@
-﻿﻿       
+﻿﻿﻿       
 # Para resolver el inconveniente de permitir la ejecuccion de scripts:  Set-ExecutionPolicy Unrestricted  
     
 
@@ -11,9 +11,11 @@ ___) | |___|  _ < | ||  __/ | |  | || |\  | |_| | |_____|  | | | | ___) |
 |____/ \____|_| \_\___|_|    |_| |___|_| \_|\____|         |___|___|____/
 
 
-Version 1.0.33.0" -ForegroundColor green
+Version 1.0.34.0" -ForegroundColor green
 
 
+Write-Host "ATENCION!! Este script ejecutelo cuando la version del cliente sea inferior a la 4.0 " -ForegroundColor Red
+Read-Host
 
 
 if (Test-Path -Path "E:\") {
@@ -456,7 +458,6 @@ if ($dato -eq "2" -or $dato -eq "") {
             $regla = New-Object System.Security.AccessControl.FileSystemAccessRule($grupo, $permiso, "ContainerInherit, ObjectInherit", "None", "Allow")
             $acl.SetAccessRule($regla)
             Set-Acl $carpeta $acl
-            Write-Host "Permisos aplicados correctamente a $carpeta"
         }
         else {
             Write-Host "La carpeta especificada no existe."
