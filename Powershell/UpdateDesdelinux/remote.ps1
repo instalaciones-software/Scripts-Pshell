@@ -289,6 +289,7 @@ Script Version 1.0.33.0" -ForegroundColor green
                 & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$nombreApi /processModel.identityType:"ApplicationPoolIdentity" 1>$null
     
                 # add pool de app the group user IIS_IUSRS
+                Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb" 2>$null
                 Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb.$nombreApi" 2>$null
                 Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb.$listmodel" 2>$null
     
