@@ -16,7 +16,7 @@ echo "Estableciendo conexion con el servidor $server.yeminus.com"
 
 pwsh -Command "
 \$cred = Import-Clixml -Path '/home/updateiis/script/xml.xml'
-Invoke-Command -FilePath '/home/updateiis/script/remote.ps1' -ComputerName '$server.yeminus.com' -Credential \$cred
+Invoke-Command -FilePath '/home/updateiis/script/4.0.ps1' -ComputerName '$server.yeminus.com' -Credential \$cred
 "
 
 exit
