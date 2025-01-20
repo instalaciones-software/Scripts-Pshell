@@ -1,45 +1,9 @@
-﻿# Configuraciones de correo
-$smtpServer = "smtp.gmail.com"      # Servidor SMTP (puede cambiar dependiendo del proveedor)
-$smtpPort = 587                     # Puerto para TLS
-$smtpUser = "yeminusinstalaciones@gmail.com"    # Tu correo de Gmail
-$smtpPassword = "qpdx eyum xeci ggci"      # Tu contraseña o aplicación específica de Google
-$toEmail = "directorsoporte@yeminus.com,soporte3@yeminus.com,instalaciones2@yeminus.com,instalaciones@yeminus.com,tics@yeminus.com"
-# Correo al cual enviar el código (puede ser tu propio correo)
-$fromEmail = "yeminusinstalaciones@gmail.com"
-
-# Generar un código aleatorio de 6 dígitos
-$codigo = Get-Random -Minimum 100000 -Maximum 999999
-
-# Cuerpo del correo con el código de verificación
-$body = "Tu código de verificación es: $codigo"
-
-
-# Configurar el cliente SMTP
-$smtp = New-Object Net.Mail.SmtpClient($smtpServer, $smtpPort)
-$smtp.EnableSsl = $true
-$smtp.Credentials = New-Object System.Net.NetworkCredential($smtpUser, $smtpPassword)
-
-# Enviar el correo
-$mailmessage = New-Object System.Net.Mail.MailMessage($fromEmail, $toEmail, "Código de Verificación IIS", $body)
-
-
-
-# Intentar enviar el correo
-try {
-    $smtp.Send($mailmessage)
-    Write-Host ""
-}
-catch {
-    Write-Host "Hubo un error al enviar el correo: $_"
-    exit
-}
-
-# Pedir al usuario que ingrese el código recibido por correo
-$codigoIngresado = Read-Host "Para ingresar al Servidor escribe el Codigo de autenticacion"
+﻿# Pedir al usuario que ingrese el código recibido por correo
+$codigoIngresado = Read-Host "Clave de ingreso"
 
 # Validar el código
 # si los correos de yeminus estan caidos, se puede saltar el codigo con la palabra yeminus
-if ($codigoIngresado -eq $codigo -or $codigoIngresado -eq "yeminus") {
+if ($codigoIngresado -eq "insta2025") {
     
 
 
@@ -52,7 +16,7 @@ if ($codigoIngresado -eq $codigo -or $codigoIngresado -eq "yeminus") {
 | --------------------------------------------------------------------------------------------------------------------|
 #>
 
-#Set-ExecutionPolicy Unrestricted
+    #Set-ExecutionPolicy Unrestricted
 
 
     Write-Host `
@@ -229,50 +193,63 @@ Script Version 1.0.33.0" -ForegroundColor green
         # Convert the names sites web in array
         $nombresSitiosWeb = $sitiosWeb -split ','
 
-
+        
+        
         foreach ($sitioWeb in $nombresSitiosWeb) {
             # stop site web
             $program = & "$comandoAppCmd\appcmd" list vdir "$sitioWeb/" /text:physicalPath
-    
+            
             if ($program -ne $null -and $program -ne '') {
                 Write-Host "Deteniendo Pools De Aplicacion $sitioWeb" -ForegroundColor yellow 
 
+                
+                
+                
+                
                 foreach ($pool in  $listApis) {
-                                        
+                    
                     # stop site web
                     & $comandoAppCmd\appcmd stop apppool $sitioWeb 1>$null
                     & $comandoAppCmd\appcmd stop apppool "$sitioWeb.$pool"
                     & $comandoAppCmd\appcmd stop apppool "$sitioWeb.$listmodel" 1>$null
-
+                    
+                    
+                    #----------------------------------------------------------------------------------------------
+                    
+                    & $comandoAppCmd\appcmd delete apppool "$sitioWeb" 1>$null # Borrar appol sitio temporal
+                    & $comandoAppCmd\appcmd delete apppool "$sitioWeb.$pool"  1>$null # Borrar app pool temporal
+                    & $comandoAppCmd\appcmd delete apppool "$sitioWeb.$listmodel" 1>$null  # Borrar appol componentes temporal
+                    
+                    
                 }
+                
+                Remove-WebSite -Name "$sitioWeb" 
+                
+                Read-Host "Crear sitio web son su recurso virtual modificar el app pool V 4.0 (Enter para continuar)"
+
                 # remove files the app
-          
+                
                 Remove-Item -Recurse -Force "$program\*" -Exclude oldversion.txt    
 
-                foreach ($pool in $listApis) {
-                    # startup the site web
-                    & $comandoAppCmd\appcmd start apppool $sitioWeb 1>$null
-                    & $comandoAppCmd\appcmd start apppool "$sitioWeb.$pool" 1>$null
-                    & $comandoAppCmd\appcmd start apppool "$sitioWeb.$listmodel" 1>$null
-
-                }
-
+                
                 Write-Host "Actualizando version de $file al $numversion sitio web $sitioWeb DESPLEGANDO APLICACION..." -ForegroundColor green 
-
+                
             }
             else {
                 Write-Host "!ATENCIÓN!" -ForegroundColor red -NoNewline
                 Write-Host " El sitio web '$sitioWeb' no existe o el nombre es incorrecto."
-               
+                
                 break OuterLoop
             }
-        
+            
             #add the directory resource virtual 
             $rutarecursos = & "${comandoAppCmd}\appcmd" list vdir "$sitioWeb/Api$sitioWeb/recursos" /text:physicalPath
-
-   
-            foreach ($nombreApi in $listApis) {
             
+                        
+            #Read-Host "Cree de nuevo el sitio web con la ruta de recursos (Enter para continuar)"
+
+            foreach ($nombreApi in $listApis) {
+                
                 # convert a aplication apiyeminus
                 & "${comandoAppCmd}\appcmd" add app /site.name:$sitioWeb /path:"/api$sitioWeb" /physicalPath:"$program\api$sitioWeb" /applicationPool:$sitioWeb 1>$null
     
@@ -289,6 +266,7 @@ Script Version 1.0.33.0" -ForegroundColor green
                 & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$nombreApi /processModel.identityType:"ApplicationPoolIdentity" 1>$null
     
                 # add pool de app the group user IIS_IUSRS
+                Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb" 2>$null
                 Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb.$nombreApi" 2>$null
                 Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitioWeb.$listmodel" 2>$null
     
@@ -320,7 +298,8 @@ Script Version 1.0.33.0" -ForegroundColor green
             else {
                 Write-Host "La carpeta especificada no existe."
             }
-   
+
+               
             # path where this the file compress
             $compressedFilePath = "C:\inetpub\versiones\$numversion.zip"
 
@@ -392,44 +371,44 @@ Script Version 1.0.33.0" -ForegroundColor green
             $contenidoArchivo = Get-Content -Path $rutaArchivo
 
            
-            if ($sitioWeb -ne "yeminus" -and $sitioWeb -ne "yeminusweb") {
+                if ($sitioWeb -ne "yeminus" -and $sitioWeb -ne "yeminusweb") {
             
-                # owerwrite the files txt
-                "$numversion" | Out-File -FilePath $rutaArchivo -Force
+                    # owerwrite the files txt
+                    "$numversion" | Out-File -FilePath $rutaArchivo -Force
             
-                $EmailDestinatario = "instalaciones@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,tics@yeminus.com,dguzman@yeminus.com,vquintero@yeminus.com"
-                $EmailEmisor = "noresponder@yeminus.com"
-                $Asunto = "📌Actualización Empresa $sitioWeb Version $numversion"
-                $sitioWeb = $sitioWeb.ToLower()
-                $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
+                    $EmailDestinatario = "instalaciones@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,tics@yeminus.com,dguzman@yeminus.com,vquintero@yeminus.com"
+                    $EmailEmisor = "noresponder@yeminus.com"
+                    $Asunto = "📌Actualización Empresa $sitioWeb Version $numversion"
+                    $sitioWeb = $sitioWeb.ToLower()
+                    $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
 
-           <p><b>Url Web Cliente:</b></p> $urlYem2
-           <p></p>
-            <p><b>Atentamente area de servicio al cliente</b></p>"
+               <p><b>Url Web Cliente:</b></p> $urlYem2
+               <p></p>
+                <p><b>Atentamente area de servicio al cliente</b></p>"
             
 
             
-                $SMTPServidor = "mail.yeminus.com"
-                $CodificacionCaracteres = [System.Text.Encoding]::UTF8
+                    $SMTPServidor = "mail.yeminus.com"
+                    $CodificacionCaracteres = [System.Text.Encoding]::UTF8
     
-                try {
-                    $SMTPMensaje = New-Object System.Net.Mail.MailMessage($EmailEmisor, $EmailDestinatario, $Asunto, $CuerpoEnHTML)
-                    $SMTPMensaje.IsBodyHtml = $true
-                    $SMTPMensaje.BodyEncoding = $CodificacionCaracteres
-                    $SMTPMensaje.SubjectEncoding = $CodificacionCaracteres
-                    $SMTPCliente = New-Object Net.Mail.SmtpClient($SMTPServidor, 587)
-                    $SMTPCliente.EnableSsl = $true
-                    $SMTPCliente.Credentials = New-Object System.Net.NetworkCredential($EmailEmisor, "12345Aa$@/*");
-                    $SMTPCliente.Send($SMTPMensaje)
+                    try {
+                        $SMTPMensaje = New-Object System.Net.Mail.MailMessage($EmailEmisor, $EmailDestinatario, $Asunto, $CuerpoEnHTML)
+                        $SMTPMensaje.IsBodyHtml = $true
+                        $SMTPMensaje.BodyEncoding = $CodificacionCaracteres
+                        $SMTPMensaje.SubjectEncoding = $CodificacionCaracteres
+                        $SMTPCliente = New-Object Net.Mail.SmtpClient($SMTPServidor, 587)
+                        $SMTPCliente.EnableSsl = $true
+                        $SMTPCliente.Credentials = New-Object System.Net.NetworkCredential($EmailEmisor, "12345Aa$@/*");
+                        $SMTPCliente.Send($SMTPMensaje)
      
-                }  
+                    }  
     
     
-                catch {
-                    Write-Error -Message "Error al enviar correo electrónico"
-                }                                                                                                                
+                    catch {
+                        Write-Error -Message "Error al enviar correo electrónico"
+                    }                                                                                                                
                                                                         
-            }
+                }
         
         }        
     } 
@@ -439,7 +418,7 @@ Script Version 1.0.33.0" -ForegroundColor green
 }
 
 else {
-    Write-Host "Código incorrecto. Intenta nuevamente."
+    Write-Host "clave incorrecto. Intenta nuevamente."
 }
 
 
