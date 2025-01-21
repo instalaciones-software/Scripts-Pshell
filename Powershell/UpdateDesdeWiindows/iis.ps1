@@ -1,4 +1,4 @@
-﻿﻿       
+﻿﻿﻿       
 # Para resolver el inconveniente de permitir la ejecuccion de scripts:  Set-ExecutionPolicy Unrestricted  
     
 
@@ -448,7 +448,6 @@ if ($dato -eq "2" -or $dato -eq "") {
             $regla = New-Object System.Security.AccessControl.FileSystemAccessRule($grupo, $permiso, "ContainerInherit, ObjectInherit", "None", "Allow")
             $acl.SetAccessRule($regla)
             Set-Acl $carpeta $acl
-            Write-Host "Permisos aplicados correctamente a $carpeta"
         }
         else {
             Write-Host "La carpeta especificada no existe."
@@ -623,7 +622,7 @@ if ($dato -eq "2" -or $dato -eq "") {
  
  
             catch {
-                Write-Error -Message "Error al enviar correo electrónico"
+                Write-Error -Message ""
             }                                                                                                                
                                                                      
         }

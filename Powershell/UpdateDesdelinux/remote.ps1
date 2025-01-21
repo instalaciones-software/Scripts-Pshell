@@ -52,7 +52,7 @@ if ($codigoIngresado -eq $codigo -or $codigoIngresado -eq "yeminus") {
 | --------------------------------------------------------------------------------------------------------------------|
 #>
 
-#Set-ExecutionPolicy Unrestricted
+    #Set-ExecutionPolicy Unrestricted
 
 
     Write-Host `
@@ -316,7 +316,6 @@ Script Version 1.0.34.0" -ForegroundColor green
                 $regla = New-Object System.Security.AccessControl.FileSystemAccessRule($grupo, $permiso, "ContainerInherit, ObjectInherit", "None", "Allow")
                 $acl.SetAccessRule($regla)
                 Set-Acl $carpeta $acl
-                Write-Host "Permisos aplicados correctamente a $carpeta"
             }
             else {
                 Write-Host "La carpeta especificada no existe."
@@ -427,7 +426,7 @@ Script Version 1.0.34.0" -ForegroundColor green
     
     
                 catch {
-                    Write-Error -Message "Error al enviar correo electrónico"
+                    Write-Host ""
                 }                                                                                                                
                                                                         
             }
