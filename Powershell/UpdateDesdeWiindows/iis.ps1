@@ -1,4 +1,4 @@
-﻿﻿﻿       
+﻿﻿       
 # Para resolver el inconveniente de permitir la ejecuccion de scripts:  Set-ExecutionPolicy Unrestricted  
     
 
