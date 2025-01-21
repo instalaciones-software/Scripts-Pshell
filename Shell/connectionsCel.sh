@@ -1,10 +1,10 @@
 #!/bin/bash
 
-rm -r /home/updateiis/script/*.ps1
+#rm -r /home/updateiis/script/*.ps1
 rm -r /home/updateiis/script/*.ps1.1
 
 # Dowload shell ps1 for upgrade
-wget -P /home/updateiis/script https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/remote.ps1
+#wget -P /home/updateiis/script https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/remote.ps1
 
 clear
 
