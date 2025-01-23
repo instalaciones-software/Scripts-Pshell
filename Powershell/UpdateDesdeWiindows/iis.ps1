@@ -1,7 +1,4 @@
-﻿﻿       
-# Para resolver el inconveniente de permitir la ejecuccion de scripts:  Set-ExecutionPolicy Unrestricted  
-    
-
+﻿﻿# Para resolver el inconveniente de permitir la ejecuccion de scripts:  Set-ExecutionPolicy Unrestricted  
 Write-Host `
     "
 ____   ____ ____  ___ ____ _____ ___ _   _  ____           ___ ___ ____
