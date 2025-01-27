@@ -278,7 +278,7 @@ Script Version 1.0.34.0" -ForegroundColor green
                 C:\Windows\system32\inetsrv\appcmd add vdir /app.name:$sitioWeb/$listmodel /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
     
                 # add pool app 
-                & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$listmodel /processModel.identityType:"LocalSystem" 1>$null
+                & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$listmodel /processModel.identityType:"ApplicationPoolIdentity" 1>$null
          
             }
 
