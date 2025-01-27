@@ -25,8 +25,8 @@ if ($codigoIngresado -eq "insta2025") {
 
 Script Version 1.0.34.0" -ForegroundColor green
 
-Write-Host "ATENCION!! Este script ejecutelo cuando la version del cliente sea inferior a la 4.0 " -ForegroundColor Red
-Read-Host
+    Write-Host "ATENCION!! Este script ejecutelo cuando la version del cliente sea inferior a la 4.0 " -ForegroundColor Red
+    Read-Host
 
     Write-Host "Sitios Web Actuales que se pueden actualizar:" -ForegroundColor Cyan 
     Write-Host $appcmdPath2 -NoNewline
@@ -282,23 +282,32 @@ Read-Host
          
             }
 
-            # Define la ruta de la carpeta y el usuario
-            $carpeta = "C:\inetpub\wwwroot\$sitioWeb"
+            # Define la ruta de las carpetas y el grupo
+            $carpeta1 = "C:\inetpub\wwwroot\$sitioWeb"
+            $carpeta2 = "$rutarecursos"
             $grupo = "IIS_IUSRS"  
+            $permiso = [System.Security.AccessControl.FileSystemRights]::Modify
 
-            # Asegúrate de que la carpeta existe
-            if (Test-Path $carpeta) {
-                $acl = Get-Acl $carpeta
-                $permiso = [System.Security.AccessControl.FileSystemRights]::Modify
-                $regla = New-Object System.Security.AccessControl.FileSystemAccessRule($grupo, $permiso, "ContainerInherit, ObjectInherit", "None", "Allow")
-                $acl.SetAccessRule($regla)
-                Set-Acl $carpeta $acl
-                Write-Host "Permisos aplicados correctamente a $carpeta"
-            }
-            else {
-                Write-Host "La carpeta especificada no existe."
+            # Función para agregar permisos
+            function Agregar-Permisos {
+                param (
+                    [string]$ruta
+                )
+                if (Test-Path $ruta) {
+                    $acl = Get-Acl $ruta
+                    $regla = New-Object System.Security.AccessControl.FileSystemAccessRule($grupo, $permiso, "ContainerInherit, ObjectInherit", "None", "Allow")
+                    $acl.SetAccessRule($regla)
+                    Set-Acl $ruta $acl
+                    Write-Host "Se agrego permisos al grupo IIS_IUSRS a la $ruta."
+                }
+                else {
+                    Write-Host "La carpeta $ruta no existe."
+                }
             }
 
+            # Llamar a la función para cada carpeta
+            Agregar-Permisos $carpeta1
+            Agregar-Permisos $carpeta2
                
             # path where this the file compress
             $compressedFilePath = "C:\inetpub\versiones\$numversion.zip"
@@ -371,16 +380,16 @@ Read-Host
             $contenidoArchivo = Get-Content -Path $rutaArchivo
 
            
-                if ($sitioWeb -ne "yeminus" -and $sitioWeb -ne "yeminusweb") {
+            if ($sitioWeb -ne "yeminus" -and $sitioWeb -ne "yeminusweb") {
             
-                    # owerwrite the files txt
-                    "$numversion" | Out-File -FilePath $rutaArchivo -Force
+                # owerwrite the files txt
+                "$numversion" | Out-File -FilePath $rutaArchivo -Force
             
-                    $EmailDestinatario = "instalaciones@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,tics@yeminus.com,dguzman@yeminus.com,vquintero@yeminus.com"
-                    $EmailEmisor = "noresponder@yeminus.com"
-                    $Asunto = "📌Actualización Empresa $sitioWeb Version $numversion"
-                    $sitioWeb = $sitioWeb.ToLower()
-                    $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
+                $EmailDestinatario = "instalaciones@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,tics@yeminus.com,dguzman@yeminus.com,vquintero@yeminus.com"
+                $EmailEmisor = "noresponder@yeminus.com"
+                $Asunto = "📌Actualización Empresa $sitioWeb Version $numversion"
+                $sitioWeb = $sitioWeb.ToLower()
+                $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
 
                <p><b>Url Web Cliente:</b></p> $urlYem2
                <p></p>
@@ -388,27 +397,27 @@ Read-Host
             
 
             
-                    $SMTPServidor = "mail.yeminus.com"
-                    $CodificacionCaracteres = [System.Text.Encoding]::UTF8
+                $SMTPServidor = "mail.yeminus.com"
+                $CodificacionCaracteres = [System.Text.Encoding]::UTF8
     
-                    try {
-                        $SMTPMensaje = New-Object System.Net.Mail.MailMessage($EmailEmisor, $EmailDestinatario, $Asunto, $CuerpoEnHTML)
-                        $SMTPMensaje.IsBodyHtml = $true
-                        $SMTPMensaje.BodyEncoding = $CodificacionCaracteres
-                        $SMTPMensaje.SubjectEncoding = $CodificacionCaracteres
-                        $SMTPCliente = New-Object Net.Mail.SmtpClient($SMTPServidor, 587)
-                        $SMTPCliente.EnableSsl = $true
-                        $SMTPCliente.Credentials = New-Object System.Net.NetworkCredential($EmailEmisor, "12345Aa$@/*");
-                        $SMTPCliente.Send($SMTPMensaje)
+                try {
+                    $SMTPMensaje = New-Object System.Net.Mail.MailMessage($EmailEmisor, $EmailDestinatario, $Asunto, $CuerpoEnHTML)
+                    $SMTPMensaje.IsBodyHtml = $true
+                    $SMTPMensaje.BodyEncoding = $CodificacionCaracteres
+                    $SMTPMensaje.SubjectEncoding = $CodificacionCaracteres
+                    $SMTPCliente = New-Object Net.Mail.SmtpClient($SMTPServidor, 587)
+                    $SMTPCliente.EnableSsl = $true
+                    $SMTPCliente.Credentials = New-Object System.Net.NetworkCredential($EmailEmisor, "12345Aa$@/*");
+                    $SMTPCliente.Send($SMTPMensaje)
      
-                    }  
+                }  
     
     
-                    catch {
-                        Write-Error -Message "Error al enviar correo electrónico"
-                    }                                                                                                                
+                catch {
+                    Write-Error -Message "Error al enviar correo electrónico"
+                }                                                                                                                
                                                                         
-                }
+            }
         
         }        
     } 
