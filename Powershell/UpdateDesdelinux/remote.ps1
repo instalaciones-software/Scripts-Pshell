@@ -23,7 +23,7 @@ if ($codigoIngresado -eq "insta2025") {
         "
          Conexion Establecida
 
-Script Version 1.0.34.0" -ForegroundColor green
+Script Version 1.0.35.0" -ForegroundColor green
 
     Write-Host "ATENCION!! Este script ejecutelo cuando la version del cliente sea inferior a la 4.0 " -ForegroundColor Red
     Read-Host
