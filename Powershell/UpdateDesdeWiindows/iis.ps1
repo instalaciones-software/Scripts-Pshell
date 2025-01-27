@@ -432,7 +432,7 @@ if ($dato -eq "2" -or $dato -eq "") {
              
 
             # add pool app 
-            & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$listmodel /processModel.identityType:"LocalSystem" 1>$null
+            & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$listmodel /processModel.identityType:"ApplicationPoolIdentity" 1>$null
      
         }
 
