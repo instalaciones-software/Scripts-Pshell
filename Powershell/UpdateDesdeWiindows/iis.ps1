@@ -11,7 +11,6 @@ ___) | |___|  _ < | ||  __/ | |  | || |\  | |_| | |_____|  | | | | ___) |
 Version 1.0.35.0" -ForegroundColor green
 
 
-
 Write-Host "ATENCION!! Este script ejecutelo cuando la version del cliente sea inferior a la 4.0 " -ForegroundColor Red
 Read-Host
 
@@ -67,7 +66,7 @@ $addfile = mkdir "C:\inetpub\versiones\" 2>$null
 $appcmdPath = "$env:SystemRoot\system32\inetsrv\appcmd.exe"
 
 $dato = Read-Host "
-¿ QUE DESEAS REALIZAR ?
+Escoje el Proceso?
 
 1. Crear sitio web y variables de entorno 
 2. Actualizar sitio web (ENTER PARA CONTINUAR)"
@@ -75,11 +74,11 @@ $dato = Read-Host "
 #create variables in S.O
 
 if ($dato -eq "1") {
-    $sitioweb = Read-Host "¿Nombre del sitio web?"
-    $motor = Read-Host "¿Tipo de motor Oracle(ENTER) o PostgreSQL(1)?"
-    $ip = Read-Host "¿Direccion ip del motor de la base de datos?"
-    $pass = Read-Host "¿Clave del usuario admin gem?"
-    $peticion = Read-Host "¿Peticiones Desconocidas si tecleas (ENTER) por defecto 0 ?"
+    $sitioweb = Read-Host "Nombre del sitio web?"
+    $motor = Read-Host "Tipo de motor Oracle(ENTER) o PostgreSQL(1)?"
+    $ip = Read-Host "Direccion ip del motor de la base de datos?"
+    $pass = Read-Host "Clave del usuario admin gem?"
+    $peticion = Read-Host "Peticiones Desconocidas si tecleas (ENTER) por defecto 0 ?"
  
  
     if ($sitioweb -ne "yeminus") {
@@ -88,7 +87,7 @@ if ($dato -eq "1") {
      
         #CREATE SITE WEB 
      
-        # Puerto en el que se ejecutará el sitio
+        # Puerto en el que se ejecutara el sitio
         $Port = 80
         $hostname = "$sitioweb.yeminus.com"
      
@@ -130,12 +129,12 @@ if ($dato -eq "1") {
 
         # CREATE ENVIROMENT VARIABLES
 
-        $admin = Read-Host "¿Usuario admin gem?"
-        $NombreBd = Read-Host "¿Servicio de la BD?"
-        $url = Read-Host "¿Digitar URL Base?"
-        $rutarecurso = Read-Host "¿Cual es la ruta de recursos?" 
-        $user = Read-Host "¿Usuario para el recurso virtual?"
-        $passuser = Read-Host "¿Clave para la ruta recursos virtual?"
+        $admin = Read-Host "Usuario admin gem?"
+        $NombreBd = Read-Host "Servicio de la BD?"
+        $url = Read-Host "Digitar URL Base?"
+        $rutarecurso = Read-Host "Cual es la ruta de recursos?" 
+        $user = Read-Host "Usuario para el recurso virtual?"
+        $passuser = Read-Host "Clave para la ruta recursos virtual?"
 
         $admin = $admin.ToUpper()
         $NombreBd = $NombreBd.ToUpper()
@@ -293,7 +292,7 @@ if ($dato -eq "2" -or $dato -eq "") {
     $comandoAppCmd = "C:\Windows\System32\inetsrv\"
 
     # which version to deploy
-    $numversion = Read-Host "¿Qué versión vas a implementar? (Ultima version en GitHub: $latestVersion, presiona Enter para descargarla)"
+    $numversion = Read-Host "Que version vas a implementar? (Ultima version en GitHub: $latestVersion, presiona Enter para descargarla)"
 
 
     if ([string]::IsNullOrEmpty($numversion)) {
@@ -303,12 +302,12 @@ if ($dato -eq "2" -or $dato -eq "") {
     # Definir la ruta de descarga
     $rutaDescarga = "C:\inetpub\versiones\$numversion.zip"
 
-    # Verificar si la versión ya está descargada
+    # Verificar si la version ya esta descargada
     if (Test-Path $rutaDescarga) {
-        Write-Host "La versión $numversion ya está descargada en $rutaDescarga"
+        Write-Host "La version $numversion ya esta descargada en $rutaDescarga"
     }
     else {
-        # Descargar la versión desde GitHub
+        # Descargar la version desde GitHub
         try {
             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
             Invoke-WebRequest -Uri "https://github.com/yeminus/yeminusweb/releases/download/$numversion/$numversion.zip" -OutFile $rutaDescarga
@@ -317,11 +316,11 @@ if ($dato -eq "2" -or $dato -eq "") {
         }
         catch {
             if ($_.Exception.Response.StatusCode -eq 404) {
-                Write-Host "!ATENCIÓN!" -ForegroundColor Red -NoNewline
-                Write-Host " La versión $numversion no existe en el repositorio. Valide la última versión en el siguiente enlace: https://github.com/yeminus/yeminusweb/releases/"
+                Write-Host "!ATENCIoN!" -ForegroundColor Red -NoNewline
+                Write-Host " La version $numversion no existe en el repositorio. Valide la última version en el siguiente enlace: https://github.com/yeminus/yeminusweb/releases/"
             }
             else {
-                Write-Host "Ocurrió un error: $($_.Exception.Message)"
+                Write-Host "Ocurrio un error: $($_.Exception.Message)"
             }
             return
         }
@@ -349,7 +348,7 @@ if ($dato -eq "2" -or $dato -eq "") {
     if ($sitiosWeb -eq "yeminus" -or $sitiosWeb -eq "yeminusweb" ) {
         $nombreUsuario = $env:USERNAME
 
-        $contrasena = Read-Host "¿Contraseña del usuario $env:USERNAME ?" -AsSecureString
+        $contrasena = Read-Host "Contraseña del usuario $env:USERNAME ?" -AsSecureString
         $contrasenaTextoPlano = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($contrasena))
 
     } 
@@ -402,7 +401,7 @@ if ($dato -eq "2" -or $dato -eq "") {
 
         }
         else {
-            Write-Host "!ATENCIÓN!" -ForegroundColor red -NoNewline
+            Write-Host "!ATENCIoN!" -ForegroundColor red -NoNewline
             Write-Host " El sitio web '$sitioWeb' no existe o el nombre es incorrecto."
             
             break OuterLoop
@@ -451,7 +450,7 @@ if ($dato -eq "2" -or $dato -eq "") {
         $grupo = "IIS_IUSRS"  
         $permiso = [System.Security.AccessControl.FileSystemRights]::Modify
 
-        # Función para agregar permisos
+        # Funcion para agregar permisos
         function Agregar-Permisos {
             param (
                 [string]$ruta
@@ -468,7 +467,7 @@ if ($dato -eq "2" -or $dato -eq "") {
             }
         }
 
-        # Llamar a la función para cada carpeta
+        # Llamar a la funcion para cada carpeta
         Agregar-Permisos $carpeta1
         Agregar-Permisos $carpeta2
 
@@ -617,7 +616,7 @@ if ($dato -eq "2" -or $dato -eq "") {
          
             $EmailDestinatario = "instalaciones@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,cjaramillo@yeminus.com,tics@yeminus.com,dguzman@yeminus.com"
             $EmailEmisor = "noresponder@yeminus.com"
-            $Asunto = "📌Actualización Empresa $sitioWeb Version $numversion"
+            $Asunto = "Actualizacion Empresa $sitioWeb Version $numversion"
             $sitioWeb = $sitioWeb.ToLower()
             $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
 
@@ -642,7 +641,7 @@ if ($dato -eq "2" -or $dato -eq "") {
  
  
             catch {
-                Write-Error -Message "Error al enviar correo electrónico"
+                Write-Error -Message "Error al enviar correo electronico"
             }                                                                                                                
                                                                      
         }
@@ -663,13 +662,13 @@ if ($dato -eq "2" -or $dato -eq "") {
     #         $correo = $worksheet.Cells.Item($i, 2).Value2
 
     #         if ($nombre -ne $null -and $correo -ne $null) {
-    #             # Configuración del correo
+    #             # Configuracion del correo
     #             $EmailDestinatario = $correo
     #             $EmailEmisor = "noresponder@yeminus.com"
     #             $Asunto = "📌Actualizacion Del Software Web Version $numversion"
     #             $CuerpoEnHTML = "<p>Cordial saludo Sr(a). Cliente</p> 
 
-    # <p>Le informamos que se ha aplicado una actualización a nuestro producto yeminus Web. La versión <b>($contenidoArchivo)</b> ha sido reemplazada por la versión <b>($numversion)</b> . Por favor, asegúrese de borrar la caché de su navegador para que pueda cargar la nueva versión correctamente. Además, le recomendamos que informe a sus compañeros para que también realicen este proceso.</p>
+    # <p>Le informamos que se ha aplicado una actualizacion a nuestro producto yeminus Web. La version <b>($contenidoArchivo)</b> ha sido reemplazada por la version <b>($numversion)</b> . Por favor, asegúrese de borrar la caché de su navegador para que pueda cargar la nueva version correctamente. Ademas, le recomendamos que informe a sus compañeros para que también realicen este proceso.</p>
 
     # <b><p>Nota:Sr cliente si despues de realizar la actualizacion tiene algun inconveniente por favor escalar el soporte a mesa de ayuda</p></b>
     
@@ -681,7 +680,7 @@ if ($dato -eq "2" -or $dato -eq "") {
 
     # <a> https://yeminus.yeminus.com/portalcliente/#/login</a>
 
-    # <p>Gracias por su atención.</p>"
+    # <p>Gracias por su atencion.</p>"
 
     #             $SMTPServidor = "mail.yeminus.com"
     #             $CodificacionCaracteres = [System.Text.Encoding]::UTF8
@@ -698,7 +697,7 @@ if ($dato -eq "2" -or $dato -eq "") {
     #                 Write-Host "Correo enviado a $nombre al correo $EmailDestinatario"
     #             }
     #             catch {
-    #                 Write-Error -Message "Error al enviar correo electrónico a $EmailDestinatario"
+    #                 Write-Error -Message "Error al enviar correo electronico a $EmailDestinatario"
     #             }
     #         }
     #     }
@@ -711,7 +710,7 @@ if ($dato -eq "2" -or $dato -eq "") {
 # if ($dato -eq "3") {
 
 #     $pathpass = Read-Host "Para conectarse a otros servidores, es necesario proporcionar la llave de acceso. Por favor, especifique la ruta donde se encuentra la llave" 
-#     $datops = Read-Host "¿Servidor a conectarse?" 
+#     $datops = Read-Host "Servidor a conectarse?" 
 
 #     $serverMap = @{
 #         "3"   = "IP"
@@ -744,4 +743,3 @@ if ($dato -eq "2" -or $dato -eq "") {
 #     }
 # }
 
-# Set-ExecutionPolicy Unrestricted  
