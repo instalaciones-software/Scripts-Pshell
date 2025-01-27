@@ -305,21 +305,32 @@ Script Version 1.0.34.0" -ForegroundColor green
          
             }
 
-            # Define la ruta de la carpeta y el usuario
-            $carpeta = "C:\inetpub\wwwroot\$sitioWeb"
+            # Define la ruta de las carpetas y el grupo
+            $carpeta1 = "C:\inetpub\wwwroot\$sitioWeb"
+            $carpeta2 = "$rutarecursos"
             $grupo = "IIS_IUSRS"  
+            $permiso = [System.Security.AccessControl.FileSystemRights]::Modify
 
-            # Asegúrate de que la carpeta existe
-            if (Test-Path $carpeta) {
-                $acl = Get-Acl $carpeta
-                $permiso = [System.Security.AccessControl.FileSystemRights]::Modify
-                $regla = New-Object System.Security.AccessControl.FileSystemAccessRule($grupo, $permiso, "ContainerInherit, ObjectInherit", "None", "Allow")
-                $acl.SetAccessRule($regla)
-                Set-Acl $carpeta $acl
+            # Función para agregar permisos
+            function Agregar-Permisos {
+                param (
+                    [string]$ruta
+                )
+                if (Test-Path $ruta) {
+                    $acl = Get-Acl $ruta
+                    $regla = New-Object System.Security.AccessControl.FileSystemAccessRule($grupo, $permiso, "ContainerInherit, ObjectInherit", "None", "Allow")
+                    $acl.SetAccessRule($regla)
+                    Set-Acl $ruta $acl
+                    Write-Host "Se agrego permisos al grupo IIS_IUSRS a la $ruta."
+                }
+                else {
+                    Write-Host "La carpeta $ruta no existe."
+                }
             }
-            else {
-                Write-Host "La carpeta especificada no existe."
-            }
+
+            # Llamar a la función para cada carpeta
+            Agregar-Permisos $carpeta1
+            Agregar-Permisos $carpeta2
    
             # path where this the file compress
             $compressedFilePath = "C:\inetpub\versiones\$numversion.zip"
