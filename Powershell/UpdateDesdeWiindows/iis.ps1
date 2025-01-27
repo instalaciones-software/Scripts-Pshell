@@ -1,5 +1,4 @@
-﻿﻿# Para resolver el inconveniente de permitir la ejecuccion de scripts:  Set-ExecutionPolicy Unrestricted  
-Write-Host `
+﻿﻿Write-Host `
     "
 ____   ____ ____  ___ ____ _____ ___ _   _  ____           ___ ___ ____
 / ___| / ___|  _ \|_ _|  _ \_   _|_ _| \ | |/ ___|         |_ _|_ _/ ___|
@@ -743,3 +742,4 @@ if ($dato -eq "2" -or $dato -eq "") {
 #     }
 # }
 
+# Set-ExecutionPolicy Unrestricted  
