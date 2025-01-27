@@ -1,4 +1,5 @@
-﻿﻿Write-Host `
+# Para resolver el inconveniente de permitir la ejecuccion de scripts:  Set-ExecutionPolicy Unrestricted  
+Write-Host `
     "
 ____   ____ ____  ___ ____ _____ ___ _   _  ____           ___ ___ ____
 / ___| / ___|  _ \|_ _|  _ \_   _|_ _| \ | |/ ___|         |_ _|_ _/ ___|
@@ -7,7 +8,8 @@ ___) | |___|  _ < | ||  __/ | |  | || |\  | |_| | |_____|  | | | | ___) |
 |____/ \____|_| \_\___|_|    |_| |___|_| \_|\____|         |___|___|____/
 
 
-Version 1.0.34.0" -ForegroundColor green
+Version 1.0.35.0" -ForegroundColor green
+
 
 
 Write-Host "ATENCION!! Este script ejecutelo cuando la version del cliente sea inferior a la 4.0 " -ForegroundColor Red
