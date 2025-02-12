@@ -1,4 +1,9 @@
+
+
 #!/bin/bash
+
+
+# version compatible ubuntu linux 20.04.6
 
 # Install pre-requisite packages.
 
@@ -6,7 +11,7 @@ sudo apt-get install -y wget apt-transport-https software-properties-common
 
 
 # Download the Microsoft repository keys
-wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb #/ftp/Instaladores/pwshLinux alli se encuntra el paquete deb
 
 
 # Register the Microsoft repository keys
