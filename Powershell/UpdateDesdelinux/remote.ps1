@@ -59,7 +59,7 @@ if ($codigoIngresado -eq $codigo -or $codigoIngresado -eq "yeminus") {
         "
          Conexion Establecida
 
-Script Version 1.0.34.0" -ForegroundColor green
+Script Version 1.0.35.0" -ForegroundColor green
 
     Write-Host "Sitios Web Actuales que se pueden actualizar:" -ForegroundColor Cyan 
     Write-Host $appcmdPath2 -NoNewline
@@ -301,25 +301,36 @@ Script Version 1.0.34.0" -ForegroundColor green
                 C:\Windows\system32\inetsrv\appcmd add vdir /app.name:$sitioWeb/$listmodel /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
     
                 # add pool app 
-                & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$listmodel /processModel.identityType:"LocalSystem" 1>$null
+                & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitioWeb.$listmodel /processModel.identityType:"ApplicationPoolIdentity" 1>$null
          
             }
 
-            # Define la ruta de la carpeta y el usuario
-            $carpeta = "C:\inetpub\wwwroot\$sitioWeb"
+            # Define la ruta de las carpetas y el grupo
+            $carpeta1 = "C:\inetpub\wwwroot\$sitioWeb"
+            $carpeta2 = "$rutarecursos"
             $grupo = "IIS_IUSRS"  
+            $permiso = [System.Security.AccessControl.FileSystemRights]::Modify
 
-            # Asegúrate de que la carpeta existe
-            if (Test-Path $carpeta) {
-                $acl = Get-Acl $carpeta
-                $permiso = [System.Security.AccessControl.FileSystemRights]::Modify
-                $regla = New-Object System.Security.AccessControl.FileSystemAccessRule($grupo, $permiso, "ContainerInherit, ObjectInherit", "None", "Allow")
-                $acl.SetAccessRule($regla)
-                Set-Acl $carpeta $acl
+            # Función para agregar permisos
+            function Agregar-Permisos {
+                param (
+                    [string]$ruta
+                )
+                if (Test-Path $ruta) {
+                    $acl = Get-Acl $ruta
+                    $regla = New-Object System.Security.AccessControl.FileSystemAccessRule($grupo, $permiso, "ContainerInherit, ObjectInherit", "None", "Allow")
+                    $acl.SetAccessRule($regla)
+                    Set-Acl $ruta $acl
+                    Write-Host "Se agrego permisos al grupo IIS_IUSRS a la $ruta."
+                }
+                else {
+                    Write-Host "La carpeta $ruta no existe."
+                }
             }
-            else {
-                Write-Host "La carpeta especificada no existe."
-            }
+
+            # Llamar a la función para cada carpeta
+            Agregar-Permisos $carpeta1
+            Agregar-Permisos $carpeta2
    
             # path where this the file compress
             $compressedFilePath = "C:\inetpub\versiones\$numversion.zip"
