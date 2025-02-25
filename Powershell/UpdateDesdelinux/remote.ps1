@@ -586,7 +586,7 @@ do {
                 $codigo = Get-Random -Minimum 10000 -Maximum 99999
 
                 # Descargar archivo ps1 en los servidores hosting
-                 Invoke-WebRequest -Uri "https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/remote.ps1" -OutFile "E:\apps\geminus\inst\remote.ps1"
+                Invoke-WebRequest -Uri "https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/remote.ps1" -OutFile "E:\apps\geminus\inst\remote.ps1"
            
                 # ENVIAR CODIGO DE ACCESO PARA REALIZAR LA ACTUALIZACION 
                 $EmailDestinatario = "instalaciones@yeminus.com,directorsoporte@yeminus.com,soporte3@yeminus.com,tics@yeminus.com,jpineda@yeminus.com,instalaciones2@yeminus.com" # Correos a enviar
@@ -675,8 +675,7 @@ do {
             $destinoRuta = "C:\inetpub\wwwroot\$sitiosWeb"          
             $modulosRuta = "C:\inetpub\wwwroot\$sitiosWeb\modules"   
      
-            & $comandoAppCmd\appcmd stop apppool $sitiosWeb 1>$null
-     
+                 
             if (-Not (Test-Path $destinoRuta)) {
                 New-Item -ItemType Directory -Force -Path $destinoRuta
             }
@@ -711,7 +710,10 @@ do {
      
                 }
                 elseif ($archivo.Name -eq "yeminus.zip") {
+                    & $comandoAppCmd\appcmd stop apppool $sitiosWeb 1>$null
                     Remove-Item  -Force -Recurse "C:\inetpub\wwwroot\$sitiosWeb\$sitiosWeb" 
+                    & $comandoAppCmd\appcmd start apppool $sitiosWeb 1>$null 
+
 
                     $carpetaDestino = Join-Path $destinoRuta $nombreCarpeta
                  
@@ -740,7 +742,6 @@ do {
                 }
             }
              
-            & $comandoAppCmd\appcmd start apppool $sitiosWeb 1>$null 
      
             #LLAMAR LA URL
             $urlYem = [System.Environment]::GetEnvironmentVariable("${nombresSitiosWeb}BASEURLyeminus", "Machine")
@@ -751,52 +752,53 @@ do {
                      (Get-Content "C:\inetpub\wwwroot\$sitiosweb\$sitiosweb\main.09bf5c1c4ec603e4.js") -replace "https://desarrollo.yeminus.com:8080/", $urlYem2  | Set-Content "C:\inetpub\wwwroot\$sitiosweb\$sitiosweb\main.09bf5c1c4ec603e4.js"
                      (Get-Content "C:\inetpub\wwwroot\$sitiosweb\$sitiosweb\index.html") -replace "/yeminus/", "/$nombresSitiosWeb/"  | Set-Content "C:\inetpub\wwwroot\$sitiosweb\$sitiosweb\index.html"
      
-                     # eliminar archivos 
+            # eliminar archivos 
 
-                     if ($sitiosWeb -ne "yeminus" -and $sitiosWeb -ne "yeminus2" -and $sitiosWeb -ne "yeminusweb") { #revisar el lunes
+            if ($sitiosWeb -ne "yeminus" -and $sitiosWeb -ne "yeminus2" -and $sitiosWeb -ne "yeminusweb") {
+                #revisar el lunes
                     
-                        Rename-Item -Path "C:\inetpub\wwwroot\$sitiosWeb\yeminus" -NewName "$sitiosWeb"
-                    }
-                        Remove-Item  -Force -Recurse "C:\inetpub\versiones\"  -Exclude *.zip 
-                        Remove-Item  -Force  -Recurse "C:\inetpub\wwwroot\$sitiosWeb\*.zip"  
+                Rename-Item -Path "C:\inetpub\wwwroot\$sitiosWeb\yeminus" -NewName "$sitiosWeb"
+            }
+            Remove-Item  -Force -Recurse "C:\inetpub\versiones\"  -Exclude *.zip 
+            Remove-Item  -Force  -Recurse "C:\inetpub\wwwroot\$sitiosWeb\*.zip"  
                 
      
 
-                        if ($sitiosWeb -ne "yeminus" -or $sitiosWeb -ne "yeminus2" -or $sitiosWeb -ne "yeminusweb") {
-                            #Enviar correo para confirmar actualizacion del yeminus web, envia cuando el sitio web no se llama yeminus es decir envia cuando se actualiza hosting..       
-                            if ($sitiosWeb -ne "yeminus" -or $sitiosWeb -ne "yeminus2" ) {
-                                $EmailDestinatario = "instalaciones@yeminus.com" # Correos a enviar
-                                $EmailEmisor = "noresponder@yeminus.com"
-                                $Asunto = "Actualizacion de los sitios web $sitiosWeb con Version N. Parche $numversion "
-                                $sitiosWeb = $sitiosWeb.ToLower()
-                                $CuerpoEnHTML = "Cordial saludo, se realiza la actualizacion del yeminus web a los sitios $sitiosWeb con las siguientes 
+            if ($sitiosWeb -ne "yeminus" -or $sitiosWeb -ne "yeminus2" -or $sitiosWeb -ne "yeminusweb") {
+                #Enviar correo para confirmar actualizacion del yeminus web, envia cuando el sitio web no se llama yeminus es decir envia cuando se actualiza hosting..       
+                if ($sitiosWeb -ne "yeminus" -or $sitiosWeb -ne "yeminus2" ) {
+                    $EmailDestinatario = "instalaciones@yeminus.com" # Correos a enviar
+                    $EmailEmisor = "noresponder@yeminus.com"
+                    $Asunto = "Actualizacion de los sitios web $sitiosWeb con Version N. Parche $numversion "
+                    $sitiosWeb = $sitiosWeb.ToLower()
+                    $CuerpoEnHTML = "Cordial saludo, se realiza la actualizacion del yeminus web a los sitios $sitiosWeb con las siguientes 
                                         
                                         <b><p>MODULOS: $parche</p></b>
                                 
                                         
                                         <b><p>URL WEB:$urlcomplet</p></b>
                                         <p>Atentamente area de Servicio al cliente</p>"
-                                $SMTPServidor = "mail.yeminus.com"
-                                $CodificacionCaracteres = [System.Text.Encoding]::UTF8
+                    $SMTPServidor = "mail.yeminus.com"
+                    $CodificacionCaracteres = [System.Text.Encoding]::UTF8
                     
-                                try {
-                                    $SMTPMensaje = New-Object System.Net.Mail.MailMessage($EmailEmisor, $EmailDestinatario, $Asunto, $CuerpoEnHTML)
-                                    $SMTPMensaje.IsBodyHtml = $true
-                                    $SMTPMensaje.BodyEncoding = $CodificacionCaracteres
-                                    $SMTPMensaje.SubjectEncoding = $CodificacionCaracteres
-                                    $SMTPCliente = New-Object Net.Mail.SmtpClient($SMTPServidor, 587)
-                                    $SMTPCliente.EnableSsl = $true
-                                    $SMTPCliente.Credentials = New-Object System.Net.NetworkCredential($EmailEmisor, "12345Aa$@/*");
-                                    $SMTPCliente.Send($SMTPMensaje)
+                    try {
+                        $SMTPMensaje = New-Object System.Net.Mail.MailMessage($EmailEmisor, $EmailDestinatario, $Asunto, $CuerpoEnHTML)
+                        $SMTPMensaje.IsBodyHtml = $true
+                        $SMTPMensaje.BodyEncoding = $CodificacionCaracteres
+                        $SMTPMensaje.SubjectEncoding = $CodificacionCaracteres
+                        $SMTPCliente = New-Object Net.Mail.SmtpClient($SMTPServidor, 587)
+                        $SMTPCliente.EnableSsl = $true
+                        $SMTPCliente.Credentials = New-Object System.Net.NetworkCredential($EmailEmisor, "12345Aa$@/*");
+                        $SMTPCliente.Send($SMTPMensaje)
                     
-                                    }  
+                    }  
                     
                     
-                                 catch {
-                                    Write-Error -Message "Error al enviar correo electronico"
-                                 } 
+                    catch {
+                        Write-Error -Message "Error al enviar correo electronico"
+                    } 
                  
-                        }
+                }
             }
 
             $intento = 0
