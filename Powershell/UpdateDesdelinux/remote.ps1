@@ -836,7 +836,7 @@ do {
                     
                     #Write-Host "La regla para bloquear la IP $ip ha sido eliminada."
                     
-                    $ruta = "C:\failed_logins_log.txt"
+                    $ruta = "E:\failed_logins_log.txt"
                     $patron = "Intento fallido desde IP: $ip" 
                     # Buscar archivo de failed login
                     
@@ -846,7 +846,7 @@ do {
                     $patron = "Intento fallido desde IP: $ip"
                     
                     
-                    (Get-Content "C:\failed_logins_log.txt") -replace "$ip", "ok" | Set-Content "C:\failed_logins_log.txt"
+                    (Get-Content "E:\failed_logins_log.txt") -replace "$ip", "ok" | Set-Content "E:\failed_logins_log.txt"
                     
                     
                     Write-Host "proceso finalizado con exito"
