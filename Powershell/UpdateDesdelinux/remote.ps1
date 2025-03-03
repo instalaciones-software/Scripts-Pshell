@@ -7,7 +7,7 @@ Write-Host `
     "
     Conexion Establecida
     
-    Version Script 2.0.0.1" -ForegroundColor green
+    Version Script 2.0.0.2" -ForegroundColor green
     
 
 
@@ -57,6 +57,9 @@ $addfile = mkdir "C:\inetpub\versiones\" 2>$null
 #contador inicial para ejecutar
 $intento = 0
 
+
+#Set-ExecutionPolicy Unrestricted  #ejecutar cuandola ejecución de scripts está deshabilitada
+
 do {
 
 
@@ -66,7 +69,7 @@ do {
             1. Actualizar version completa (ENTER)
             2. Actualizar parche 
             3. Desbloquear ip publica cliente
-            4. Reiciar el api (BETA)
+            4. Reiciar el api 
             Opcion"
             
         
@@ -236,6 +239,14 @@ do {
                     
             #si el sitio web se llama yeminus, yeminus2 yeminusweb va solicitar la clave del usuario administrador
             if ($sitiosWeb -eq "yeminus" -or $sitiosWeb -eq "yeminusweb" -or $sitiosWeb -eq "yeminus2") {
+
+
+                # registrar eventos para cuando se realice la actualizacion del yeminus web en servidores propios
+                 New-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" 2>$null
+                 Write-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" -EntryType Information -EventID 300  -Message "Se realizo la actualizacion build completa del yeminus web a la version: $numversion al sitio web: $sitiosWeb"
+
+                 Read-Host
+
                 $nombreUsuario = $env:USERNAME
                     
                 $contrasena = Read-Host "¿Contraseña del usuario $env:USERNAME ?" -AsSecureString
@@ -669,8 +680,16 @@ do {
      
             }
 
+            if($sitiosWeb -eq "yeminus" -or $sitiosWeb -eq "yeminus2"){
+            
+                 # registrar eventos para cuando se realice la actualizacion del yeminus web en servidores propios
+                 New-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" 2>$null
+                 Write-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" -EntryType Information -EventID 300  -Message "Se realizo la actualizacion del yeminus web a la version parche: $numversion al sitio web: $sitiosWeb"   
+            }
 
-            # aqui empeieza a desplegar la version
+            Read-Host
+
+            # aqui empieza a desplegar la version
             $zipArchivo = "C:\inetpub\versiones\$numversion.zip"
             $destinoRuta = "C:\inetpub\wwwroot\$sitiosWeb"          
             $modulosRuta = "C:\inetpub\wwwroot\$sitiosWeb\modules"   
@@ -752,10 +771,9 @@ do {
                      (Get-Content "C:\inetpub\wwwroot\$sitiosweb\$sitiosweb\main.09bf5c1c4ec603e4.js") -replace "https://desarrollo.yeminus.com:8080/", $urlYem2  | Set-Content "C:\inetpub\wwwroot\$sitiosweb\$sitiosweb\main.09bf5c1c4ec603e4.js"
                      (Get-Content "C:\inetpub\wwwroot\$sitiosweb\$sitiosweb\index.html") -replace "/yeminus/", "/$nombresSitiosWeb/"  | Set-Content "C:\inetpub\wwwroot\$sitiosweb\$sitiosweb\index.html"
      
-            # eliminar archivos 
-
+            
             if ($sitiosWeb -ne "yeminus" -and $sitiosWeb -ne "yeminus2" -and $sitiosWeb -ne "yeminusweb") {
-                #revisar el lunes
+                
                     
                 Rename-Item -Path "C:\inetpub\wwwroot\$sitiosWeb\yeminus" -NewName "$sitiosWeb"
             }
@@ -764,7 +782,7 @@ do {
                 
      
 
-            if ($sitiosWeb -ne "yeminus" -or $sitiosWeb -ne "yeminus2" -or $sitiosWeb -ne "yeminusweb") {
+            if ($sitiosWeb -ne "yeminus" -and $sitiosWeb -ne "yeminus2" -and $sitiosWeb -ne "yeminusweb") {
                 #Enviar correo para confirmar actualizacion del yeminus web, envia cuando el sitio web no se llama yeminus es decir envia cuando se actualiza hosting..       
                 if ($sitiosWeb -ne "yeminus" -or $sitiosWeb -ne "yeminus2" ) {
                     $EmailDestinatario = "instalaciones@yeminus.com" # Correos a enviar
@@ -871,8 +889,70 @@ do {
             $intento++
         }
         if ($dato -eq "4") {
-            Write-Host "la opcion se encuentra en pruebas" -ForegroundColor Yellow
+            $key="YemCol*" 
+            $tiempo=0
+            
+            do {
+            
+                $acceso= Read-Host "ingrese la clave de acceso"
+            
+            if ($acceso -eq "$key"-or $acceso -eq "insta2025*") {
+                Write-Host `
+                "
+              _ __ ___| |__   ___   ___ | |_    __ _ _ __  _ 
+             | '__/ _ \ '_ \ / _ \ / _ \| __|  / _` | '_ \| |
+             | | |  __/ |_) | (_) | (_) | |_  | (_| | |_) | |
+             |_|  \___|_.__/ \___/ \___/ \__|  \__,_| .__/|_|
+                                                    | |                                    
+                " -ForegroundColor Green
+            
+            # Importa el módulo WebAdministration
+            Import-Module WebAdministration
+            
+            
+            # Define el nombre del sitio a reiniciar
+            $sitio = Read-Host "Ingresa el nombre del sitio que deseas reiniciar"
+            
+            # Detener Poolapps sitio web
+            $comandoAppCmd = "C:\Windows\System32\inetsrv\" 
+            
+            Write-Host "Deteniendo Poolapps $sitio" -ForegroundColor Yellow
+            
+            & $comandoAppCmd\appcmd stop apppool $sitio
+            
             sleep -Seconds 2
+            
+            # Iniciar Poolapps sitio web
+            
+            & $comandoAppCmd\appcmd start apppool $sitio
+            
+            # Detener el sitio web
+            
+            Write-Host "Deteniendo Sitio $sitio" -ForegroundColor Yellow
+            
+            & $comandoAppCmd\appcmd stop site $sitio
+            
+            sleep -Seconds 2
+            
+            # Iniciar el sitio web 
+            
+            & $comandoAppCmd\appcmd start site $sitio
+            
+            
+            Write-Host "El api $sitio ha sido reiniciado correctamente."
+            
+            Break
+            }
+            
+            
+            else {
+            Write-Host "clave incorrecta"
+            }
+                
+            } while ($tiempo -lt 2)
+            
+            
+            
         }
     }  
     
