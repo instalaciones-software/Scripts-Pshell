@@ -245,7 +245,6 @@ do {
                  New-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" 2>$null
                  Write-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" -EntryType Information -EventID 300  -Message "Se realizo la actualizacion build completa del yeminus web a la version: $numversion al sitio web: $sitiosWeb"
 
-                 Read-Host
 
                 $nombreUsuario = $env:USERNAME
                     
@@ -451,20 +450,16 @@ do {
                     
                 # show the files txt 
                 $numversion = Get-Content -Path $rutaArchivo
-
-                Write-Host "$contenidoArchivo"
-                
-
                      
                 # envia correo si el sitio web se llama diferente a yeminus, yeminusweb
                 if ($sitiosWeb -ne "yeminus" -and $sitiosWeb -ne "yeminusweb" -and $sitiosWeb -ne "yeminus2") {
                                 
                                
-                    $EmailDestinatario = "instalaciones@yeminus.com"
+                    $EmailDestinatario = "instalaciones@yeminus.com,jpineda@yeminus.com,directorsoporte@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,tics@yeminus.com,vquintero@yeminus.com"
                     $EmailEmisor = "noresponder@yeminus.com"
                     $Asunto = "📌Actualización Empresa $sitiosWeb Version $numversion"
                     $sitiosWeb = $sitiosWeb.ToLower()
-                    $CuerpoEnHTML = "<p>Cordial saludo, Se realiza la actualizacion del yeminus web a la empresa <b>$sitiosWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
+                    $CuerpoEnHTML = "<p>Cordial saludo, Se realiza la actualizacion del yeminus web a la empresa <b>$sitiosWeb  con version $numversion este cliente tenia la version $file </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
                     
                             <p><b>Url Web Cliente:</b></p> $urlYem2
                             <p></p>
@@ -785,7 +780,7 @@ do {
             if ($sitiosWeb -ne "yeminus" -and $sitiosWeb -ne "yeminus2" -and $sitiosWeb -ne "yeminusweb") {
                 #Enviar correo para confirmar actualizacion del yeminus web, envia cuando el sitio web no se llama yeminus es decir envia cuando se actualiza hosting..       
                 if ($sitiosWeb -ne "yeminus" -or $sitiosWeb -ne "yeminus2" ) {
-                    $EmailDestinatario = "instalaciones@yeminus.com" # Correos a enviar
+                    $EmailDestinatario = "instalaciones@yeminus.com,jpineda@yeminus.com,directorsoporte@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,tics@yeminus.com,vquintero@yeminus.com" # Correos a enviar
                     $EmailEmisor = "noresponder@yeminus.com"
                     $Asunto = "Actualizacion de los sitios web $sitiosWeb con Version N. Parche $numversion "
                     $sitiosWeb = $sitiosWeb.ToLower()
