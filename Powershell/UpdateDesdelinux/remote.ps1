@@ -69,7 +69,7 @@ do {
             1. Actualizar version completa (ENTER)
             2. Actualizar parche 
             3. Desbloquear ip publica cliente
-            4. Reiciar el api 
+            4. Reiniciar el api 
             Opcion"
             
         
@@ -353,32 +353,32 @@ do {
                             
                 }
                     
-                # Define la ruta de las carpetas y el grupo
-                $carpeta1 = "C:\inetpub\wwwroot\$sitiosWeb"
-                $carpeta2 = "$rutarecursos"
-                $grupo = "IIS_IUSRS"  
-                $permiso = [System.Security.AccessControl.FileSystemRights]::Modify
+                # # Define la ruta de las carpetas y el grupo
+                # $carpeta1 = "C:\inetpub\wwwroot\$sitiosWeb"
+                # $carpeta2 = "$rutarecursos"
+                # $grupo = "IIS_IUSRS"  
+                # $permiso = [System.Security.AccessControl.FileSystemRights]::Modify
                     
-                # Función para agregar permisos
-                function Agregar-Permisos {
-                    param (
-                        [string]$ruta
-                    )
-                    if (Test-Path $ruta) {
-                        $acl = Get-Acl $ruta
-                        $regla = New-Object System.Security.AccessControl.FileSystemAccessRule($grupo, $permiso, "ContainerInherit, ObjectInherit", "None", "Allow")
-                        $acl.SetAccessRule($regla)
-                        Set-Acl $ruta $acl
-                        Write-Host "Se agrego permisos al grupo IIS_IUSRS a la $ruta."
-                    }
-                    else {
-                        Write-Host "La carpeta $ruta no existe."
-                    }
-                }
+                # # Función para agregar permisos
+                # function Agregar-Permisos {
+                #     param (
+                #         [string]$ruta
+                #     )
+                #     if (Test-Path $ruta) {
+                #         $acl = Get-Acl $ruta
+                #         $regla = New-Object System.Security.AccessControl.FileSystemAccessRule($grupo, $permiso, "ContainerInherit, ObjectInherit", "None", "Allow")
+                #         $acl.SetAccessRule($regla)
+                #         Set-Acl $ruta $acl
+                #         Write-Host "Se agrego permisos al grupo IIS_IUSRS a la $ruta."
+                #     }
+                #     else {
+                #         Write-Host "La carpeta $ruta no existe."
+                #     }
+                # }
                     
-                # Llamar a la función para cada carpeta
-                Agregar-Permisos $carpeta1
-                Agregar-Permisos $carpeta2
+                # # Llamar a la función para cada carpeta
+                # Agregar-Permisos $carpeta1
+                # Agregar-Permisos $carpeta2
                     
                 # path where this the file compress
                 $compressedFilePath = "C:\inetpub\versiones\$numversion.zip"

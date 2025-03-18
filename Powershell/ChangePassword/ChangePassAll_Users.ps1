@@ -26,7 +26,7 @@ $usernames = @(
     @{ Name = "consultor-02"; ZipPassword = "ChangePassZip" }       # Juli Implementacion
     @{ Name = "consultor-03"; ZipPassword = 'ChangePassZip' }       # Olguita Implementacion
     @{ Name = "consultor-04"; ZipPassword = "ChangePassZip" }       # Sebastian Implementacion
-    @{ Name = "consultor-05"; ZipPassword = "ChangePassZip" }       # Duglas Implementacion
+    @{ Name = "consultor-05"; ZipPassword = "ChangePassZip" }       # Daniel Implementacion
     @{ Name = "consultor-06"; ZipPassword = "ChangePassZip" }       # heidy Implementacion
     @{ Name = "consultor-07"; ZipPassword = "ChangePassZip" }       # Diego  Implementacion
     @{ Name = "consultor-08"; ZipPassword = "ChangePassZip" }       # Diana Implementacion
@@ -83,7 +83,7 @@ $CodificacionCaracteres = [System.Text.Encoding]::UTF8
 $ArchivoAdjunto = "$routezip"
 
 
-$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,vquintero@yeminus.com,scuervo@yeminus.com,jpineda@yeminus.com,oflorez@yeminus.com,dmarin@yeminus.com,jrodriguez@yeminus.com,despinal@yeminus.com"
+$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,vquintero@yeminus.com,scuervo@yeminus.com,jpineda@yeminus.com,oflorez@yeminus.com,dtaborda@yeminus.com,jrodriguez@yeminus.com,despinal@yeminus.com"
 #$CCO = "instalaciones@yeminus.com" #pruebas
 
 try {
