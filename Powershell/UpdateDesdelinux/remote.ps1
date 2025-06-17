@@ -7,7 +7,7 @@ Write-Host `
     "
     Conexion Establecida
     
-    Version Script 2.0.0.2" -ForegroundColor green
+    Version Script 3.0.0.0" -ForegroundColor green
     
 
 
@@ -64,21 +64,32 @@ do {
 
 
     $dato = Read-Host " 
-            Escoje la opcion.. (1 a 4)
+            Escoje la opcion.. (1 a 10)
         
             1. Actualizar version completa (ENTER)
             2. Actualizar parche 
             3. Desbloquear ip publica cliente
-            4. Reiniciar el api 
+            4. Reiniciar el api
+            5. Invoke comandos (ALL SERVER) 
+            6. Backup File
+            7. Block Ip
+            8. ChangePassAll_Users
+            9. pshellChange
+            10. Download Version
+
+            
             Opcion"
             
         
     # Condicion Principal
-    if ($dato -eq "1" -or $dato -eq "2" -or $dato -eq "3" -or $dato -eq "4" -or $dato -eq "") {
-                
+    if ($dato -eq "1" -or $dato -eq "2" -or $dato -eq "3" -or $dato -eq "4" -or $dato -eq "5" -or $dato -eq "6" -or $dato -eq "7" -or $dato -eq "8" -or $dato -eq "9" -or $dato -eq "") {
+          
+        #1. Actualizar version completa (ENTER)
         if ($dato -eq "1" -or $dato -eq "") {
                     
-              
+            Write-Host "ESTE PASO ES PARA ACTUALIZAR LA VERSIÓN COMPLETA DE YEMINUS WEB. ESTE SCRIPT FUNCIONA A PARTIR DE LA VERSIÓN 4.0." -ForegroundColor Yellow
+
+            sleep -Seconds 3
                         
             Write-Host "Sitios Actuales que se pueden actualizar:" -ForegroundColor Cyan 
             Write-Host $appcmdPath2 -NoNewline # Aqui muestra los sitios que tiene el servidor IIS
@@ -242,8 +253,8 @@ do {
 
 
                 # registrar eventos para cuando se realice la actualizacion del yeminus web en servidores propios
-                 New-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" 2>$null
-                 Write-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" -EntryType Information -EventID 300  -Message "Se realizo la actualizacion build completa del yeminus web a la version: $numversion al sitio web: $sitiosWeb"
+                New-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" 2>$null
+                Write-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" -EntryType Information -EventID 300  -Message "Se realizo la actualizacion build completa del yeminus web a la version: $numversion al sitio web: $sitiosWeb"
 
 
                 $nombreUsuario = $env:USERNAME
@@ -493,10 +504,14 @@ do {
         
             $intento = 0
         } 
+
+        #2. Actualizar parche 
         if ($dato -eq "2" ) {
-                    
               
-           
+            Write-Host "ESTE PASO SE EJECUTA CUANDO LA VERSION SALGA CON UN PARCHE, ES DECIR ALGUN .API QUE SE HAYA SOLUCINADO LA INCONSISTENCIA, ESTE PASO NO FUNCIONA PARA ACTUALIZAR VERSION COMPLETA" -ForegroundColor Yellow
+              
+            sleep -Seconds 3
+
             Write-Host "Sitios Actuales que se pueden actualizar:" -ForegroundColor Cyan 
             Write-Host $appcmdPath2 -NoNewline # Aqui muestra los sitios que tiene el servidor IIS
             Write-Host
@@ -675,11 +690,11 @@ do {
      
             }
 
-            if($sitiosWeb -eq "yeminus" -or $sitiosWeb -eq "yeminus2"){
+            if ($sitiosWeb -eq "yeminus" -or $sitiosWeb -eq "yeminus2") {
             
-                 # registrar eventos para cuando se realice la actualizacion del yeminus web en servidores propios
-                 New-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" 2>$null
-                 Write-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" -EntryType Information -EventID 300  -Message "Se realizo la actualizacion del yeminus web a la version parche: $numversion al sitio web: $sitiosWeb"   
+                # registrar eventos para cuando se realice la actualizacion del yeminus web en servidores propios
+                New-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" 2>$null
+                Write-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" -EntryType Information -EventID 300  -Message "Se realizo la actualizacion del yeminus web a la version parche: $numversion al sitio web: $sitiosWeb"   
             }
 
             Read-Host
@@ -816,8 +831,14 @@ do {
 
             $intento = 0
         }         
+
+        #3. Desbloquear ip publica cliente
         if ($dato -eq "3") {
            
+            Write-Host "ESTA OPCION ES PARA DESBLOQUEAR IP PUBLICA DEL CLIENTE" -ForegroundColor Yellow
+
+            sleep -Seconds 3
+
             $time = 0
            
             do {
@@ -878,22 +899,35 @@ do {
                 $intento = 0
                     
                     
-            } while ($time -lt 2 )
+                else {
+                    $intento++
+                }
+            } 
+            
+            while ($time -lt 2 )
+            
+
+
+          
         }
-        else {
-            $intento++
-        }
+
+        # 4. Reiniciar el api
         if ($dato -eq "4") {
-            $key="YemCol*" 
-            $tiempo=0
+
+            Write-Host "ESTA OPCION ES PARA REINICIAR EL API DE LOS SITIOS WEB DE LOS CLIENTES, ESTO CONLLEVA A QUE EL SITIO WEB SE LES VA CAER POR UN MOMENTO" -ForegroundColor Yellow
+
+            sleep -Seconds 3
+
+            $key = "YemCol*" 
+            $tiempo = 0
             
             do {
             
-                $acceso= Read-Host "ingrese la clave de acceso"
+                $acceso = Read-Host "ingrese la clave de acceso"
             
-            if ($acceso -eq "$key"-or $acceso -eq "insta2025*") {
-                Write-Host `
-                "
+                if ($acceso -eq "$key" -or $acceso -eq "insta2025*") {
+                    Write-Host `
+                        "
               _ __ ___| |__   ___   ___ | |_    __ _ _ __  _ 
              | '__/ _ \ '_ \ / _ \ / _ \| __|  / _` | '_ \| |
              | | |  __/ |_) | (_) | (_) | |_  | (_| | |_) | |
@@ -901,58 +935,521 @@ do {
                                                     | |                                    
                 " -ForegroundColor Green
             
-            # Importa el módulo WebAdministration
-            Import-Module WebAdministration
+                    # Importa el módulo WebAdministration
+                    Import-Module WebAdministration
             
             
-            # Define el nombre del sitio a reiniciar
-            $sitio = Read-Host "Ingresa el nombre del sitio que deseas reiniciar"
+                    # Define el nombre del sitio a reiniciar
+                    $sitio = Read-Host "Ingresa el nombre del sitio que deseas reiniciar"
             
-            # Detener Poolapps sitio web
-            $comandoAppCmd = "C:\Windows\System32\inetsrv\" 
+                    # Detener Poolapps sitio web
+                    $comandoAppCmd = "C:\Windows\System32\inetsrv\" 
             
-            Write-Host "Deteniendo Poolapps $sitio" -ForegroundColor Yellow
+                    Write-Host "Deteniendo Poolapps $sitio" -ForegroundColor Yellow
             
-            & $comandoAppCmd\appcmd stop apppool $sitio
+                    & $comandoAppCmd\appcmd stop apppool $sitio
             
-            sleep -Seconds 2
+                    sleep -Seconds 2
             
-            # Iniciar Poolapps sitio web
+                    # Iniciar Poolapps sitio web
             
-            & $comandoAppCmd\appcmd start apppool $sitio
+                    & $comandoAppCmd\appcmd start apppool $sitio
             
-            # Detener el sitio web
+                    # Detener el sitio web
             
-            Write-Host "Deteniendo Sitio $sitio" -ForegroundColor Yellow
+                    Write-Host "Deteniendo Sitio $sitio" -ForegroundColor Yellow
             
-            & $comandoAppCmd\appcmd stop site $sitio
+                    & $comandoAppCmd\appcmd stop site $sitio
             
-            sleep -Seconds 2
+                    sleep -Seconds 2
             
-            # Iniciar el sitio web 
+                    # Iniciar el sitio web 
             
-            & $comandoAppCmd\appcmd start site $sitio
-            
-            
-            Write-Host "El api $sitio ha sido reiniciado correctamente."
-            
-            Break
-            }
+                    & $comandoAppCmd\appcmd start site $sitio
             
             
-            else {
-            Write-Host "clave incorrecta"
-            }
+                    Write-Host "El api $sitio ha sido reiniciado correctamente."
+            
+                    Break
+                }
+            
+            
+                else {
+                    Write-Host "clave incorrecta"
+                }
                 
             } while ($tiempo -lt 2)
             
             
             
         }
-    }  
+        
+        #5. Invoke comandos (ALL SERVER) 
+        if ($dato -eq "5") {
+
+            Write-Host "Esta opcion es para ejecutar un solo script en todos los servidores de yeminus" -ForegroundColor Yellow
+
+            sleep -Seconds 3
+
+            $tiempo = 0
+           
+            $key = Read-Host "Ingresa la clave"
+
+            do {
+                
+                if ($key -eq "Ocsxxi%123%") {
+
+                    $list = @(
+                        "inversionesfzz.yeminus.com",
+                        "cercafe.yeminus.com",
+                        "telematica.yeminus.com",
+                        "fxmoda.yeminus.com",
+                        "dys.yeminus.com",
+                        "agregadosexito.yeminus.com",
+                        "dima.yeminus.com",
+                        "sma.yeminus.com",
+                        "energitel.yeminus.com",
+                        "farmart.yeminus.com",
+                        "comercialdelicores.yeminus.com",
+                        "manzanares.yeminus.com",
+                        "redvital9.yeminus.com",
+                        "yeminus.yeminus.com"
+                    )
+
+                    $file = Read-Host "Por favor indicar cual es la ruta del archivo ps1"
+                    $pass = Get-Credential -UserName "pshell" -Message "Ingresa la contraseña"
+
+                    $trustedHosts = $list -join ","
+                    Set-Item WSMan:\localhost\Client\TrustedHosts -Value $trustedHosts -Force
+
+                    foreach ($server in $list) {
+                        try {
+                            Write-Host "Ejecutando en $server..."
+                            Invoke-Command -ComputerName $server -FilePath $file -Credential $pass -Authentication Negotiate -ErrorAction Stop
+                            Write-Host "Ejecutado correctamente en $server"
+                        }
+                        catch {
+                            Write-Error "Error al ejecutar en $server $_"
+                        }
+                    }
+
+                    Clear-Item -Path WSMan:\localhost\Client\TrustedHosts -Force
+    
+                }
+
+                break
+
+            } while ($tiempo -lt 2)
+
+        }
+
+        #6. Backup File
+        if ($dato -eq "6") {
+
+            $pass = Read-Host "Por favor ingresa la clave"
+            
+            if ($pass -eq "insta2025*") {
+
+                sleep -Seconds 3
+                
+                Write-Host "Este paso es para hacer backup de los formatos de las empresas" -ForegroundColor Yellow
+
+                sleep -Seconds 3
+
+                do {
+
+                    $rutaCarpeta = "E:\backups"
+
+                    if (Test-Path $rutaCarpeta) {
+                        Write-Host "La carpeta ya existe en $rutaCarpeta"
+                    }
+                    else {
+                        New-Item -ItemType Directory -Path $rutaCarpeta
+                        Write-Host "Se ha creado la carpeta en $rutaCarpeta"
+                    }
+
+                    $rutaArchivo = 'E:\Apps\list.txt'
+                    $contenidoArchivo = Get-Content -Path $rutaArchivo
+
+    
+                    $fechaini = Get-Date -Format 'yyyyMMdd'
+                    $currentDate = [datetime]::ParseExact($fechaini, 'yyyyMMdd', $null)
+
+
+                    $previousDate = $currentDate.AddDays(-3698) # 8 dias atras 
+                    $fechaanterior = $previousDate.ToString('yyyyMMdd')
+
+
+                    $fechaactual = Get-Date -Format 'yyyyMMdd'
+
+  
+
+                    cd E:\Apps
+
+                    attrib -h +s /d *.*
+
+                    foreach ($name in $contenidoArchivo) {
+       
+                        robocopy "E:\Apps\$name\" "E:\backups\$name\" /XD 'adjuntos-correos' /s /z /maxage:$fechaanterior /minage:$fechaactual
+
+                        robocopy "C:\FirmaDigitalFE\" "E:\backups\FirmaDigitalFE\" /s /z /maxage:$fechaanterior /minage:$fechaactual
+    
+                    }
+
+                    #danny esta es la nueva linea hay que quemar la ruta del 7zip 
+
+                    & "C:\Program Files\7-Zip\7z.exe" a -tzip "E:\Back-$env:COMPUTERNAME-$fechaanterior-Al-$fechaactual.zip" "E:\backups" -mx=9
+
+
+                    #Compress-Archive  -force -Path  "E:\backups" -DestinationPath "E:\Back-$env:COMPUTERNAME-$fechaanterior-Al-$fechaactual.zip"
+
+                    Remove-Item -Recurse -Force "E:\backups"
+
+
+                    # Enviar correo
+
+
+                    $EmailDestinatario = "tics@yeminus.com"
+                    $EmailEmisor = "instalacionesyeminus@gmail.com"
+                    $Asunto = "!IMPORTANTE BACKUPS APP SRV-$env:COMPUTERNAME!"
+                    $CuerpoEnHTML = "Cordial saludo, Se hace backup del servidor <b>$env:COMPUTERNAME Recuerda que el archivo se almaceno en el FTP la ruta es ftp://files.yeminus.com/BackupEmpresas/BackupsAPP/ informacion guardada del dia $fechaanterior al $fechaactual . las empresas que estan en este servidor:</b><i>$contenidoArchivo<i/>"
+                    $SMTPServidor = "smtp.gmail.com"
+                    $CodificacionCaracteres = [System.Text.Encoding]::UTF8
+
+                    try {
+                        $SMTPMensaje = New-Object System.Net.Mail.MailMessage($EmailEmisor, $EmailDestinatario, $Asunto, $CuerpoEnHTML)
+                        $SMTPMensaje.IsBodyHtml = $true
+                        $SMTPMensaje.BodyEncoding = $CodificacionCaracteres
+                        $SMTPMensaje.SubjectEncoding = $CodificacionCaracteres
+                        $SMTPCliente = New-Object Net.Mail.SmtpClient($SMTPServidor, 587)
+                        $SMTPCliente.EnableSsl = $true
+                        $SMTPCliente.Credentials = New-Object System.Net.NetworkCredential($EmailEmisor, "mfjsthdtvacefkft");
+                        $SMTPCliente.Send($SMTPMensaje)
+ 
+                    }  
+
+
+                    catch {
+                        Write-Error -Message "Error al enviar correo electrónico"
+                    }
+
+
+                    & "C:\Program Files (x86)\WinSCP\WinSCP.com" /command "open ftp://empresabkup:empresabkup1*@files.yeminus.com" "put E:\Back-$env:COMPUTERNAME-$fechaanterior-Al-$fechaactual.zip /BackupEmpresas/BackupsAPP/" "exit"
+
+
+                    attrib +h +s /d *.*
+
+
+            
+                
+                } while ($tiempo -lt 2)
+
+            }
+
+        }
+
+        #7. BlockIP
+        if ($dato -eq "7") {
+          
+            Write-Host "Bloquear ip publica si hay mas intentos de 3 claves incorrectas" -ForegroundColor Yellow
+
+            sleep -Seconds 3 
+
+            $tiempo = 0
+
+            do {
+
+                # ParÃ¡metros del script
+                $logPath = "C:\failed_logins_log.txt"
+                $threshold = 5  # NÃºmero de intentos fallidos para bloquear la IP
+
+                # Verificar si el archivo de log existe, si no, crearlo
+                if (-not (Test-Path $logPath)) {
+                    New-Item -Path $logPath -ItemType File -Force
+                }
+
+                # Buscar eventos de intentos de inicio de sesiÃ³n fallidos (ID 4625) en los Ãºltimos 10 minutos
+                $failedLogins = Get-WinEvent -FilterHashtable @{LogName = 'Security'; Id = 4625; StartTime = (Get-Date).AddMinutes(-20) } | 
+                Where-Object { $_.Properties[19].Value -ne $null } |  # Asegurarse de que la IP estÃ© presente en la propiedad 19
+                ForEach-Object {
+                    [PSCustomObject]@{
+                        TimeGenerated = $_.TimeCreated
+                        IPAddress     = $_.Properties[19].Value  # Usar la propiedad correcta de "Source Network Address"
+                        UserName      = $_.Properties[5].Value   # Nombre de usuario de la propiedad 5
+                    }
+                }
+
+                # Registrar todas las IPs detectadas, incluso si no alcanzan el umbral
+                foreach ($login in $failedLogins) {
+                    Add-Content -Path $logPath -Value "$(Get-Date) - Intento fallido desde IP: $($login.IPAddress), Usuario: $($login.UserName)"
+                }
+
+                # Contar intentos fallidos por cada IP
+                $groupedLogins = $failedLogins | Group-Object IPAddress
+
+                foreach ($group in $groupedLogins) {
+                    if ($group.Count -ge $threshold) {
+                        $ip = $group.Name
+                        $users = $group.Group | Select-Object -ExpandProperty UserName -Unique -Join ", "
+
+                        # Revisar si ya ha sido bloqueada
+                        $alreadyBlocked = netsh advfirewall firewall show rule name=all | Select-String $ip
+                        if (-not $alreadyBlocked) {
+                            try {
+                                # Bloquear la IP en el Firewall de Windows
+                                Write-Host "Bloqueando IP: $ip con $($group.Count) intentos fallidos (Usuarios: $users)"
+                                netsh advfirewall firewall add rule name="Bloquear IP Maliciosa $ip" dir=in action=block remoteip=$ip
+                
+                                # Registrar el bloqueo en el log
+                                Add-Content -Path $logPath -Value "$(Get-Date) - IP $ip bloqueada por $($group.Count) intentos fallidos. Usuarios: $users."
+                            }
+                            catch {
+                                Write-Host "Error al bloquear la IP: $ip o escribir en el archivo de log."
+                            }
+                        }
+                    }
+                }
+
+                
+            } while ($tiempo -lt 2)
+            
+
+
+        }
+
+        #8. ChangePassAll_Users
+        if ($dato -eq "8") {
+
+
+            $pass = Read-Host "Ingresa la clave para poder continuar"
+
+
+            if ($pass -eq "insta2025*") {
+                    
+                Write-Host "Cambiar la contraseña de todos los usuarios de remoto" -ForegroundColor Yellow
+
+                sleep -Seconds 3
+            
+                do {
+                
+                    function Generate-RandomString {
+                        param (
+                            [int]$length = 12
+                        )
+    
+                        $chars = "QWERTYUIOPLKJHGFDASAZXCVBNMabcdefghjklmnbvcxz!#$%&'()*+,-./:;<=>?@[\]^_`{|}~123456789"
+    
+                        $randomString = -join ((1..$length) | ForEach-Object { $chars[(Get-Random -Minimum 0 -Maximum $chars.Length)] })
+    
+                        return $randomString
+                    }
+                    # Usuarios RDP 
+                    $usernames = @(   
+                        # Usuarios RDP 
+                        @{ Name = "epineda"; ZipPassword = "Pepito" }                      # Inge
+                        @{ Name = "administrator"; ZipPassword = "+-NewPw2024*#" }         # Danny Infraestructura
+                        @{ Name = "instalacion"; ZipPassword = "Ocsxxi%123%" }             # Diego Infraestructura
+                        @{ Name = "instalacion2"; ZipPassword = "Colombia2021**##" }       # Esteban Infraestructura
+                        @{ Name = "soporte-01"; ZipPassword = "Yeminus" }                  # Jarvy   Subgerente      
+                        @{ Name = "soporte-02"; ZipPassword = "15963Sopo#" }               # Harold  Director Mesa
+                        @{ Name = "soporte-03"; ZipPassword = "Lc1088022547" }             # Laura mesa
+                        @{ Name = "soporte-04"; ZipPassword = "Bardack085" }               # Jhon G mesa
+                        @{ Name = "soporte-05"; ZipPassword = "saar98." }                  # Stiven mesa
+                        @{ Name = "soporte-06"; ZipPassword = "Alana0803*" }               # Angelica mesa
+                        @{ Name = "soporte-07"; ZipPassword = "Sopyem10*" }                 # Julian mesa
+                        @{ Name = "consultor-01"; ZipPassword = "Valen9306." }             # Valentina mesa
+                        @{ Name = "consultor-02"; ZipPassword = "Jp1088353472#" }          # Juli implentacion
+                        @{ Name = "consultor-03"; ZipPassword = 'Con-Of$gem' }             # Olguita implentacion
+                        @{ Name = "consultor-04"; ZipPassword = "S3bas#" }                 # Sebastian implentacion
+                        @{ Name = "consultor-05"; ZipPassword = "123456Dt$" }              # Daniel taborda implentacion
+                        @{ Name = "consultor-06"; ZipPassword = "lbeltran22" }             # luz stella implentacion
+                        @{ Name = "consultor-07"; ZipPassword = "De1349*" }                # Diego implentacion
+                        @{ Name = "consultor-08"; ZipPassword = "Dc1117486486#" }          # Diana implentacion
+                    )
+                    mkdir E:\Apps\geminus\datos 2>$null
+
+                    $folderPath = "E:\Apps\geminus\"
+
+                    if (-not (Test-Path -Path $folderPath)) {
+                        New-Item -Path $folderPath -ItemType Directory
+                    }
+
+                    foreach ($user in $usernames) {
+                        $username = $user.Name
+                        $zipPassword = $user.ZipPassword
+
+    
+                        $length = 30
+    
+                        $randomString = Generate-RandomString -length $length
+    
+                        $userFilePath = "$folderPath\datos\$env:COMPUTERNAME-$username.txt"
+    
+                        Set-Content -Path $userFilePath -Value "por favor no compartir acceso, el reporte se envia cada 30 dias $username $randomString"
+    
+                        $password = ConvertTo-SecureString -AsPlainText -Force -String $randomString
+    
+                        Set-LocalUser -Name $username -Password $password
+                        Write-Host "Cambio de clave al usuario $username"
+    
+                        $zipFilePath = "$folderPath\datos\$env:COMPUTERNAME-$username.zip"
+
+                        Start-Process -FilePath "C:\Program Files\7-Zip\7z.exe" -ArgumentList "a", "-tzip", "`"$zipFilePath`"", "`"$userFilePath`"", "-p$zipPassword" -NoNewWindow -Wait
+   
+                        Remove-Item -Path "$folderPath\datos\*.txt" -Force
+        
+                    }
+
+                    $routefile = "E:\Apps\geminus\datos"
+                    $routezip = "E:\Apps\geminus\datos\datos.zip"
+
+                    Start-Process -FilePath "C:\Program Files\7-Zip\7z.exe" -ArgumentList "a", "-tzip", "`"$routezip`"", "`"$routefile`"" -NoNewWindow -Wait 
+
+
+                    $EmailEmisor = "noresponder@yeminus.com"
+                    $Asunto = "Reporte de Actividad - SRV-" + $env:COMPUTERNAME
+                    $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Comparto el reporte</p>"
+
+                    $SMTPServidor = "mail.yeminus.com"
+                    $CodificacionCaracteres = [System.Text.Encoding]::UTF8
+
+
+                    $ArchivoAdjunto = "$routezip"
+
+
+                    $CCO = "instalaciones@yeminus.com" , "instalaciones2@yeminus.com", "epineda@yeminus.com", "subgerente@yeminus.com", "directorsoporte@yeminus.com", "yeminusinstalaciones@gmail.com", "coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,vquintero@yeminus.com,scuervo@yeminus.com,jpineda@yeminus.com,oflorez@yeminus.com,dtaborda@yeminus.com,jrodriguez@yeminus.com,despinal@yeminus.com"
+                    #$CCO = "instalaciones@yeminus.com" #pruebas
+
+                    try {
+    
+                        $SMTPMensaje = New-Object System.Net.Mail.MailMessage
+                        $SMTPMensaje.From = $EmailEmisor
+                        $SMTPMensaje.Subject = $Asunto
+                        $SMTPMensaje.Body = $CuerpoEnHTML
+                        $SMTPMensaje.IsBodyHtml = $true
+                        $SMTPMensaje.BodyEncoding = $CodificacionCaracteres
+                        $SMTPMensaje.SubjectEncoding = $CodificacionCaracteres
+    
+    
+                        $Adjunto = New-Object System.Net.Mail.Attachment($ArchivoAdjunto)
+                        $SMTPMensaje.Attachments.Add($Adjunto)
+    
+    
+                        foreach ($cco in $CCO) {
+                            $SMTPMensaje.Bcc.Add($cco)
+                        }
+        
+    
+                        $SMTPCliente = New-Object Net.Mail.SmtpClient($SMTPServidor, 587)
+                        $SMTPCliente.EnableSsl = $true
+                        $SMTPCliente.Credentials = New-Object System.Net.NetworkCredential($EmailEmisor, "12345Aa$@/*")
+        
+    
+                        $SMTPCliente.Send($SMTPMensaje)
+                        Write-Output "Correo electrónico enviado correctamente."
+        
+    
+                        $Adjunto.Dispose()
+                    }
+                    catch {
+                        Write-Error -Message "Error al enviar correo electrónico: $_"
+                    }
+            
+            
+                    Remove-Item -Path "$folderPath\datos\*.*" -Force
+
+
+                } while ($tiempo -lt 2)
+
+            }
+
+        }
+
+        #9. pshellChange
+        if ($dato -eq "9") {
+            
+            $pass = Read-Host "Por favor digita la clave de ingreso" 
+
+            if ($pass -eq "insta2025*") {
+                
+                Write-Host "Cambiar la clave de un solo usuario" -ForegroundColor Yellow
+
+                sleep -Seconds 3 
+                
+                $user = Read-Host "Indica cual es el usuario"
+    
+                $Password = Read-Host -AsSecureString
+                $UserAccount = Get-LocalUser -Name "$user" 
+                $UserAccount | Set-LocalUser -Password $Password
+            }
+
+        }
+         }  
+
+        # 10. Download Version
+         if ($dato -eq "10") {
+
+        
+        # #mirar los archivos
+        # Get-ChildItem "C:\inetpub\versiones\"
+
+        # sleep -Seconds 3
+
+        # Remove-Item "C:\inetpub\versiones\*.zip"
+
+
+        #URL Api Gituhub 
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        $url = "https://api.github.com/repos/yeminus/yeminusweb/releases/latest"
+
+        # carry out a get the version 
+        $response = Invoke-RestMethod -Uri $url -Method Get
+
+        #get number to version lastest version
+        $latestVersion = $response.tag_name
+
+        # route where this installed the appcmd IIS
+        $comandoAppCmd = "C:\Windows\System32\inetsrv\"
+
+        # which version to deploy
+        $numversion = $latestVersion
+
+
+        if ([string]::IsNullOrEmpty($numversion)) {
+            $numversion = $latestVersion
+        }
+
+        # Definir la ruta de descarga
+        $rutaDescarga = "C:\inetpub\versiones\$numversion.zip"
+
+        # Verificar si la versión ya está descargada
+        if (Test-Path $rutaDescarga) {
+            Write-Host "La versión $numversion ya está descargada en $rutaDescarga"
+        }
+        else {
+            # Descargar la versión desde GitHub
+            try {
+                [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+                Invoke-WebRequest -Uri "https://github.com/yeminus/yeminusweb/releases/download/$numversion/$numversion.zip" -OutFile $rutaDescarga
+                Write-Host "!VERSION DESCARGADA!" -ForegroundColor Green -NoNewline
+                Write-Host " $numversion exitosamente en $rutaDescarga"
+            }
+            catch {
+                if ($_.Exception.Response.StatusCode -eq 404) {
+                    Write-Host "!ATENCIÓN!" -ForegroundColor Red -NoNewline
+                    Write-Host " La versión $numversion no existe en el repositorio. Valide la última versión en el siguiente enlace: https://github.com/yeminus/yeminusweb/releases/"
+                }
+                else {
+                    Write-Host "Ocurrió un error: $($_.Exception.Message)"
+                }
+                return
+            }
+        }
+
+         }
     
     # preguntar si quiere ejecutar el script
-    if ($dato -eq "1" -or $dato -eq "2" -or $dato -eq "3" -or $dato -eq "4" - $dato -eq "") {
+    if ($dato -eq "1" -or $dato -eq "2" -or $dato -eq "3" -or $dato -eq "4" -or $dato -eq "5" -or $dato -eq "6"-or $dato -eq "7"-or $dato -eq "8"-or $dato -eq "9"-or $dato -eq "10") {
         $restart = Read-Host "Desea ejecutar el script de nuevo SI(s), NO(ENTER)"
         if ($restart -ne "S" -or $restart -ne "s") {
         

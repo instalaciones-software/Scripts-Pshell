@@ -10,28 +10,28 @@
     return $randomString
 }
                                                                     # Usuarios RDP 
-$usernames = @(                                                     
-    @{ Name = "epineda"; ZipPassword = "ChangePassZip" }            # Inge gerente
-    @{ Name = "administrator"; ZipPassword = "ChangePassZip" }      # Danny Instalacion
-    @{ Name = "instalacion"; ZipPassword = "ChangePassZip" }        # Diego Instalacion
-    @{ Name = "instalacion2"; ZipPassword = "ChangePassZip" }       # Esteban Instalacion
-    @{ Name = "soporte-01"; ZipPassword = "ChangePassZip" }         # Jarvy Subgerente
-    @{ Name = "soporte-02"; ZipPassword = "ChangePassZip" }         # Harold Mesa de ayuda
-    @{ Name = "soporte-03"; ZipPassword = "ChangePassZip" }         # Laura Mesa de ayuda
-    @{ Name = "soporte-04"; ZipPassword = "ChangePassZip" }         # Jhon G Mesa de ayuda
-    @{ Name = "soporte-05"; ZipPassword = "ChangePassZip" }         # Stiven Mesa de ayuda
-    @{ Name = "soporte-06"; ZipPassword = "ChangePassZip" }         # Angelica Mesa de ayuda
-    @{ Name = "soporte-07"; ZipPassword = "ChangePassZip"}          # Julian Mesa de ayuda
-    @{ Name = "consultor-01"; ZipPassword = "ChangePassZip" }       # Valen Implementacion
-    @{ Name = "consultor-02"; ZipPassword = "ChangePassZip" }       # Juli Implementacion
-    @{ Name = "consultor-03"; ZipPassword = 'ChangePassZip' }       # Olguita Implementacion
-    @{ Name = "consultor-04"; ZipPassword = "ChangePassZip" }       # Sebastian Implementacion
-    @{ Name = "consultor-05"; ZipPassword = "ChangePassZip" }       # Daniel Implementacion
-    @{ Name = "consultor-06"; ZipPassword = "ChangePassZip" }       # heidy Implementacion
-    @{ Name = "consultor-07"; ZipPassword = "ChangePassZip" }       # Diego  Implementacion
-    @{ Name = "consultor-08"; ZipPassword = "ChangePassZip" }       # Diana Implementacion
+$usernames = @(   
+                                                          # Usuarios RDP 
+     @{ Name = "epineda"; ZipPassword = "Pepito" }                      # Inge
+     @{ Name = "administrator"; ZipPassword = "+-NewPw2024*#" }         # Danny Infraestructura
+     @{ Name = "instalacion"; ZipPassword = "Ocsxxi%123%" }             # Diego Infraestructura
+     @{ Name = "instalacion2"; ZipPassword = "Colombia2021**##" }       # Esteban Infraestructura
+     @{ Name = "soporte-01"; ZipPassword = "Yeminus" }                  # Jarvy   Subgerente      
+     @{ Name = "soporte-02"; ZipPassword = "15963Sopo#" }               # Harold  Director Mesa
+     @{ Name = "soporte-03"; ZipPassword = "Lc1088022547" }             # Laura mesa
+     @{ Name = "soporte-04"; ZipPassword = "Bardack085" }               # Jhon G mesa
+     @{ Name = "soporte-05"; ZipPassword = "saar98." }                  # Stiven mesa
+     @{ Name = "soporte-06"; ZipPassword = "Alana0803*" }               # Angelica mesa
+     @{ Name = "soporte-07"; ZipPassword = "Sopyem10*"}                 # Julian mesa
+     @{ Name = "consultor-01"; ZipPassword = "Valen9306." }             # Valentina mesa
+     @{ Name = "consultor-02"; ZipPassword = "Jp1088353472#" }          # Juli implentacion
+     @{ Name = "consultor-03"; ZipPassword = 'Con-Of$gem' }             # Olguita implentacion
+     @{ Name = "consultor-04"; ZipPassword = "S3bas#" }                 # Sebastian implentacion
+     @{ Name = "consultor-05"; ZipPassword = "123456Dt$" }              # Daniel taborda implentacion
+     @{ Name = "consultor-06"; ZipPassword = "lbeltran22" }             # luz stella implentacion
+     @{ Name = "consultor-07"; ZipPassword = "De1349*" }                # Diego implentacion
+     @{ Name = "consultor-08"; ZipPassword = "Dc1117486486#" }          # Diana implentacion
     )
-
 mkdir E:\Apps\geminus\datos 2>$null
 
 $folderPath = "E:\Apps\geminus\"
