@@ -45,8 +45,13 @@ $listApis.Add("TablasSistema");
 $listApis.Add("Ventas");
 
 
+
+
+
+
 $listmodel = New-Object Collections.Generic.List[String]
 $listmodel.Add("WebComponents");
+$listmodel.Add("Impresion");
 
 
 
@@ -352,15 +357,19 @@ do {
                     Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitiosWeb.$nombreApi" 2>$null
                     Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitiosWeb.$listmodel" 2>$null
                         
+
+                    foreach ($listmodel in $listmodel) {
                         
-                    # add new components            
-                    & "${comandoAppCmd}\appcmd" add app /site.name:$sitiosWeb /path:"/$listmodel" /physicalPath:"$program\$listmodel" /applicationPool:$sitiosWeb.$listmodel 1>$null
+                        # add new components            
+                        & "${comandoAppCmd}\appcmd" add app /site.name:$sitiosWeb /path:"/$listmodel" /physicalPath:"$program\$listmodel" /applicationPool:$sitiosWeb.$listmodel 1>$null
+                            
+                        # add directory virtual de los componentes
+                        C:\Windows\system32\inetsrv\appcmd add vdir /app.name:$sitiosWeb/$listmodel /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
+                            
+                        # add pool app 
+                        & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitiosWeb.$listmodel /processModel.identityType:"ApplicationPoolIdentity" 1>$null
+                    }
                         
-                    # add directory virtual de los componentes
-                    C:\Windows\system32\inetsrv\appcmd add vdir /app.name:$sitiosWeb/$listmodel /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
-                        
-                    # add pool app 
-                    & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitiosWeb.$listmodel /processModel.identityType:"ApplicationPoolIdentity" 1>$null
                             
                 }
                     
