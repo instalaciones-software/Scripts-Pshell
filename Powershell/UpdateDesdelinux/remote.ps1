@@ -1000,53 +1000,56 @@ do {
 
             sleep -Seconds 3
 
-            $tiempo = 0
-           
+            $tiempo = 0              
+                
             $key = Read-Host "Ingresa la clave"
 
             do {
-                
+
                 if ($key -eq "Ocsxxi%123%") {
 
-                    $list = @(
-                        "inversionesfzz.yeminus.com",
-                        "cercafe.yeminus.com",
-                        "telematica.yeminus.com",
-                        "fxmoda.yeminus.com",
-                        "dys.yeminus.com",
-                        "agregadosexito.yeminus.com",
-                        "dima.yeminus.com",
-                        "sma.yeminus.com",
-                        "energitel.yeminus.com",
-                        "farmart.yeminus.com",
-                        "comercialdelicores.yeminus.com",
-                        "manzanares.yeminus.com",
-                        "redvital9.yeminus.com",
-                        "yeminus.yeminus.com"
-                    )
-
-                    $file = Read-Host "Por favor indicar cual es la ruta del archivo ps1"
+    
                     $pass = Get-Credential -UserName "pshell" -Message "Ingresa la contraseña"
+                    $continuar = $true
 
-                    $trustedHosts = $list -join ","
-                    Set-Item WSMan:\localhost\Client\TrustedHosts -Value $trustedHosts -Force
+                    while ($continuar) {
+        
+                        $input = Read-Host "¿A qué servidores deseas conectarte? (separa por coma: IP o dominio)"
+                        $servers = $input -split "," | ForEach-Object { $_.Trim() }
 
-                    foreach ($server in $list) {
-                        try {
-                            Write-Host "Ejecutando en $server..."
-                            Invoke-Command -ComputerName $server -FilePath $file -Credential $pass -Authentication Negotiate -ErrorAction Stop
-                            Write-Host "Ejecutado correctamente en $server"
+        
+                        $file = Read-Host "¿Cuál es la ruta del archivo .ps1 que deseas ejecutar en estos servidores?"
+
+        
+                        $trustedHosts = $servers -join ","
+                        Set-Item WSMan:\localhost\Client\TrustedHosts -Value $trustedHosts -Force
+
+                        foreach ($server in $servers) {
+                            try {
+                                Write-Host "`n Ejecutando en $server..." -ForegroundColor Cyan
+                                Invoke-Command -ComputerName $server -FilePath $file -Credential $pass -Authentication Negotiate -ErrorAction Stop
+                                Write-Host "Ejecutado correctamente en $server" -ForegroundColor Green
+                            }
+                            catch {
+                                Write-Error "Error al ejecutar en $server"
+                            }
                         }
-                        catch {
-                            Write-Error "Error al ejecutar en $server $_"
+
+        
+                        $respuesta = Read-Host "`n¿Deseas conectarte a más servidores? (s/n)"
+                        if ($respuesta -ne "s") {
+                            $continuar = $false
                         }
                     }
 
-                    Clear-Item -Path WSMan:\localhost\Client\TrustedHosts -Force
     
-                }
+                    Clear-Item -Path WSMan:\localhost\Client\TrustedHosts -Force
+                    Write-Host "`n Todos los procesos finalizados. TrustedHosts limpiado." -ForegroundColor Yellow
 
-                break
+                }
+                else {
+                    Write-Host "Clave incorrecta. Acceso denegado." -ForegroundColor Red
+                }
 
             } while ($tiempo -lt 2)
 
@@ -1393,10 +1396,10 @@ do {
             }
 
         }
-         }  
+    }  
 
-        # 10. Download Version
-         if ($dato -eq "10") {
+    # 10. Download Version
+    if ($dato -eq "10") {
 
         
         # #mirar los archivos
@@ -1455,10 +1458,10 @@ do {
             }
         }
 
-         }
+    }
     
     # preguntar si quiere ejecutar el script
-    if ($dato -eq "1" -or $dato -eq "2" -or $dato -eq "3" -or $dato -eq "4" -or $dato -eq "5" -or $dato -eq "6"-or $dato -eq "7"-or $dato -eq "8"-or $dato -eq "9"-or $dato -eq "10") {
+    if ($dato -eq "1" -or $dato -eq "2" -or $dato -eq "3" -or $dato -eq "4" -or $dato -eq "5" -or $dato -eq "6" -or $dato -eq "7" -or $dato -eq "8" -or $dato -eq "9" -or $dato -eq "10" -or $dato -eq "") {
         $restart = Read-Host "Desea ejecutar el script de nuevo SI(s), NO(ENTER)"
         if ($restart -ne "S" -or $restart -ne "s") {
         
