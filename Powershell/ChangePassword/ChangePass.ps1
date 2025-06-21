@@ -9,15 +9,14 @@
     
     return $randomString
 }
-                                                                    # Usuarios RDP 
-$usernames = @(   
-                                                          # Usuarios RDP 
+
+$usernames = @(                                                         # Usuarios RDP 
      @{ Name = "epineda"; ZipPassword = "Pepito" }                      # Inge
      @{ Name = "administrator"; ZipPassword = "+-NewPw2024*#" }         # Danny Infraestructura
      @{ Name = "instalacion"; ZipPassword = "Ocsxxi%123%" }             # Diego Infraestructura
      @{ Name = "instalacion2"; ZipPassword = "Colombia2021**##" }       # Esteban Infraestructura
      @{ Name = "soporte-01"; ZipPassword = "Yeminus" }                  # Jarvy   Subgerente      
-     @{ Name = "soporte-02"; ZipPassword = "15963Sopo#" }               # Harold  Director Mesa
+     @{ Name = "soporte-02"; ZipPassword = "15963Sopo#" }               # Harold    Director Mesa
      @{ Name = "soporte-03"; ZipPassword = "Lc1088022547" }             # Laura mesa
      @{ Name = "soporte-04"; ZipPassword = "Bardack085" }               # Jhon G mesa
      @{ Name = "soporte-05"; ZipPassword = "saar98." }                  # Stiven mesa
@@ -28,10 +27,12 @@ $usernames = @(
      @{ Name = "consultor-03"; ZipPassword = 'Con-Of$gem' }             # Olguita implentacion
      @{ Name = "consultor-04"; ZipPassword = "S3bas#" }                 # Sebastian implentacion
      @{ Name = "consultor-05"; ZipPassword = "123456Dt$" }              # Daniel taborda implentacion
-     @{ Name = "consultor-06"; ZipPassword = "lbeltran22" }             # luz stella implentacion
+     @{ Name = "consultor-06"; ZipPassword = "lbeltran22" }               # heidy implentacion
      @{ Name = "consultor-07"; ZipPassword = "De1349*" }                # Diego implentacion
      @{ Name = "consultor-08"; ZipPassword = "Dc1117486486#" }          # Diana implentacion
     )
+
+
 mkdir E:\Apps\geminus\datos 2>$null
 
 $folderPath = "E:\Apps\geminus\"
@@ -83,8 +84,8 @@ $CodificacionCaracteres = [System.Text.Encoding]::UTF8
 $ArchivoAdjunto = "$routezip"
 
 
-$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,vquintero@yeminus.com,scuervo@yeminus.com,jpineda@yeminus.com,oflorez@yeminus.com,dtaborda@yeminus.com,jrodriguez@yeminus.com,despinal@yeminus.com"
-#$CCO = "instalaciones@yeminus.com" #pruebas
+$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte10@yeminus.com,vquintero@yeminus.com,scuervo@yeminus.com,jpineda@yeminus.com,oflorez@yeminus.com,dtaborda@yeminus.com,lbeltran@yeminus.com,despinal@yeminus.com,tics@yeminus.com,dcortes@yeminus.com"
+#$CCO = "dcortes@yeminus.com" #pruebas
 
 try {
     
@@ -124,5 +125,4 @@ catch {
             
 Remove-Item -Path "$folderPath\datos\*.*" -Force
 
-            
-
+ 
