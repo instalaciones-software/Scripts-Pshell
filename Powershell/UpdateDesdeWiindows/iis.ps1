@@ -8,7 +8,7 @@ ___) | |___|  _ < | ||  __/ | |  | || |\  | |_| | |_____|  | | | | ___) |
 |____/ \____|_| \_\___|_|    |_| |___|_| \_|\____|         |___|___|____/
 
 
-Version 1.0.35.0" -ForegroundColor green
+Version 2.0.1.0" -ForegroundColor green
 
 
 
@@ -359,9 +359,9 @@ if ($dato -eq "2" -or $dato -eq "") {
     }
 
     # Convert the names sites web in array
-    $nombresSitiosWeb = $sitiosWeb -split ','
+     $nombresSitiosWeb = $sitiosWeb -split ','
 
-
+    
     foreach ($sitioWeb in $nombresSitiosWeb) {
         # stop site web
         $program = & "$comandoAppCmd\appcmd" list vdir "$sitioWeb/" /text:physicalPath
@@ -606,11 +606,11 @@ if ($dato -eq "2" -or $dato -eq "") {
             # owerwrite the files txt
             "$numversion" | Out-File -FilePath $rutaArchivo -Force
          
-            $EmailDestinatario = "instalaciones@yeminus.com,directorsoporte@yeminus.com,instalaciones2@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,cjaramillo@yeminus.com,tics@yeminus.com,dguzman@yeminus.com"
+            $EmailDestinatario = "instalaciones@yeminus.com,directorsoporte@yeminus.com,instalaciones3@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte3@yeminus.com,soporte10@yeminus.com,tics@yeminus.com,vquintero@yeminus.com"
             $EmailEmisor = "noresponder@yeminus.com"
             $Asunto = "Actualizacion Empresa $sitioWeb Version $numversion"
             $sitioWeb = $sitioWeb.ToLower()
-            $CuerpoEnHTML = "<p>Cordial saludo Compañeros, Se realiza la actualizacion del yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
+            $CuerpoEnHTML = "<p>Cordial saludo, Se realiza la actualizacion del yeminus web a la empresa <b>$sitioWeb  con version $numversion este cliente tenia la version $contenidoArchivo </b> Por favor estar pendientes de este cliente por si requieren soporte sobre el producto web</p>
 
          <b><a>Link web: </b>$urlYem2</a>
          <p></p>
@@ -639,99 +639,4 @@ if ($dato -eq "2" -or $dato -eq "") {
         }
      
     }        
- 
-    # foreach ($sitioWeb in $nombresSitiosWeb) {
-    #     $rutaExcel = "c:\$sitioWeb\$sitioWeb.xlsx"
-
-    #     $excel = New-Object -ComObject Excel.Application
-    #     $workbook = $excel.Workbooks.Open($rutaExcel)
-    #     $worksheet = $workbook.Worksheets.Item(1)
-
-    #     $rango = $worksheet.UsedRange
-
-    #     for ($i = 2; $i -le $rango.Rows.Count; $i++) {
-    #         $nombre = $worksheet.Cells.Item($i, 1).Value2
-    #         $correo = $worksheet.Cells.Item($i, 2).Value2
-
-    #         if ($nombre -ne $null -and $correo -ne $null) {
-    #             # Configuracion del correo
-    #             $EmailDestinatario = $correo
-    #             $EmailEmisor = "noresponder@yeminus.com"
-    #             $Asunto = "📌Actualizacion Del Software Web Version $numversion"
-    #             $CuerpoEnHTML = "<p>Cordial saludo Sr(a). Cliente</p> 
-
-    # <p>Le informamos que se ha aplicado una actualizacion a nuestro producto yeminus Web. La version <b>($contenidoArchivo)</b> ha sido reemplazada por la version <b>($numversion)</b> . Por favor, asegúrese de borrar la cache de su navegador para que pueda cargar la nueva version correctamente. Además, le recomendamos que informe a sus compañeros para que tambien realicen este proceso.</p>
-
-    # <b><p>Nota:Sr cliente si despues de realizar la actualizacion tiene algun inconveniente por favor escalar el soporte a mesa de ayuda</p></b>
-    
-    # <p>Tutorial de subir tickets:<p/>
-
-    # <a>https://youtu.be/LpUyBrDM-fw/</a>
-
-    # <p>Link subir tickets:</p>
-
-    # <a> https://yeminus.yeminus.com/portalcliente/#/login</a>
-
-    # <p>Gracias por su atencion.</p>"
-
-    #             $SMTPServidor = "mail.yeminus.com"
-    #             $CodificacionCaracteres = [System.Text.Encoding]::UTF8
- 
-    #             try {
-    #                 $SMTPMensaje = New-Object System.Net.Mail.MailMessage($EmailEmisor, $EmailDestinatario, $Asunto, $CuerpoEnHTML)
-    #                 $SMTPMensaje.IsBodyHtml = $true
-    #                 $SMTPMensaje.BodyEncoding = $CodificacionCaracteres
-    #                 $SMTPMensaje.SubjectEncoding = $CodificacionCaracteres
-    #                 $SMTPCliente = New-Object Net.Mail.SmtpClient($SMTPServidor, 587)
-    #                 $SMTPCliente.EnableSsl = $true
-    #                 $SMTPCliente.Credentials = New-Object System.Net.NetworkCredential($EmailEmisor, "12345Aa$@/*")
-    #                 $SMTPCliente.Send($SMTPMensaje)
-    #                 Write-Host "Correo enviado a $nombre al correo $EmailDestinatario"
-    #             }
-    #             catch {
-    #                 Write-Error -Message "Error al enviar correo electronico a $EmailDestinatario"
-    #             }
-    #         }
-    #     }
-         
-    #     $workbook.Close()
-    #     $excel.Quit()
-    # }
-}                                                                            
-      
-# if ($dato -eq "3") {
-
-#     $pathpass = Read-Host "Para conectarse a otros servidores, es necesario proporcionar la llave de acceso. Por favor, especifique la ruta donde se encuentra la llave" 
-#     $datops = Read-Host "Servidor a conectarse?" 
-
-#     $serverMap = @{
-#         "3"   = "IP"
-#         "233" = "IP"
-#         "144" = "IP"
-#         "5"   = "IP"
-#         "137" = "IP"
-#         "230" = "IP"
-#         "229" = "IP"
-#         "231" = "IP"
-#         "232" = "IP"
-#         "133" = "IP"
-#         "228" = "IP"
-#         "234" = "IP"
-#         "33"  = "IP"
-#         "56"  = "IP"
-#     }
-
-#     # Check if the provided server code exists in the hashtable
-#     if ($serverMap.ContainsKey($datops)) {
-#         $cred = Import-Clixml "$pathpass\key$datops.xml"
-#         $ipAddress = $serverMap[$datops]     
-#          Enter-PSSession -ComputerName $ipAddress -Credential $cred
-#        # Invoke-Command -ComputerName $ipAddress -Credential  $cred -FilePath "$pathpass\iis.ps1"
-#         Remove-Item -Path "$pathpass\*.xml" -Force
-
-#     }
-#     else {
-#         Write-Host "ip de servidor no valido" -ForegroundColor Red
-#     }
-# }
-
+ }
