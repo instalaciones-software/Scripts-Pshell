@@ -1,7 +1,1 @@
-                        1. Web - (Actualizar Yemninus Web a partir 4.0)
-                        2. ChangePass - (Cambiar clave a todos lo usuarios soporte y consultor)
-                        3. version - (Descargar ultima version del Yeminus Web)
-                        4. Firma - (Hacer Backup firmas Digitales)
-                        5. parche - (Actualizar Version parche)
-                        6. api - (Reiniciar Api)
-                        7. Ip - (Desbloquear ip publica)
+
