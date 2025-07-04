@@ -1,4 +1,7 @@
-﻿$appcmdPath = "$env:SystemRoot\system32\inetsrv\appcmd.exe"
+﻿cls
+
+
+$appcmdPath = "$env:SystemRoot\system32\inetsrv\appcmd.exe"
 $appcmdPath2 = C:\Windows\System32\inetsrv\appcmd.exe list site /text:name | Sort-Object
 
   
