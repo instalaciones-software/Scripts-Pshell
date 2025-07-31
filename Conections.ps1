@@ -56,9 +56,9 @@ do {
         Start-Sleep -Seconds 2
 
         $url = "https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/$file.ps1"
-        $destino = "C:\Users\pshell\Scripts\$file.ps1"
+        $destino = "C:\Users\instalacion\Scripts\$file.ps1"
         Invoke-WebRequest -Uri $url -OutFile $destino
-        Write-Host "`n✅ Descarga completa: $destino" -ForegroundColor Green
+        Write-Host "`n✅ Descarga completada" -ForegroundColor Green
 
         # --- Bucle para conectarse a varios servidores ---
         do {
@@ -70,9 +70,9 @@ do {
 
             foreach ($server in $servers) {
                 try {
-                    $cred = Import-Clixml -Path "C:\Users\pshell\xml.xml"
+                    $cred = Import-Clixml -Path "C:\Users\instalacion\xml.xml"
                     Write-Host " Ejecutando en $server.yeminus.com" -ForegroundColor Green
-                    Invoke-Command -ComputerName "$server.yeminus.com" -FilePath "C:\Users\pshell\Scripts\$file.ps1" -Credential $cred -Authentication Negotiate
+                    Invoke-Command -ComputerName "$server.yeminus.com" -FilePath "$destino" -Credential $cred -Authentication Negotiate
                 }
                 catch {
                     Write-Error "❌ Error al ejecutar en $server"
@@ -143,9 +143,9 @@ do {
             Start-Sleep -Seconds 2
 
             $url = "https://github.com/instalaciones-software/Scripts-Pshell/releases/download/1.0.0/$file.ps1"
-            $destino = "C:\Users\pshell\Scripts\$file.ps1"
+             $destino = "C:\Users\instalacion\Scripts\$file.ps1"
             Invoke-WebRequest -Uri $url -OutFile $destino
-            Write-Host "`n✅ Descarga completa: $destino" -ForegroundColor Green
+            Write-Host "`n✅ Descarga completada $destino" -ForegroundColor Green
 
             # Preparar TrustedHosts con dominios completos
             $trustedHosts = ($servers | ForEach-Object { "$_.yeminus.com" }) -join ","
@@ -154,9 +154,9 @@ do {
             # Ejecutar en cada servidor
             foreach ($server in $servers) {
                 try {
-                    $cred = Import-Clixml -Path "C:\Users\pshell\xml.xml"
+                    $cred = Import-Clixml -Path "C:\Users\instalacion\xml.xml"
                     Write-Host " Ejecutando en $server.yeminus.com" -ForegroundColor Green
-                    Invoke-Command -ComputerName "$server.yeminus.com" -FilePath "C:\Users\pshell\Scripts\$file.ps1" -Credential $cred -Authentication Negotiate
+                    Invoke-Command -ComputerName "$server.yeminus.com" -FilePath "$destino" -Credential $cred -Authentication Negotiate
                 }
                 catch {
                     Write-Error "❌ Error al ejecutar en $server"

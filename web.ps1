@@ -258,9 +258,17 @@ $addfile = mkdir "C:\inetpub\versiones\" 2>$null
                         # stop site web
                         & $comandoAppCmd\appcmd stop apppool $sitiosWeb 1>$null
                         & $comandoAppCmd\appcmd stop apppool "$sitiosWeb.$pool"
-                        & $comandoAppCmd\appcmd stop apppool "$sitiosWeb.$listmodel" 1>$null
-                    
                     }
+
+                    # stop
+
+                    foreach ($listmodel in $listmodel) {
+
+                       & $comandoAppCmd\appcmd stop apppool "$sitiosWeb.$listmodel" 1>$null
+                    }
+
+
+
                     # remove files the app
                             
                     Remove-Item -Recurse -Force "$program\*" -Exclude oldversion.txt    
@@ -269,10 +277,16 @@ $addfile = mkdir "C:\inetpub\versiones\" 2>$null
                         # startup the site web
                         & $comandoAppCmd\appcmd start apppool $sitiosWeb 1>$null
                         & $comandoAppCmd\appcmd start apppool "$sitiosWeb.$pool" 1>$null
-                        & $comandoAppCmd\appcmd start apppool "$sitiosWeb.$listmodel" 1>$null
-                    
+                        
                     }
                     
+
+
+                        foreach ($listmodel in $listmodel) {
+
+                       & $comandoAppCmd\appcmd start apppool "$sitiosWeb.$listmodel" 1>$null
+                    }
+
                     Write-Host "Actualizando version de $file al $numversion sitio web $sitiosWeb DESPLEGANDO APLICACION..." -ForegroundColor green 
 
                     $rutaArchivo = "$program\oldversion.txt"
