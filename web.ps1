@@ -1,6 +1,6 @@
 ﻿cls
 
-#holaa
+
 
 
 $appcmdPath = "$env:SystemRoot\system32\inetsrv\appcmd.exe"
