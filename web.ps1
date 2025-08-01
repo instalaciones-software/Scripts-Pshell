@@ -262,9 +262,9 @@ $addfile = mkdir "C:\inetpub\versiones\" 2>$null
 
                     # stop
 
-                    foreach ($listmodel in $listmodel) {
+                    foreach ($model in $listmodel) {
 
-                       & $comandoAppCmd\appcmd stop apppool "$sitiosWeb.$listmodel" 1>$null
+                       & $comandoAppCmd\appcmd stop apppool "$sitiosWeb.$model"
                     }
 
 
@@ -276,15 +276,14 @@ $addfile = mkdir "C:\inetpub\versiones\" 2>$null
                     foreach ($pool in $listApis) {
                         # startup the site web
                         & $comandoAppCmd\appcmd start apppool $sitiosWeb 1>$null
-                        & $comandoAppCmd\appcmd start apppool "$sitiosWeb.$pool" 1>$null
-                        
+                        & $comandoAppCmd\appcmd start apppool "$sitiosWeb.$pool" 1>$null                        
                     }
                     
 
 
-                        foreach ($listmodel in $listmodel) {
+                        foreach ($model in $listmodel) {
 
-                       & $comandoAppCmd\appcmd start apppool "$sitiosWeb.$listmodel" 1>$null
+                       & $comandoAppCmd\appcmd start apppool "$sitiosWeb.$model " 1>$null
                     }
 
                     Write-Host "Actualizando version de $file al $numversion sitio web $sitiosWeb DESPLEGANDO APLICACION..." -ForegroundColor green 
@@ -326,19 +325,20 @@ $addfile = mkdir "C:\inetpub\versiones\" 2>$null
                     # add pool de app the group user IIS_IUSRS
                     Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitiosWeb" 2>$null
                     Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitiosWeb.$nombreApi" 2>$null
-                    Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitiosWeb.$listmodel" 2>$null
-                        
-
-                    foreach ($listmodel in $listmodel) {
+                    
+                    
+                    foreach ($modul in $listmodel) {
                         
                         # add new components            
-                        & "${comandoAppCmd}\appcmd" add app /site.name:$sitiosWeb /path:"/$listmodel" /physicalPath:"$program\$listmodel" /applicationPool:$sitiosWeb.$listmodel 1>$null
-                            
+                        & "${comandoAppCmd}\appcmd" add app /site.name:$sitiosWeb /path:"/$modul" /physicalPath:"$program\$modul" /applicationPool:$sitiosWeb.$modul 1>$null
+                        
                         # add directory virtual de los componentes
-                        C:\Windows\system32\inetsrv\appcmd add vdir /app.name:$sitiosWeb/$listmodel /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
-                            
+                        C:\Windows\system32\inetsrv\appcmd add vdir /app.name:$sitiosWeb/$modul /path:/recursos /physicalPath:$rutarecursos /username:$nombreUsuario /password:$contrasenaTextoPlano 1>$null
+                        
                         # add pool app 
-                        & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitiosWeb.$listmodel /processModel.identityType:"ApplicationPoolIdentity" 1>$null
+                        & "${comandoAppCmd}\appcmd" add apppool /apppool.name:$sitiosWeb.$modul /processModel.identityType:"ApplicationPoolIdentity" 1>$null
+
+                        Add-LocalGroupMember -Group "IIS_IUSRS" -Member "IIS APPPOOL\$sitiosWeb.$modul" 2>$null
                     }
                         
                             
