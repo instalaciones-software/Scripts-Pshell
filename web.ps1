@@ -283,7 +283,7 @@ $addfile = mkdir "C:\inetpub\versiones\" 2>$null
 
                         foreach ($model in $listmodel) {
 
-                       & $comandoAppCmd\appcmd start apppool "$sitiosWeb.$model " 1>$null
+                       & $comandoAppCmd\appcmd start apppool "$sitiosWeb.$model" 1>$null
                     }
 
                     Write-Host "Actualizando version de $file al $numversion sitio web $sitiosWeb DESPLEGANDO APLICACION..." -ForegroundColor green 
