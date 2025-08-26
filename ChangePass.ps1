@@ -29,7 +29,7 @@ $usernames = @(                                                         # Usuari
      @{ Name = "consultor-05"; ZipPassword = "123456Dt$" }              # Daniel taborda implentacion
      @{ Name = "consultor-06"; ZipPassword = "lbeltran22" }             # luz stella implentacion
      @{ Name = "consultor-07"; ZipPassword = "De1349*" }                # Diego implentacion
-     @{ Name = "consultor-08"; ZipPassword = "1053814926*p" }          # paula implentacion
+     @{ Name = "consultor-08"; ZipPassword = "1053814926*p" }          # paola implentacion
     )
 
 
