@@ -22,14 +22,14 @@ $usernames = @(                                                         # Usuari
      @{ Name = "soporte-05"; ZipPassword = "saar98." }                  # Stiven mesa
      @{ Name = "soporte-06"; ZipPassword = "Alana0803*" }               # Angelica mesa
      @{ Name = "soporte-07"; ZipPassword = "Sopyem10*"}                 # Julian mesa
-     @{ Name = "consultor-01"; ZipPassword = "Valen9306." }             # Valentina mesa
+     @{ Name = "consultor-01"; ZipPassword = "CAN85juan*" }             # Duglas Implementacion
      @{ Name = "consultor-02"; ZipPassword = "Jp1088353472#" }          # Juli implentacion
      @{ Name = "consultor-03"; ZipPassword = 'Con-Of$gem' }             # Olguita implentacion
      @{ Name = "consultor-04"; ZipPassword = "S3bas#" }                 # Sebastian implentacion
      @{ Name = "consultor-05"; ZipPassword = "123456Dt$" }              # Daniel taborda implentacion
      @{ Name = "consultor-06"; ZipPassword = "lbeltran22" }             # luz stella implentacion
      @{ Name = "consultor-07"; ZipPassword = "De1349*" }                # Diego implentacion
-     @{ Name = "consultor-08"; ZipPassword = "1053814926*p" }          # paola implentacion
+     @{ Name = "consultor-08"; ZipPassword = "1053814926*p" }          # paula implentacion
     )
 
 
