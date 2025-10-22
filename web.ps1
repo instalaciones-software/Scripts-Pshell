@@ -41,6 +41,7 @@ $listApis.Add("Security");
 $listApis.Add("SolicitudesCompraMRP");
 $listApis.Add("TablasSistema");
 $listApis.Add("Ventas");
+$listApis.Add("FacturacionElectronica");
 
 
 
@@ -118,7 +119,7 @@ $addfile = mkdir "C:\inetpub\versiones\" 2>$null
         
         
             # enviar correo codigo de verificacion si el sitio se llama diferente a yeminus, yeminus2 y yeminus web
-            if ($sitiosWeb -ne "yeminus" -and $sitiosWeb -ne "yeminus2" -and $sitiosWeb -ne "yeminusweb") {
+            if ($sitiosWeb -ne "yeminus" -and $sitiosWeb -ne "yeminus2" -and $sitiosWeb -ne "yeminuslocal") {
         
                 # Generar Codigo
                 $codigo = Get-Random -Minimum 10000 -Maximum 99999
@@ -213,12 +214,14 @@ $addfile = mkdir "C:\inetpub\versiones\" 2>$null
                 
                     
             #si el sitio web se llama yeminus, yeminus2 yeminusweb va solicitar la clave del usuario administrador
-            if ($sitiosWeb -eq "yeminus" -or $sitiosWeb -eq "yeminusweb" -or $sitiosWeb -eq "yeminus2") {
+            if ($sitiosWeb -eq "yeminus" -or $sitiosWeb -eq "yeminuslocal" -or $sitiosWeb -eq "yeminus2") {
 
 
                 # registrar eventos para cuando se realice la actualizacion del yeminus web en servidores propios
                 New-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" 2>$null
                 Write-EventLog -LogName "Windows Powershell" -Source "IIS_YEMINUS" -EntryType Information -EventID 300  -Message "Se realizo la actualizacion build completa del yeminus web a la version: $numversion al sitio web: $sitiosWeb"
+        
+      
 
 
                 $nombreUsuario = $env:USERNAME
