@@ -9,7 +9,7 @@ $appcmdPath2 = C:\Windows\System32\inetsrv\appcmd.exe list site /text:name | Sor
   
 
 
-# Lista de los apis Que tiene actualmente el Software Yeminus web 
+#  Lista de los apis Que tiene actualmente el Software Yeminus web 
 $listApis = New-Object Collections.Generic.List[String]
 $listApis.Add("ActivosFijos");
 $listApis.Add("Admin");
