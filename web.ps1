@@ -42,13 +42,13 @@ $listApis.Add("SolicitudesCompraMRP");
 $listApis.Add("TablasSistema");
 $listApis.Add("Ventas");
 $listApis.Add("FacturacionElectronica");
-$listApis.Add("Gateway");
 
 
 
 $listmodel = New-Object Collections.Generic.List[String]
 $listmodel.Add("WebComponents");
 $listmodel.Add("Impresion");
+$listmodel.Add("Gateway");
 
 
 
