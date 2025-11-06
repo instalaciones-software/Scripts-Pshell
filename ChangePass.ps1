@@ -84,8 +84,8 @@ $CodificacionCaracteres = [System.Text.Encoding]::UTF8
 $ArchivoAdjunto = "$routezip"
 
 
-$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte10@yeminus.com,vquintero@yeminus.com,jpineda@yeminus.com,oflorez@yeminus.com,dtaborda@yeminus.com,lbeltran@yeminus.com,despinal@yeminus.com,tics@yeminus.com,ptorres@yeminus.com"
-#$CCO = "dcortes@yeminus.com" #pruebas
+$CCO = "instalaciones@yeminus.com" ,"instalaciones2@yeminus.com","epineda@yeminus.com","subgerente@yeminus.com","directorsoporte@yeminus.com","yeminusinstalaciones@gmail.com","coorinstalaciones.yeminus@gmail.com,aarias@yeminus.com,soporte2@yeminus.com,soporte1@yeminus.com,soporte10@yeminus.com,vquintero@yeminus.com,jpineda@yeminus.com,oflorez@yeminus.com,dtaborda@yeminus.com,lbeltran@yeminus.com,despinal@yeminus.com,tics@yeminus.com,ptorres@yeminus.com,hcortes@yeminus.com"
+#$CCO = "hcortes@yeminus.com,instalaciones@yeminus.com" #pruebas
 
 try {
     
